@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Catalogue — LocalKart</title>
+  
+  <!-- Main Stylesheet Link -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ========================================================
+       INTERNAL CSS STYLING IN THE HEAD SECTION
+       Full standalone styling for Product Catalogue & Grid UI
+       ======================================================== -->
+  <style>
+    /* Global Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #212529;
+      background-color: #fafcf9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* Site Header & Navigation */
+    .site-header {
+      background-color: #ffffff;
+      border-bottom: 2px solid #e9ecef;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #1b4332;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-badge {
+      background-color: #e8f5e9;
+      color: #2d6a4f;
+      border: 1px solid #b7e4c7;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #495057;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #2d6a4f;
+      background-color: #e8f5e9;
+    }
+
+    /* Page Banner */
+    .page-banner-section {
+      background-color: #f1f7f3;
+      padding: 42px 0 24px;
+      text-align: center;
+      border-bottom: 1px solid #e7ede8;
+    }
+
+    .page-banner-title {
+      color: #1b4332;
+      font-size: 2.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .page-banner-subtitle {
+      color: #495057;
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* Category Filter Navigation Bar */
+    .category-nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 24px 0 10px;
+    }
+
+    .cat-btn {
+      padding: 8px 16px;
+      background-color: #ffffff;
+      border: 1px solid #ced4da;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2d6a4f;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .cat-btn:hover {
+      background-color: #1b4332;
+      color: #ffffff;
+      border-color: #1b4332;
+      transform: translateY(-1px);
+    }
+
+    /* Category Headings */
+    .category-heading {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #1b4332;
+      border-bottom: 2px solid #d8f3dc;
+      padding-bottom: 10px;
+      margin: 40px 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Product Grid & Responsive Cards */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 50px;
+    }
+
+    .product-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e9ecef;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .product-img-wrap {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      background-color: #f8faf8;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #f1f3f5;
+    }
+
+    .product-img-wrap a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .product-card:hover .product-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .product-category-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(27, 67, 50, 0.92);
+      color: #ffffff;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    .product-info {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-store {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .product-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #1b4332;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .product-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .product-title a:hover {
+      color: #2d6a4f;
+      text-decoration: underline;
+    }
+
+    .product-desc {
+      font-size: 0.88rem;
+      color: #495057;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-price-row {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid #f1f3f5;
+    }
+
+    .product-price {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: #e76f51;
+    }
+
+    .view-btn {
+      background-color: #2d6a4f;
+      color: #ffffff;
+      padding: 7px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-block;
+    }
+
+    .view-btn:hover {
+      background-color: #1b4332;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(27, 67, 50, 0.25);
+    }
+
+    /* Footer Styles */
+    .site-footer {
+      background-color: #1b4332;
+      color: #d8f3dc;
+      padding: 55px 0 25px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.2fr 1.2fr;
+      gap: 35px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .footer-col p {
+      font-size: 0.92rem;
+      color: #d8f3dc;
+      line-height: 1.6;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #e8f5e9;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #e76f51;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #b7e4c7;
+    }
+
+    /* Responsive Media Queries */
+    @media (max-width: 992px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-wrapper {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Search Bar in Products Banner */
+    .search-bar-container {
+      max-width: 720px;
+      margin: 26px auto 6px;
+      text-align: left;
+    }
+
+    .search-bar-box {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border: 2px solid #b7e4c7;
+      border-radius: 12px;
+      padding: 5px 6px 5px 16px;
+      box-shadow: 0 6px 18px rgba(27, 67, 50, 0.08);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      gap: 8px;
+    }
+
+    .search-bar-box:focus-within {
+      border-color: #2d6a4f;
+      box-shadow: 0 8px 24px rgba(45, 106, 79, 0.16);
+    }
+
+    .search-icon {
+      font-size: 1.15rem;
+      color: #2d6a4f;
+      flex-shrink: 0;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .search-input-field {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 0.98rem;
+      color: #1b4332;
+      padding: 9px 4px;
+      font-family: inherit;
+    }
+
+    .search-input-field::placeholder {
+      color: #6b7280;
+    }
+
+    .search-input-field::-webkit-search-cancel-button,
+    .search-input-field::-webkit-search-decoration {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .cart-counter {
+      background-color: #e76f51;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .search-clear-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 50%;
+      background-color: #e8f5e9;
+      color: #1b4332;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .search-clear-btn.visible {
+      display: inline-flex;
+    }
+
+    .search-clear-btn:hover {
+      background-color: #d8f3dc;
+      color: #111827;
+    }
+
+    .search-submit-btn {
+      background-color: #2d6a4f;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: inherit;
+      transition: background-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .search-submit-btn:hover {
+      background-color: #1b4332;
+      transform: translateY(-1px);
+    }
+
+    .search-status-bar {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #2d6a4f;
+      font-weight: 600;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    /* Dynamic Search Results Container */
+    .search-results-section {
+      display: none;
+      margin-bottom: 50px;
+    }
+
+    .search-results-section.active {
+      display: block;
+    }
+
+    .search-results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #e8f5e9;
+      padding-bottom: 10px;
+    }
+
+    .search-results-header .category-heading {
+      margin: 0;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .reset-search-btn {
+      background-color: #ffffff;
+      color: #2d6a4f;
+      border: 1.5px solid #2d6a4f;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .reset-search-btn:hover {
+      background-color: #e8f5e9;
+      color: #1b4332;
+    }
+
+    .empty-search-state {
+      display: none;
+      background-color: #ffffff;
+      border: 1px dashed #b7e4c7;
+      border-radius: 14px;
+      padding: 46px 24px;
+      text-align: center;
+      margin-top: 10px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    }
+
+    .empty-search-state.visible {
+      display: block;
+    }
+
+    .empty-search-icon {
+      font-size: 2.6rem;
+      margin-bottom: 12px;
+    }
+
+    .empty-search-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1b4332;
+      margin: 0 0 18px;
+    }
+
+    /* Product Card Action Buttons */
+    .product-price-row {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .product-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .add-cart-btn {
+      background-color: #e8f5e9;
+      color: #1b4332;
+      border: 1.5px solid #b7e4c7;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .add-cart-btn:hover {
+      background-color: #2d6a4f;
+      border-color: #2d6a4f;
+      color: #ffffff;
+    }
+
+    .add-cart-btn.added {
+      background-color: #1b4332;
+      border-color: #1b4332;
+      color: #ffffff;
+    }
+
+    .cat-btn.active {
+      background-color: #2d6a4f;
+      color: #ffffff;
+      border-color: #2d6a4f;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background-color: #1b4332;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(27, 67, 50, 0.25);
+      border-left: 4px solid #52b788;
+      animation: toastSlideIn 0.25s ease;
+    }
+
+    @keyframes toastSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .search-bar-container {
+        margin: 20px auto 6px;
+      }
+      .search-input-field {
+        font-size: 0.92rem;
+      }
+      .search-submit-btn {
+        padding: 9px 14px;
+        font-size: 0.88rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .search-bar-box {
+        padding: 4px 5px 4px 12px;
+        gap: 6px;
+      }
+      .search-submit-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+      }
+      .toast-container {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+      }
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+      .product-img-wrap {
+        height: 240px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        LocalKart
+        <span class="logo-badge">Support Local</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="stores.html">All Stores</a></li>
+          <li><a href="products.html" class="active">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="cart.html">🛒 Cart <span class="cart-counter">0</span></a></li>
+          <li><a href="login.html">🔐 Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="page-banner-section">
+    <div class="container">
+      <h1 class="page-banner-title">Product Catalogue</h1>
+      <p class="page-banner-subtitle">
+        Browse authentic products directly sourced from verified Indian small vendors, farmers, and artisans.
+      </p>
+
+      <!-- Responsive Product Search Bar -->
+      <div class="search-bar-container">
+        <form id="product-search-form" class="search-bar-box" role="search" autocomplete="off">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            id="product-search-input"
+            class="search-input-field"
+            placeholder="Search for products, groceries, fruits, vegetables..."
+            aria-label="Search for products, groceries, fruits, vegetables"
+          >
+          <button
+            type="button"
+            id="search-clear-btn"
+            class="search-clear-btn"
+            aria-label="Clear search"
+            title="Clear search"
+          >✕</button>
+          <button type="submit" id="search-submit-btn" class="search-submit-btn">Search</button>
+        </form>
+        <div id="search-status-bar" class="search-status-bar" aria-live="polite"></div>
+      </div>
+
+      <!-- Category Filter Jump Links -->
+      <div class="category-nav-bar">
+        <a href="#vegetables" class="cat-btn">🥦 Vegetables</a>
+        <a href="#fruits" class="cat-btn">🍎 Fruits</a>
+        <a href="#groceries" class="cat-btn">🌾 Groceries</a>
+        <a href="#beverages" class="cat-btn">🥤 Beverages</a>
+        <a href="#clothing" class="cat-btn">👕 Clothing</a>
+        <a href="#handicrafts" class="cat-btn">🏺 Handicrafts</a>
+        <a href="#gifts" class="cat-btn">🎁 Handmade Gifts</a>
+        <a href="#organic" class="cat-btn">🌿 Organic</a>
+        <a href="#bakery" class="cat-btn">🥐 Bakery</a>
+        <a href="#sweets" class="cat-btn">🍬 Sweets</a>
+        <a href="#snacks" class="cat-btn">🍟 Snacks</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Catalogue Section -->
+  <section class="section" style="padding-top: 10px;">
+    <div class="container">
+
+      <!-- Dynamic Live Search Results Section -->
+      <div id="search-results-section" class="search-results-section">
+        <div class="search-results-header">
+          <h2 id="search-results-heading" class="category-heading">Search Results</h2>
+          <button type="button" id="reset-search-link" class="reset-search-btn">✕ Show All Products</button>
+        </div>
+        <div id="search-results-grid" class="product-grid"></div>
+        <div id="no-products-found" class="empty-search-state">
+          <div class="empty-search-icon" aria-hidden="true">🔍</div>
+          <p class="empty-search-text">Sorry! No products found. Try searching for something else.</p>
+          <button type="button" id="empty-clear-btn" class="search-submit-btn">Browse All Products</button>
+        </div>
+      </div>
+
+      <div id="all-categories-wrapper">
+      <!-- 1. Farm Fresh Vegetables -->
+      <div id="vegetables" style="margin-bottom: 50px;">
+        <h2 class="category-heading">🥦 Farm Fresh Vegetables</h2>
+        <div class="product-grid">
+          <!-- Item: Tomatoes -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Vegetables</span>
+              <a href="product.html?id=prod-7"><img src="images/tomatoes_packet.jpg" alt="Farm Fresh Red Tomatoes in Packet"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-7">Farm Fresh Red Tomatoes (1 kg)</a></h3>
+              <p class="product-desc">Vine-ripened juicy red tomatoes packed in an eco-friendly grocery paper tray with farm label.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹40</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-7" data-product-name="Farm Fresh Red Tomatoes (1 kg)" data-product-price="40" data-product-image="images/tomatoes_packet.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Vegetables">+ Add to Cart</button>
+                  <a href="product.html?id=prod-7" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Potatoes -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Vegetables</span>
+              <a href="product.html?id=prod-8"><img src="images/potatoes_packet.jpg" alt="Organic Farm Potatoes in Mesh Packet"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-8">Organic Farm Potatoes (2 kg)</a></h3>
+              <p class="product-desc">Naturally grown dirt-free mountain potatoes packed in a rustic breathable mesh and kraft paper bag.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹55</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-8" data-product-name="Organic Farm Potatoes (2 kg)" data-product-price="55" data-product-image="images/potatoes_packet.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Vegetables">+ Add to Cart</button>
+                  <a href="product.html?id=prod-8" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Onions -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Vegetables</span>
+              <a href="product.html?id=prod-9"><img src="images/onions_packet.jpg" alt="Fresh Red Indian Onions in Net Bag"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-9">Fresh Red Indian Onions (1 kg)</a></h3>
+              <p class="product-desc">Direct Nashik harvest pungent red cooking onions secured in a durable ventilated net mesh packet.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹38</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-9" data-product-name="Fresh Red Indian Onions (1 kg)" data-product-price="38" data-product-image="images/onions_packet.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Vegetables">+ Add to Cart</button>
+                  <a href="product.html?id=prod-9" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Spinach -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Vegetables</span>
+              <a href="product.html?id=prod-11"><img src="images/spinach_packet.jpg" alt="Fresh Farm Spinach Palak"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Verma Organic Farm</span>
+              <h3 class="product-title"><a href="product.html?id=prod-11">Organic Green Spinach / Palak</a></h3>
+              <p class="product-desc">Tender organic green spinach leaves bound with a certified farm kraft paper band (500g).</p>
+              <div class="product-price-row">
+                <span class="product-price">₹30</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-11" data-product-name="Organic Green Spinach / Palak" data-product-price="30" data-product-image="images/spinach_packet.jpg" data-product-vendor="Verma Organic Farm" data-product-category="Vegetables">+ Add to Cart</button>
+                  <a href="product.html?id=prod-11" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Carrots -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Vegetables</span>
+              <a href="product.html?id=prod-10"><img src="images/carrots.jpg" alt="Farm Fresh Carrots"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-10">Farm Fresh Carrots (1 kg)</a></h3>
+              <p class="product-desc">Crisp, naturally sweetened orange carrots harvested daily from local peri-urban farm fields.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹45</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-10" data-product-name="Farm Fresh Carrots (1 kg)" data-product-price="45" data-product-image="images/carrots.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Vegetables">+ Add to Cart</button>
+                  <a href="product.html?id=prod-10" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Fresh Seasonal Fruits -->
+      <div id="fruits" style="margin-bottom: 50px;">
+        <h2 class="category-heading">🍎 Fresh Seasonal Fruits</h2>
+        <div class="product-grid">
+          <!-- Item: Apples -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Fruits</span>
+              <a href="product.html?id=prod-13"><img src="images/apples_packet.jpg" alt="Crisp Himachal Red Apples"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-13">Crisp Himachal Red Apples (1 kg)</a></h3>
+              <p class="product-desc">Naturally sweet high-altitude Shimla red apples neatly presented in an organic fruit tray packet.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹160</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-13" data-product-name="Crisp Himachal Red Apples (1 kg)" data-product-price="160" data-product-image="images/apples_packet.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Fruits">+ Add to Cart</button>
+                  <a href="product.html?id=prod-13" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Bananas -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Fruits</span>
+              <a href="product.html?id=prod-14"><img src="images/bananas_packet.jpg" alt="Fresh Ripe Yellow Bananas"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-14">Fresh Ripe Yellow Bananas (1 Dozen)</a></h3>
+              <p class="product-desc">Naturally ripened Robusta yellow bananas wrapped with sustainable eco-friendly paper tape.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹60</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-14" data-product-name="Fresh Ripe Yellow Bananas (1 Dozen)" data-product-price="60" data-product-image="images/bananas_packet.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Fruits">+ Add to Cart</button>
+                  <a href="product.html?id=prod-14" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Pomegranates -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Fruits</span>
+              <a href="product.html?id=prod-18"><img src="images/pomegranates.jpg" alt="Fresh Ripe Pomegranates"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-18">Fresh Ripe Pomegranates (1 kg)</a></h3>
+              <p class="product-desc">Ruby-red antioxidant-rich Bhagwa pomegranates with sweet crunchy edible seeds.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹140</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-18" data-product-name="Fresh Ripe Pomegranates (1 kg)" data-product-price="140" data-product-image="images/pomegranates.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Fruits">+ Add to Cart</button>
+                  <a href="product.html?id=prod-18" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Packaged Groceries & Daily Essentials -->
+      <div id="groceries" style="margin-bottom: 50px;">
+        <h2 class="category-heading">🌾 Packaged Groceries &amp; Daily Essentials</h2>
+        <div class="product-grid">
+          <!-- Item: Wheat Atta Packet -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Kitchen Staples</span>
+              <a href="product.html?id=prod-30"><img src="images/atta_packet.jpg" alt="Chakki Fresh Wheat Atta in Packet"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-30">Chakki Fresh Wheat Atta (5 kg Packet)</a></h3>
+              <p class="product-desc">100% whole grain stone-ground wheat flour in an authentic sealed kraft paper pouch packet.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹210</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-30" data-product-name="Chakki Fresh Wheat Atta (5 kg Packet)" data-product-price="210" data-product-image="images/atta_packet.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Kitchen Staples">+ Add to Cart</button>
+                  <a href="product.html?id=prod-30" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: White Bread in Packet -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Bakery</span>
+              <a href="product.html?id=prod-2"><img src="images/white_bread.jpg" alt="White Fresh Bread in Packet"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Bakery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-2">White Fresh Bread (400g Packet)</a></h3>
+              <p class="product-desc">Soft daily-baked sliced sandwich bread in a sealed transparent grocery packet with clip.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹35</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-2" data-product-name="White Fresh Bread (400g Packet)" data-product-price="35" data-product-image="images/white_bread.jpg" data-product-vendor="Fresh Basket Bakery" data-product-category="Bakery">+ Add to Cart</button>
+                  <a href="product.html?id=prod-2" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Butter -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Dairy</span>
+              <a href="product.html?id=prod-21"><img src="images/butter.jpg" alt="Amul Pure Salted Butter"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Dairy</span>
+              <h3 class="product-title"><a href="product.html?id=prod-21">Amul Pasteurized Table Butter (100g)</a></h3>
+              <p class="product-desc">Iconic Indian dairy table butter in original foil-sealed golden carton wrapper.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹56</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-21" data-product-name="Amul Pasteurized Table Butter (100g)" data-product-price="56" data-product-image="images/butter.jpg" data-product-vendor="Fresh Basket Dairy" data-product-category="Dairy">+ Add to Cart</button>
+                  <a href="product.html?id=prod-21" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Eggs Carton -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Poultry</span>
+              <a href="product.html?id=prod-67"><img src="images/eggs_carton.jpg" alt="Farm Fresh White Eggs in Carton Tray"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-67">Farm Fresh White Eggs (Carton of 12)</a></h3>
+              <p class="product-desc">Clean protein-rich poultry eggs packed safely in an eco-friendly pulp carton tray packet.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹90</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-67" data-product-name="Farm Fresh White Eggs (Carton of 12)" data-product-price="90" data-product-image="images/eggs_carton.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Poultry">+ Add to Cart</button>
+                  <a href="product.html?id=prod-67" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Sugar -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Kitchen Staples</span>
+              <a href="product.html?id=prod-31"><img src="images/sugar.jpg" alt="Pure Cane Sugar"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-31">Pure Cane Sugar (1 kg)</a></h3>
+              <p class="product-desc">Refined sparkling white cane sugar crystals for daily tea, milk, and home baking.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹50</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-31" data-product-name="Pure Cane Sugar (1 kg)" data-product-price="50" data-product-image="images/sugar.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Kitchen Staples">+ Add to Cart</button>
+                  <a href="product.html?id=prod-31" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Salt -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Kitchen Staples</span>
+              <a href="product.html?id=prod-34"><img src="images/salt.jpg" alt="Pure Refined Cooking Salt"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-34">Pure Refined Cooking Salt (1 kg)</a></h3>
+              <p class="product-desc">Iodized vacuum-evaporated fine crystal kitchen salt for everyday cooking.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹24</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-34" data-product-name="Pure Refined Cooking Salt (1 kg)" data-product-price="24" data-product-image="images/salt.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Kitchen Staples">+ Add to Cart</button>
+                  <a href="product.html?id=prod-34" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Beverages & Breakfast Condiments -->
+      <div id="beverages" style="margin-bottom: 50px;">
+        <h2 class="category-heading">🥤 Beverages, Coffee &amp; Condiments</h2>
+        <div class="product-grid">
+          <!-- Item: Coca-Cola -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Beverages</span>
+              <a href="product.html?id=prod-89"><img src="images/cocacola.jpg" alt="Coca Cola Original Bottle"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-89">Coca-Cola Original Taste (750ml)</a></h3>
+              <p class="product-desc">Chilled sparkling refreshing cola beverage in original brand bottle packaging.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹40</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-89" data-product-name="Coca-Cola Original Taste (750ml)" data-product-price="40" data-product-image="images/cocacola.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Beverages">+ Add to Cart</button>
+                  <a href="product.html?id=prod-89" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Real Juice -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Beverages</span>
+              <a href="product.html?id=prod-90"><img src="images/real_juice.jpg" alt="Real Fruit Juice Tetra Pak"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-90">Real Fruit Power Mixed Fruit (1 Litre)</a></h3>
+              <p class="product-desc">100% natural fruit juice goodness in an authentic aseptic 6-layer protective tetra pak.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹110</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-90" data-product-name="Real Fruit Power Mixed Fruit (1 Litre)" data-product-price="110" data-product-image="images/real_juice.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Beverages">+ Add to Cart</button>
+                  <a href="product.html?id=prod-90" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Nestle Coffee -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Beverages</span>
+              <a href="product.html?id=prod-91"><img src="images/nestle_coffee.jpg" alt="Nescafe Classic Coffee Jar"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-91">Nescafe Classic Instant Coffee Jar (100g)</a></h3>
+              <p class="product-desc">Pure roasted coffee granules in an aroma-sealed glass jar for rich morning coffee.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹195</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-91" data-product-name="Nescafe Classic Instant Coffee Jar (100g)" data-product-price="195" data-product-image="images/nestle_coffee.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Beverages">+ Add to Cart</button>
+                  <a href="product.html?id=prod-91" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Kissan Fruit Jam -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Breakfast</span>
+              <a href="product.html?id=prod-83"><img src="images/kissan_jam.jpg" alt="Kissan Mixed Fruit Jam Jar"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-83">Kissan Mixed Fruit Jam (500g Jar)</a></h3>
+              <p class="product-desc">Made with 8 real fruit pulps, packed in an original sealed glass jar. Perfect with fresh bread.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹125</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-83" data-product-name="Kissan Mixed Fruit Jam (500g Jar)" data-product-price="125" data-product-image="images/kissan_jam.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Breakfast">+ Add to Cart</button>
+                  <a href="product.html?id=prod-83" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Kissan Ketchup -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Condiments</span>
+              <a href="product.html?id=prod-82"><img src="images/kissan_ketchup.jpg" alt="Kissan Fresh Tomato Ketchup Bottle"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Fresh Basket Grocery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-82">Kissan Fresh Tomato Ketchup (950g)</a></h3>
+              <p class="product-desc">Rich thick tomato sauce made from 100% real ripe tomatoes in original pour bottle.</p>
+              <div class="product-price-row">
+                <span class="product-price">₹130</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-82" data-product-name="Kissan Fresh Tomato Ketchup (950g)" data-product-price="130" data-product-image="images/kissan_ketchup.jpg" data-product-vendor="Fresh Basket Grocery" data-product-category="Condiments">+ Add to Cart</button>
+                  <a href="product.html?id=prod-82" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+      </div>
+
+            <!-- 2. Clothing & Handloom Apparel -->
+      <div id="clothing" style="margin-bottom: 50px;">
+        <h2 class="category-heading">&#128085; Clothing &amp; Handloom Apparel</h2>
+        <div class="product-grid">
+          <!-- Item: Cotton T-Shirt -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Clothing</span>
+              <a href="product.html?id=prod-49"><img src="images/cotton_tshirt.jpg" alt="Casual Breathable Cotton T-Shirt"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Sharma Handloom &amp; Apparel</span>
+              <h3 class="product-title"><a href="product.html?id=prod-49">Casual Breathable Cotton T-Shirt</a></h3>
+              <p class="product-desc">100% pure organic breathable cotton, lightweight everyday comfort fit with reinforced crew neck.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;499</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-49" data-product-name="Casual Breathable Cotton T-Shirt" data-product-price="499" data-product-image="images/cotton_tshirt.jpg" data-product-vendor="Sharma Handloom &amp; Apparel" data-product-category="Clothing">+ Add to Cart</button>
+                  <a href="product.html?id=prod-49" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Handloom Scarf -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Clothing</span>
+              <a href="product.html?id=prod-52"><img src="images/handloom_scarf.jpg" alt="Pure Handloom Cotton Scarf"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Sharma Handloom Store</span>
+              <h3 class="product-title"><a href="product.html?id=prod-52">Pure Handloom Cotton Scarf</a></h3>
+              <p class="product-desc">Traditional geometric hand-spun cotton scarf crafted by village weavers with delicate fringe tassels.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;349</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-52" data-product-name="Pure Handloom Cotton Scarf" data-product-price="349" data-product-image="images/handloom_scarf.jpg" data-product-vendor="Sharma Handloom Store" data-product-category="Clothing">+ Add to Cart</button>
+                  <a href="product.html?id=prod-52" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Handicrafts & Artisan Decor -->
+      <div id="handicrafts" style="margin-bottom: 50px;">
+        <h2 class="category-heading">&#127994; Handicrafts &amp; Artisan Decor</h2>
+        <div class="product-grid">
+          <!-- Item: Terracotta Vase -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Handicrafts</span>
+              <a href="product.html?id=prod-85"><img src="images/vase.jpg" alt="Handcrafted Terracotta Vase"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Himachali Handicrafts</span>
+              <h3 class="product-title"><a href="product.html?id=prod-85">Handcrafted Terracotta Vase (10 inch)</a></h3>
+              <p class="product-desc">Wheel-thrown natural clay decorative flower vase with traditional hand-painted ethnic folk motifs.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;420</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-85" data-product-name="Handcrafted Terracotta Vase (10 inch)" data-product-price="420" data-product-image="images/vase.jpg" data-product-vendor="Himachali Handicrafts" data-product-category="Handicrafts">+ Add to Cart</button>
+                  <a href="product.html?id=prod-85" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Wooden Elephants & Carvings -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Handicrafts</span>
+              <a href="product.html?id=prod-59"><img src="images/handcrafted_wooden_elephants.jpg" alt="Handcrafted Sheesham Wooden Elephants"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Himachali Handicrafts</span>
+              <h3 class="product-title"><a href="product.html?id=prod-59">Hand-Carved Wooden Artisan Elephants</a></h3>
+              <p class="product-desc">Authentic solid wood hand-sculpted heritage elephant figurines with intricate brass and etched detailing.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;550</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-59" data-product-name="Hand-Carved Wooden Artisan Elephants" data-product-price="550" data-product-image="images/handcrafted_wooden_elephants.jpg" data-product-vendor="Himachali Handicrafts" data-product-category="Handicrafts">+ Add to Cart</button>
+                  <a href="product.html?id=prod-59" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Ceramic Mug -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Handicrafts</span>
+              <a href="product.html?id=prod-57"><img src="images/ceramic_mug.jpg" alt="Handmade Ceramic Coffee Mug"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Himachali Handicrafts</span>
+              <h3 class="product-title"><a href="product.html?id=prod-57">Handmade Ceramic Coffee Mug (350ml)</a></h3>
+              <p class="product-desc">Wheel-thrown artisan pottery coffee mug with warm speckled glaze and ergonomic comfort handle.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;280</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-57" data-product-name="Handmade Ceramic Coffee Mug (350ml)" data-product-price="280" data-product-image="images/ceramic_mug.jpg" data-product-vendor="Himachali Handicrafts" data-product-category="Handicrafts">+ Add to Cart</button>
+                  <a href="product.html?id=prod-57" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Handmade Gifts & Creative Items -->
+      <div id="gifts" style="margin-bottom: 50px;">
+        <h2 class="category-heading">&#127873; Handmade Gifts &amp; Creative Studio</h2>
+        <div class="product-grid">
+          <!-- Item: Curated Gift Hamper -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Gifts</span>
+              <a href="product.html?id=prod-65"><img src="images/gift_hamper.jpg" alt="Curated Artisan Gift Hamper Basket"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Creative Corner Gifts</span>
+              <h3 class="product-title"><a href="product.html?id=prod-65">Curated Artisan Gift Hamper Basket</a></h3>
+              <p class="product-desc">Handcrafted woven cane hamper basket filled with scented candles, floral arrangements, and festive ribbons.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;799</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-65" data-product-name="Curated Artisan Gift Hamper Basket" data-product-price="799" data-product-image="images/gift_hamper.jpg" data-product-vendor="Creative Corner Gifts" data-product-category="Gifts">+ Add to Cart</button>
+                  <a href="product.html?id=prod-65" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Handmade Greeting Cards -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Gifts</span>
+              <a href="product.html?id=prod-63"><img src="images/handmade_greeting_cards.jpg" alt="Handmade Calligraphy Greeting Cards"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Creative Corner Gifts</span>
+              <h3 class="product-title"><a href="product.html?id=prod-63">Handmade Calligraphy Greeting Cards Set</a></h3>
+              <p class="product-desc">Artisanal textured greeting cards featuring hand-lettered 'With Love' and 'Happy Day' with floral illustrations.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;199</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-63" data-product-name="Handmade Calligraphy Greeting Cards Set" data-product-price="199" data-product-image="images/handmade_greeting_cards.jpg" data-product-vendor="Creative Corner Gifts" data-product-category="Gifts">+ Add to Cart</button>
+                  <a href="product.html?id=prod-63" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Scented Candle -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Gifts</span>
+              <a href="product.html?id=prod-87"><img src="images/candle.jpg" alt="Handmade Scented Soy Candle"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Creative Corner Gifts</span>
+              <h3 class="product-title"><a href="product.html?id=prod-87">Scented Soy Wax Candle Jar</a></h3>
+              <p class="product-desc">Hand-poured aromatic lavender and vanilla candle with pure cotton wick, 35 hours clean burning.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;299</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-87" data-product-name="Scented Soy Wax Candle Jar" data-product-price="299" data-product-image="images/candle.jpg" data-product-vendor="Creative Corner Gifts" data-product-category="Gifts">+ Add to Cart</button>
+                  <a href="product.html?id=prod-87" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Red Roses Bouquet -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Flowers</span>
+              <a href="product.html?id=prod-69"><img src="images/red_roses.jpg" alt="Fresh Fragrant Red Roses Hand Bouquet"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Creative Corner Gifts</span>
+              <h3 class="product-title"><a href="product.html?id=prod-69">Fresh Fragrant Red Roses Bouquet</a></h3>
+              <p class="product-desc">Freshly harvested velvety deep red roses artistically arranged with satin wrap for memorable gifting.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;350</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-69" data-product-name="Fresh Fragrant Red Roses Bouquet" data-product-price="350" data-product-image="images/red_roses.jpg" data-product-vendor="Creative Corner Gifts" data-product-category="Flowers">+ Add to Cart</button>
+                  <a href="product.html?id=prod-69" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Organic Products -->
+      <div id="organic" style="margin-bottom: 50px;">
+        <h2 class="category-heading">&#127855; Certified Organic Products</h2>
+        <div class="product-grid">
+          <!-- Item: Honey Jar -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Organic</span>
+              <a href="product.html?id=prod-77"><img src="images/honey_jar.jpg" alt="Pure Wild Forest Honey Jar"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Verma Organic Farm</span>
+              <h3 class="product-title"><a href="product.html?id=prod-77">Pure Wild Forest Honey (500g Jar)</a></h3>
+              <p class="product-desc">Unprocessed, pure raw multifloral honey in an artisanal glass jar with wooden dipper.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;380</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-77" data-product-name="Pure Wild Forest Honey (500g Jar)" data-product-price="380" data-product-image="images/honey_jar.jpg" data-product-vendor="Verma Organic Farm" data-product-category="Organic">+ Add to Cart</button>
+                  <a href="product.html?id=prod-77" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Organic Rolled Oats -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Organic</span>
+              <a href="product.html?id=prod-80"><img src="images/organic_rolled_oats.jpg" alt="Verma Farm Organic Rolled Oats"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Verma Organic Farm</span>
+              <h3 class="product-title"><a href="product.html?id=prod-80">Farm Harvest Organic Rolled Oats (1 kg)</a></h3>
+              <p class="product-desc">Certified chemical-free whole grain rolled oats packed in rustic farm burlap stay-fresh bags.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;180</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-80" data-product-name="Farm Harvest Organic Rolled Oats (1 kg)" data-product-price="180" data-product-image="images/organic_rolled_oats.jpg" data-product-vendor="Verma Organic Farm" data-product-category="Organic">+ Add to Cart</button>
+                  <a href="product.html?id=prod-80" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item: Organic Turmeric & Earthen Spices -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Organic</span>
+              <a href="product.html?id=prod-43"><img src="images/organic_turmeric.jpg" alt="Pure Farm Organic Turmeric Powder"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Verma Organic Farm</span>
+              <h3 class="product-title"><a href="product.html?id=prod-43">Pure Organic Turmeric Powder (500g)</a></h3>
+              <p class="product-desc">High-curcumin sun-dried organic turmeric roots hand-ground in traditional earthen pestles.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;120</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-43" data-product-name="Pure Organic Turmeric Powder (500g)" data-product-price="120" data-product-image="images/organic_turmeric.jpg" data-product-vendor="Verma Organic Farm" data-product-category="Organic">+ Add to Cart</button>
+                  <a href="product.html?id=prod-43" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+                  <!-- Fresh Bakery & Confectionery -->
+      <div id="bakery" style="margin-bottom: 50px;">
+        <h2 class="category-heading">&#129473; Fresh Bakery &amp; Artisanal Bakes</h2>
+        <div class="product-grid">
+          <!-- Item 1: Chocolate Cake -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Bakery</span>
+              <a href="product.html?id=prod-26"><img src="images/prod-26_chocolate_cake.jpg" alt="Rich Double-Chocolate Celebration Cake (500g)"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Sunrise Local Bakery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-26">Double-Chocolate Celebration Cake (500g)</a></h3>
+              <p class="product-desc">Moist chocolate sponge layered with rich dark chocolate ganache, topped with handmade frosting rosettes.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;350</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-26" data-product-name="Double-Chocolate Celebration Cake (500g)" data-product-price="350" data-product-image="images/prod-26_chocolate_cake.jpg" data-product-vendor="Sunrise Local Bakery" data-product-category="Bakery">+ Add to Cart</button>
+                  <a href="product.html?id=prod-26" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: Muffins -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Bakery</span>
+              <a href="product.html?id=prod-27"><img src="images/prod-27_muffins.jpg" alt="Fresh Choco-Chip Muffins &amp; Soft Cookies"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Sunrise Local Bakery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-27">Choco-Chip Muffins &amp; Soft Cookies (Pack of 4)</a></h3>
+              <p class="product-desc">Golden baked artisanal muffins and soft cookies studded with melted dark chocolate chips and vanilla bean.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;120</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-27" data-product-name="Choco-Chip Muffins &amp; Soft Cookies (Pack of 4)" data-product-price="120" data-product-image="images/prod-27_muffins.jpg" data-product-vendor="Sunrise Local Bakery" data-product-category="Bakery">+ Add to Cart</button>
+                  <a href="product.html?id=prod-27" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: Decorated Biscuits -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Bakery</span>
+              <a href="product.html?id=prod-28"><img src="images/prod-28_biscuits.jpg" alt="Artisanal Decorated Biscuit Treats &amp; Pops"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Sunrise Local Bakery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-28">Decorated Biscuit Treats &amp; Pops (Pack of 3)</a></h3>
+              <p class="product-desc">Crisp flaky biscuits and toasted rice pops hand-dipped in melted Belgian chocolate with colorful sugar sprinkles.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;80</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-28" data-product-name="Decorated Biscuit Treats &amp; Pops (Pack of 3)" data-product-price="80" data-product-image="images/prod-28_biscuits.jpg" data-product-vendor="Sunrise Local Bakery" data-product-category="Bakery">+ Add to Cart</button>
+                  <a href="product.html?id=prod-28" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4: Farmhouse White Bread -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Bread</span>
+              <a href="product.html?id=prod-25"><img src="images/white_bread.jpg" alt="Fresh Farmhouse White Sandwich Bread (400g)"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Sunrise Local Bakery</span>
+              <h3 class="product-title"><a href="product.html?id=prod-25">Fresh Farmhouse White Bread (400g)</a></h3>
+              <p class="product-desc">Soft, airy, golden-crusted sandwich loaf baked fresh every morning from pure grain flour without artificial preservatives.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;40</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-25" data-product-name="Fresh Farmhouse White Bread (400g)" data-product-price="40" data-product-image="images/white_bread.jpg" data-product-vendor="Sunrise Local Bakery" data-product-category="Bread">+ Add to Cart</button>
+                  <a href="product.html?id=prod-25" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Traditional Sweets & Royal Mithai -->
+      <div id="sweets" style="margin-bottom: 50px;">
+        <h2 class="category-heading">&#127852; Traditional Sweets &amp; Royal Mithai</h2>
+        <div class="product-grid">
+          <!-- Item 1: Kaju Katli Box -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Sweets</span>
+              <a href="product.html?id=prod-42"><img src="images/kaju_katli_box.jpg" alt="Royal Silver Varak Kaju Katli (500g)"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Mishra Traditional Sweets</span>
+              <h3 class="product-title"><a href="product.html?id=prod-42">Royal Silver Varak Kaju Katli (500g)</a></h3>
+              <p class="product-desc">Authentic cashew diamond sweets with delicate edible silver foil in an elegant festive gift box.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;480</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-42" data-product-name="Royal Silver Varak Kaju Katli (500g)" data-product-price="480" data-product-image="images/kaju_katli_box.jpg" data-product-vendor="Mishra Traditional Sweets" data-product-category="Sweets">+ Add to Cart</button>
+                  <a href="product.html?id=prod-42" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: Gulab Jamun -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Sweets</span>
+              <a href="product.html?id=prod-41"><img src="images/gulab_jamun.jpg" alt="Pure Desi Ghee Gulab Jamun (500g)"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Mishra Traditional Sweets</span>
+              <h3 class="product-title"><a href="product.html?id=prod-41">Pure Desi Ghee Gulab Jamun (500g)</a></h3>
+              <p class="product-desc">Soft, golden khoya dumplings steeped in aromatic saffron, green cardamom, and rose water syrup.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;280</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-41" data-product-name="Pure Desi Ghee Gulab Jamun (500g)" data-product-price="280" data-product-image="images/gulab_jamun.jpg" data-product-vendor="Mishra Traditional Sweets" data-product-category="Sweets">+ Add to Cart</button>
+                  <a href="product.html?id=prod-41" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: Motichoor Laddoo -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Sweets</span>
+              <a href="product.html?id=prod-38"><img src="images/laddoo.jpg" alt="Pure Cow Ghee Motichoor Laddoo (500g)"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Mishra Traditional Sweets</span>
+              <h3 class="product-title"><a href="product.html?id=prod-38">Pure Cow Ghee Motichoor Laddoo (500g)</a></h3>
+              <p class="product-desc">Melt-in-mouth micro gram-flour pearls fried in pure cow ghee, garnished with melon seeds and pistachios.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;240</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-38" data-product-name="Pure Cow Ghee Motichoor Laddoo (500g)" data-product-price="240" data-product-image="images/laddoo.jpg" data-product-vendor="Mishra Traditional Sweets" data-product-category="Sweets">+ Add to Cart</button>
+                  <a href="product.html?id=prod-38" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4: Royal Assorted Mix Sweet Box -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Sweets</span>
+              <a href="product.html?id=prod-36"><img src="images/sweets_box.jpg" alt="Royal Assorted Festive Mix Sweet Box (1kg)"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Mishra Traditional Sweets</span>
+              <h3 class="product-title"><a href="product.html?id=prod-36">Royal Assorted Festive Mix Sweet Box (1kg)</a></h3>
+              <p class="product-desc">Premium festive assortment featuring Silver Kaju Katli, Besan Barfi, Mawa Peda, and Dry Fruit Chikki.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;550</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-36" data-product-name="Royal Assorted Festive Mix Sweet Box (1kg)" data-product-price="550" data-product-image="images/sweets_box.jpg" data-product-vendor="Mishra Traditional Sweets" data-product-category="Sweets">+ Add to Cart</button>
+                  <a href="product.html?id=prod-36" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Crispy Snacks & Savoury Munchies -->
+      <div id="snacks" style="margin-bottom: 50px;">
+        <h2 class="category-heading">&#127871; Crispy Snacks &amp; Savoury Munchies</h2>
+        <div class="product-grid">
+          <!-- Item 1: Spanish Tomato Lay's -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Chips</span>
+              <a href="product.html?id=prod-95"><img src="images/lays_tomato.jpg" alt="Lay's Spanish Tomato Tango Potato Chips"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Gupta General Store</span>
+              <h3 class="product-title"><a href="product.html?id=prod-95">Lay's Spanish Tomato Tango Chips (52g)</a></h3>
+              <p class="product-desc">Crispy golden potato chips tossed with a tangy blend of Mediterranean Spanish tomatoes and savory spices.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;20</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-95" data-product-name="Lay&#39;s Spanish Tomato Tango Chips (52g)" data-product-price="20" data-product-image="images/lays_tomato.jpg" data-product-vendor="Gupta General Store" data-product-category="Chips">+ Add to Cart</button>
+                  <a href="product.html?id=prod-95" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: India's Magic Masala Blue Lay's -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Chips</span>
+              <a href="product.html?id=prod-39"><img src="images/lays_masala.jpg" alt="Lay's India's Magic Masala Blue Chips"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Gupta General Store</span>
+              <h3 class="product-title"><a href="product.html?id=prod-39">Lay's India's Magic Masala Blue Chips (50g)</a></h3>
+              <p class="product-desc">India's most beloved spicy ridged potato chips flavored with cumin, coriander, red chili, and amchur mango powder.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;20</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-39" data-product-name="Lay&#39;s India&#39;s Magic Masala Blue Chips (50g)" data-product-price="20" data-product-image="images/lays_masala.jpg" data-product-vendor="Gupta General Store" data-product-category="Chips">+ Add to Cart</button>
+                  <a href="product.html?id=prod-39" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: Haldiram's Bhujia Sev -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Namkeen</span>
+              <a href="product.html?id=prod-37"><img src="images/haldiram_namkeen.jpg" alt="Haldiram's Bhujia Sev Crispy Namkeen"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Gupta General Store</span>
+              <h3 class="product-title"><a href="product.html?id=prod-37">Haldiram's Bhujia Sev Crispy Namkeen (460g)</a></h3>
+              <p class="product-desc">Authentic crispy Bikaneri savory noodles made from tepary bean and gram flour seasoned with aromatic spices.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;99</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-37" data-product-name="Haldiram&#39;s Bhujia Sev Crispy Namkeen (460g)" data-product-price="99" data-product-image="images/haldiram_namkeen.jpg" data-product-vendor="Gupta General Store" data-product-category="Namkeen">+ Add to Cart</button>
+                  <a href="product.html?id=prod-37" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4: Salted Peanuts 250g -->
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">Snacks</span>
+              <a href="product.html?id=prod-40"><img src="images/salted_peanuts.jpg" alt="Roasted Crunchy Salted Peanuts (250g)"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">Mishra Traditional Sweets</span>
+              <h3 class="product-title"><a href="product.html?id=prod-40">Roasted Crunchy Salted Peanuts (250g)</a></h3>
+              <p class="product-desc">Golden oven-roasted crunchy peanuts lightly seasoned with rock salt in a stay-fresh moisture packet.</p>
+              <div class="product-price-row">
+                <span class="product-price">&#8377;65</span>
+                <div class="product-actions">
+                  <button type="button" class="add-cart-btn" data-action="add-to-cart" data-product-id="prod-40" data-product-name="Roasted Crunchy Salted Peanuts (250g)" data-product-price="65" data-product-image="images/salted_peanuts.jpg" data-product-vendor="Mishra Traditional Sweets" data-product-category="Snacks">+ Add to Cart</button>
+                  <a href="product.html?id=prod-40" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div><!-- /#all-categories-wrapper -->
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>LocalKart</h4>
+          <p>
+            An educational frontend project demonstrating an online marketplace designed to empower local vendors and independent shops in India.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="stores.html">All Stores</a></li>
+            <li><a href="products.html">Product Catalogue</a></li>
+            <li><a href="about.html">About the Project</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Top Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#groceries">Fresh Groceries</a></li>
+            <li><a href="#clothing">Handloom Clothing</a></li>
+            <li><a href="#handicrafts">Traditional Handicrafts</a></li>
+            <li><a href="#organic">Organic Products</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Direct Support</h4>
+          <p>
+            100% fair pricing, verified neighborhood sellers, and authentic regional products delivered with care.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 LocalKart. Supporting Local Vendors &amp; Small Businesses. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    (function () {
+      const LOCAL_IMAGE_MAP = {
+        'prod-1': 'images/tomatoes_packet.jpg',
+        'prod-2': 'images/white_bread.jpg',
+        'prod-3': 'images/prod-3_fresh_milk.jpg',
+        'prod-4': 'images/apples_packet.jpg',
+        'prod-5': 'images/sweets_box.jpg',
+        'prod-6': 'images/prod-6_water_bottles.jpg',
+        'prod-7': 'images/tomatoes_packet.jpg',
+        'prod-8': 'images/potatoes_packet.jpg',
+        'prod-9': 'images/onions_packet.jpg',
+        'prod-10': 'images/carrots.jpg',
+        'prod-11': 'images/spinach_packet.jpg',
+        'prod-12': 'images/prod-12_capsicum.jpg',
+        'prod-13': 'images/apples_packet.jpg',
+        'prod-14': 'images/bananas_packet.jpg',
+        'prod-15': 'images/prod-15_mangoes.jpg',
+        'prod-16': 'images/prod-16_oranges.jpg',
+        'prod-17': 'images/prod-17_grapes.jpg',
+        'prod-18': 'images/pomegranates.jpg',
+        'prod-19': 'images/prod-19_curd.jpg',
+        'prod-20': 'images/prod-20_paneer.jpg',
+        'prod-21': 'images/butter.jpg',
+        'prod-22': 'images/prod-22_cheese.jpg',
+        'prod-23': 'images/prod-23_buttermilk.jpg',
+        'prod-24': 'images/prod-24_brown_bread.jpg',
+        'prod-25': 'images/white_bread.jpg',
+        'prod-26': 'images/prod-26_chocolate_cake.jpg',
+        'prod-27': 'images/prod-27_muffins.jpg',
+        'prod-28': 'images/prod-28_biscuits.jpg',
+        'prod-29': 'images/prod-29_rice.jpg',
+        'prod-30': 'images/atta_packet.jpg',
+        'prod-31': 'images/sugar.jpg',
+        'prod-32': 'images/prod-32_cooking_oil.jpg',
+        'prod-33': 'images/prod-33_lentils.jpg',
+        'prod-34': 'images/salt.jpg',
+        'prod-35': 'images/sweets_box.jpg',
+        'prod-36': 'images/sweets_box.jpg',
+        'prod-37': 'images/haldiram_namkeen.jpg',
+        'prod-38': 'images/laddoo.jpg',
+        'prod-39': 'images/lays_masala.jpg',
+        'prod-40': 'images/salted_peanuts.jpg',
+        'prod-41': 'images/gulab_jamun.jpg',
+        'prod-42': 'images/kaju_katli_box.jpg',
+        'prod-95': 'images/lays_tomato.jpg',
+        'prod-43': 'images/organic_turmeric.jpg',
+        'prod-44': 'images/prod-44_red_chilli_powder.jpg',
+        'prod-45': 'images/prod-45_coriander_powder.jpg',
+        'prod-46': 'images/prod-43_turmeric_powder.jpg',
+        'prod-47': 'images/prod-47_cumin_seeds.jpg',
+        'prod-48': 'images/prod-48_black_pepper.jpg',
+        'prod-49': 'images/cotton_tshirt.jpg',
+        'prod-50': 'images/prod-50_casual_shirt.jpg',
+        'prod-51': 'images/prod-51_traditional_kurta.jpg',
+        'prod-52': 'images/handloom_scarf.jpg',
+        'prod-53': 'images/prod-53_casual_sandals.jpg',
+        'prod-54': 'images/prod-54_everyday_shoes.jpg',
+        'prod-55': 'images/prod-55_storage_container.jpg',
+        'prod-56': 'images/prod-56_lunch_box.jpg',
+        'prod-57': 'images/ceramic_mug.jpg',
+        'prod-58': 'images/kitchen_towel.jpg',
+        'prod-59': 'images/handcrafted_wooden_elephants.jpg',
+        'prod-60': 'images/notebook.jpg',
+        'prod-61': 'images/prod-61_pen_set.jpg',
+        'prod-62': 'images/prod-62_drawing_book.jpg',
+        'prod-63': 'images/handmade_greeting_cards.jpg',
+        'prod-64': 'images/prod-64_decorative_plant_pot.jpg',
+        'prod-65': 'images/gift_hamper.jpg',
+        'prod-66': 'images/prod-66_farm_fresh_brown_eggs.jpg',
+        'prod-67': 'images/white_eggs.jpg',
+        'prod-68': 'images/prod-68_country_chicken_eggs.jpg',
+        'prod-69': 'images/red_roses.jpg',
+        'prod-70': 'images/jasmine_garland.jpg',
+        'prod-71': 'images/prod-71_money_plant_with_pot.jpg',
+        'prod-72': 'images/prod-72_snake_plant_air_purifier.jpg',
+        'prod-73': 'images/prod-73_fast_charging_usb_c_cable.jpg',
+        'prod-74': 'images/prod-74_20w_power_adapter.jpg',
+        'prod-75': 'images/prod-75_mobile_phone_stand.jpg',
+        'prod-76': 'images/prod-76_tempered_glass_screen_protector.jpg',
+        'prod-77': 'images/honey_jar.jpg',
+        'prod-78': 'images/prod-78_organic_a2_cow_ghee.jpg',
+        'prod-79': 'images/prod-79_organic_green_tea_leaves.jpg',
+        'prod-80': 'images/organic_rolled_oats.jpg',
+        'prod-81': 'images/prod-81_instant_masala_noodles_pack.jpg',
+        'prod-82': 'images/kissan_ketchup.jpg',
+        'prod-83': 'images/kissan_jam.jpg',
+        'prod-84': 'images/prod-84_breakfast_corn_flakes.jpg',
+        'prod-85': 'images/vase.jpg',
+        'prod-86': 'images/prod-86_floor_cleaner.jpg',
+        'prod-87': 'images/candle.jpg',
+        'prod-88': 'images/prod-88_slip_on_loafers.jpg',
+        'prod-89': 'images/cocacola.jpg',
+        'prod-90': 'images/real_juice.jpg',
+        'prod-91': 'images/nestle_coffee.jpg'
+      };
+
+      function escapeHtml(text) {
+        return String(text == null ? '' : text)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function buildCatalogFromPageAndData() {
+        const productMap = new Map();
+
+        // 1. Collect curated cards directly from the products.html DOM (authoritative images, prices, vendors)
+        const domCards = document.querySelectorAll('#all-categories-wrapper .product-card');
+        domCards.forEach((card) => {
+          const titleLink = card.querySelector('.product-title a');
+          if (!titleLink) return;
+
+          const href = titleLink.getAttribute('href') || '';
+          const idMatch = href.match(/id=(prod-\d+)/);
+          if (!idMatch) return;
+
+          const id = idMatch[1];
+          const name = titleLink.textContent.trim();
+          const vendorEl = card.querySelector('.product-store');
+          const vendorName = vendorEl ? vendorEl.textContent.trim() : 'LocalKart Vendor';
+          const catEl = card.querySelector('.product-category-tag');
+          const category = catEl ? catEl.textContent.trim() : 'Local Goods';
+          const descEl = card.querySelector('.product-desc');
+          const description = descEl ? descEl.textContent.trim() : '';
+          const priceEl = card.querySelector('.product-price');
+          const priceText = priceEl ? priceEl.textContent.trim() : '₹0';
+          const numericPrice = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
+          const imgEl = card.querySelector('.product-img-wrap img');
+          const image = imgEl ? imgEl.getAttribute('src') : (LOCAL_IMAGE_MAP[id] || '');
+          const alt = imgEl ? (imgEl.getAttribute('alt') || name) : name;
+          const catSection = card.closest('#all-categories-wrapper > div[id]');
+          const sectionId = catSection ? catSection.id : '';
+
+          productMap.set(id, {
+            id,
+            name,
+            vendorName,
+            category,
+            sectionId,
+            description,
+            priceText,
+            price: numericPrice,
+            image,
+            alt
+          });
+        });
+
+        // 2. Include remaining products from MARKET_DATA across all vendors with verified local images
+        if (typeof MARKET_DATA !== 'undefined' && Array.isArray(MARKET_DATA.products)) {
+          MARKET_DATA.products.forEach((p) => {
+            if (!productMap.has(p.id)) {
+              productMap.set(p.id, {
+                id: p.id,
+                name: p.name,
+                vendorName: p.vendorName || 'LocalKart Vendor',
+                category: p.category || 'Local Goods',
+                sectionId: p.categoryId || '',
+                description: p.description || '',
+                priceText: '₹' + p.price,
+                price: Number(p.price) || 0,
+                image: LOCAL_IMAGE_MAP[p.id] || p.image || 'images/tomatoes_packet.jpg',
+                alt: p.name
+              });
+            }
+          });
+        }
+
+        return Array.from(productMap.values());
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const searchForm = document.getElementById('product-search-form');
+        const searchInput = document.getElementById('product-search-input');
+        const clearBtn = document.getElementById('search-clear-btn');
+        const statusBar = document.getElementById('search-status-bar');
+        const resultsSection = document.getElementById('search-results-section');
+        const resultsHeading = document.getElementById('search-results-heading');
+        const resultsGrid = document.getElementById('search-results-grid');
+        const noProductsEl = document.getElementById('no-products-found');
+        const resetLinkBtn = document.getElementById('reset-search-link');
+        const emptyClearBtn = document.getElementById('empty-clear-btn');
+        const categoriesWrapper = document.getElementById('all-categories-wrapper');
+        const categoryLinks = document.querySelectorAll('.category-nav-bar .cat-btn');
+
+        if (!searchInput || !resultsSection || !categoriesWrapper) return;
+
+        const allProducts = buildCatalogFromPageAndData();
+
+        function filterProducts(rawQuery) {
+          const keyword = (rawQuery || '').trim().toLowerCase();
+          if (!keyword) return [];
+
+          const matches = allProducts.filter((item) => {
+            const nameMatch = item.name.toLowerCase().includes(keyword);
+            const categoryMatch =
+              item.category.toLowerCase().includes(keyword) ||
+              (item.sectionId && item.sectionId.toLowerCase().includes(keyword));
+            const vendorMatch = keyword.length >= 3 && item.vendorName.toLowerCase().includes(keyword);
+            return nameMatch || categoryMatch || vendorMatch;
+          });
+
+          matches.sort((a, b) => {
+            const aName = a.name.toLowerCase();
+            const bName = b.name.toLowerCase();
+            const aRank = aName.startsWith(keyword) ? 0 : (aName.includes(keyword) ? 1 : 2);
+            const bRank = bName.startsWith(keyword) ? 0 : (bName.includes(keyword) ? 1 : 2);
+            if (aRank !== bRank) return aRank - bRank;
+            return aName.localeCompare(bName);
+          });
+
+          return matches;
+        }
+
+        function createSearchCardHtml(item) {
+          return (
+            '<div class="product-card">' +
+              '<div class="product-img-wrap">' +
+                '<span class="product-category-tag">' + escapeHtml(item.category) + '</span>' +
+                '<a href="product.html?id=' + encodeURIComponent(item.id) + '">' +
+                  '<img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.alt) + '" onerror="handleImageError(this)">' +
+                '</a>' +
+              '</div>' +
+              '<div class="product-info">' +
+                '<span class="product-store">' + escapeHtml(item.vendorName) + '</span>' +
+                '<h3 class="product-title"><a href="product.html?id=' + encodeURIComponent(item.id) + '">' + escapeHtml(item.name) + '</a></h3>' +
+                '<p class="product-desc">' + escapeHtml(item.description) + '</p>' +
+                '<div class="product-price-row">' +
+                  '<span class="product-price">' + escapeHtml(item.priceText) + '</span>' +
+                  '<div class="product-actions">' +
+                    '<button type="button" class="add-cart-btn" data-action="add-to-cart" ' +
+                      'data-product-id="' + escapeHtml(item.id) + '" ' +
+                      'data-product-name="' + escapeHtml(item.name) + '" ' +
+                      'data-product-price="' + escapeHtml(item.price) + '" ' +
+                      'data-product-image="' + escapeHtml(item.image) + '" ' +
+                      'data-product-vendor="' + escapeHtml(item.vendorName) + '" ' +
+                      'data-product-category="' + escapeHtml(item.category) + '">+ Add to Cart</button>' +
+                    '<a href="product.html?id=' + encodeURIComponent(item.id) + '" class="view-btn">View Details</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+          );
+        }
+
+        function renderSearch(rawQuery, shouldScroll) {
+          const trimmed = (rawQuery || '').trim();
+
+          if (!trimmed) {
+            clearBtn.classList.remove('visible');
+            resultsSection.classList.remove('active');
+            noProductsEl.classList.remove('visible');
+            resultsGrid.innerHTML = '';
+            categoriesWrapper.style.display = '';
+            statusBar.textContent = '';
+            return;
+          }
+
+          clearBtn.classList.add('visible');
+          categoryLinks.forEach((link) => link.classList.remove('active'));
+          categoriesWrapper.style.display = 'none';
+          resultsSection.classList.add('active');
+
+          const matches = filterProducts(trimmed);
+
+          if (matches.length > 0) {
+            noProductsEl.classList.remove('visible');
+            resultsHeading.textContent = 'Search Results for "' + trimmed + '" (' + matches.length + ')';
+            statusBar.textContent = 'Found ' + matches.length + ' ' + (matches.length === 1 ? 'product' : 'products') + ' across all vendors for "' + trimmed + '"';
+            resultsGrid.innerHTML = matches.map(createSearchCardHtml).join('');
+          } else {
+            resultsGrid.innerHTML = '';
+            resultsHeading.textContent = 'Search Results for "' + trimmed + '" (0)';
+            statusBar.textContent = 'No products matched "' + trimmed + '"';
+            noProductsEl.classList.add('visible');
+          }
+
+          if (shouldScroll) {
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+
+        function clearSearchAndRestore(focusInput) {
+          searchInput.value = '';
+          renderSearch('', false);
+          if (window.history && window.history.replaceState && window.location.search.includes('search=')) {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('search');
+            window.history.replaceState({}, '', url.pathname + url.hash);
+          }
+          if (focusInput) searchInput.focus();
+        }
+
+        // Instant live filtering as the user types (case-insensitive, partial match)
+        searchInput.addEventListener('input', () => {
+          renderSearch(searchInput.value, false);
+        });
+
+        // Search button click & Enter key submit without refreshing page
+        searchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          renderSearch(searchInput.value, true);
+        });
+
+        clearBtn.addEventListener('click', () => clearSearchAndRestore(true));
+        resetLinkBtn.addEventListener('click', () => clearSearchAndRestore(true));
+        emptyClearBtn.addEventListener('click', () => clearSearchAndRestore(true));
+
+        // Keep category jump links (banner & footer) working smoothly even if a search filter is active
+        document.querySelectorAll('.category-nav-bar .cat-btn, .footer-links a[href^="#"]').forEach((link) => {
+          link.addEventListener('click', (e) => {
+            const targetHref = link.getAttribute('href') || '';
+            if (targetHref.startsWith('#')) {
+              const targetSection = document.querySelector(targetHref);
+              if (targetSection) {
+                e.preventDefault();
+                clearSearchAndRestore(false);
+                categoryLinks.forEach((el) => el.classList.remove('active'));
+                const matchingNavBtn = document.querySelector('.category-nav-bar a[href="' + targetHref + '"]');
+                if (matchingNavBtn) matchingNavBtn.classList.add('active');
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }
+          });
+        });
+
+        // Support ?search=... URL query if navigated directly
+        if (typeof getUrlParam === 'function') {
+          const initialQuery = getUrlParam('search');
+          if (initialQuery) {
+            searchInput.value = initialQuery;
+            renderSearch(initialQuery, false);
+          }
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

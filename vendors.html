@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet all 20 verified local merchants, organic growers, bakeries, and craft studios at Local Market Online Store.">
+  <title>Local Vendors Directory | Local Market Online Store</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Internal CSS Style Tag -->
+  <style>
+    /* Embedded Head Styles for Vendors Directory */
+    .vendor-filter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--color-primary-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div>
+        <span>🌿 <strong>Local Vendor Directory</strong> &bull; Verified Neighborhood Businesses</span>
+      </div>
+      <div>
+        <span>Supporting Small Vendors, Growing Local Businesses!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation Bar -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand-wrapper">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-group">
+          <span class="brand-name">Local Market</span>
+          <span class="brand-tagline">Online Store</span>
+        </div>
+      </a>
+
+      <form class="header-search-form" action="products.html" method="GET">
+        <input 
+          type="text" 
+          name="search" 
+          class="header-search-input" 
+          placeholder="Search products or vendors..." 
+          aria-label="Search products"
+        >
+        <button type="submit" class="header-search-btn" aria-label="Submit Search">🔍</button>
+      </form>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="products.html" class="nav-link">Products</a>
+        <a href="vendors.html" class="nav-link active">Vendors</a>
+        <a href="about.html" class="nav-link">About Project</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="cart.html" class="cart-btn-header" aria-label="View Shopping Cart">
+          <span>🛒</span>
+          <span>Cart</span>
+          <span class="cart-counter">0</span>
+        </a>
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container section">
+
+      <!-- Breadcrumbs & Header -->
+      <div style="margin-bottom: var(--space-xl);">
+        <nav class="details-breadcrumb">
+          <a href="index.html">Home</a> &rsaquo;
+          <span>Vendor Directory</span>
+        </nav>
+        <h1 class="section-title" style="margin-top: 4px;">20 Local Business Partners</h1>
+        <p class="section-desc">
+          Meet the real people, family farms, independent craftspeople, and neighborhood shops behind every fresh delivery.
+        </p>
+      </div>
+
+      <!-- Vendor Filter & Search Toolbar -->
+      <div class="filter-wrapper" style="margin-bottom: var(--space-xl);">
+        <div class="filter-grid" style="grid-template-columns: 2fr 1.5fr auto;">
+          <div class="form-group">
+            <label for="vendor-search" class="form-label">Search Vendor by Name or Owner</label>
+            <input type="text" id="vendor-search" class="form-control" placeholder="Search Green Farm, Local Bakery, Spice Garden...">
+          </div>
+
+          <div class="form-group">
+            <label for="vendor-category-filter" class="form-label">Filter by Business Category</label>
+            <select id="vendor-category-filter" class="form-control">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="justify-content: flex-end;">
+            <button class="btn btn-secondary" onclick="document.getElementById('vendor-search').value=''; document.getElementById('vendor-category-filter').value=''; document.getElementById('vendor-search').dispatchEvent(new Event('input'));" style="height: 42px;">
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Count Header -->
+      <div class="catalog-info-bar">
+        <span id="vendor-count-display" style="font-weight: 700; color: var(--color-primary-dark);">Loading vendors...</span>
+        <span style="font-size: 0.82rem; color: var(--color-text-muted);">
+          100% Certified Local Commerce
+        </span>
+      </div>
+
+      <!-- Vendors Grid (Populated by js/vendors.js) -->
+      <div class="vendors-grid" id="vendors-grid"></div>
+
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <span style="font-size: 1.8rem;">🌿</span>
+            <h3 style="margin: 0;">Local Market Online Store</h3>
+          </div>
+          <p class="footer-tagline">Supporting Small Vendors, Growing Local Businesses!</p>
+          <p class="footer-text">
+            Every product order directly strengthens small shopkeepers, self-employed craftspeople, and urban farmers in our community.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Original Vendors</h4>
+          <ul class="footer-links">
+            <li><a href="vendor-details.html?id=vendor-1">Green Farm (Vegetables)</a></li>
+            <li><a href="vendor-details.html?id=vendor-2">Local Bakery (Bakery)</a></li>
+            <li><a href="vendor-details.html?id=vendor-3">Dairy Corner (Dairy)</a></li>
+            <li><a href="vendor-details.html?id=vendor-4">Fruit Basket (Fruits)</a></li>
+            <li><a href="vendor-details.html?id=vendor-5">Tasty Treats (Snacks)</a></li>
+            <li><a href="vendor-details.html?id=vendor-6">Daily Needs Shop (Essentials)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Partner Vendors</h4>
+          <ul class="footer-links">
+            <li><a href="vendor-details.html?id=vendor-7">Sharma Grocery Store</a></li>
+            <li><a href="vendor-details.html?id=vendor-9">Sweet Delight</a></li>
+            <li><a href="vendor-details.html?id=vendor-10">Spice Garden</a></li>
+            <li><a href="vendor-details.html?id=vendor-11">Organic Harvest</a></li>
+            <li><a href="vendor-details.html?id=vendor-13">Flower Valley</a></li>
+            <li><a href="vendor-details.html?id=vendor-16">Craft Corner</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Vendor Community</h4>
+          <p class="footer-text">
+            Want to list your shop on Local Market? We empower neighborhood traders with zero platform commissions.
+          </p>
+          <a href="contact.html?type=vendor" class="btn btn-primary btn-sm" style="margin-top: 8px;">Apply As Vendor &rarr;</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Local Market Online Store. All Rights Reserved.</div>
+        <div>
+          <a href="about.html" style="color: #b7c7be; margin-right: 14px;">About Us</a>
+          <a href="contact.html" style="color: #b7c7be;">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/vendors.js"></script>
+</body>
+</html>

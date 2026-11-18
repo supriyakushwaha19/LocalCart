@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LocalKart Account &amp; Vendor Login Portal — Secure sign in for customers, local vendors, and store owners.">
+  <title>Login — LocalKart</title>
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ========================================================
+       INTERNAL CSS STYLING IN THE HEAD SECTION
+       ======================================================== -->
+  <style>
+    /* Global Base Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #212529;
+      background-color: #fafcf9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s ease;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* Site Header & Navigation */
+    .site-header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #e7ede8;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .brand-logo {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #1b4332;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      background: #e8f5e9;
+      color: #2d6a4f;
+      border: 1px solid #b7e4c7;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #495057;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #2d6a4f;
+      background-color: #f1f8f3;
+    }
+
+    /* Page Banner */
+    .page-banner {
+      background-color: #f1f7f3;
+      padding: 42px 0 35px;
+      text-align: center;
+      border-bottom: 1px solid #e2ebe4;
+    }
+
+    .page-banner h1 {
+      color: #1b4332;
+      font-size: 2.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .page-banner p {
+      color: #495057;
+      max-width: 650px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* Centered Login Card Section */
+    .login-section {
+      padding: 50px 0 70px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .login-card-wrapper {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .auth-card {
+      background: #ffffff;
+      border: 1.5px solid #d8f3dc;
+      border-radius: 16px;
+      padding: 38px 34px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .auth-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .auth-header h2 {
+      font-size: 1.65rem;
+      color: #1b4332;
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    .auth-header p {
+      color: #6c757d;
+      font-size: 0.92rem;
+    }
+
+    /* Role Selection Tabs */
+    .role-tabs {
+      display: flex;
+      background: #f1f8f3;
+      padding: 5px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      gap: 6px;
+    }
+
+    .role-tab-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: #495057;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .role-tab-btn.active {
+      background: #ffffff;
+      color: #1b4332;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #212529;
+      margin-bottom: 6px;
+    }
+
+    .form-input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #ced4da;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2d6a4f;
+      box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+    }
+
+    .pwd-toggle-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #6c757d;
+    }
+
+    .form-help-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-size: 0.88rem;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #495057;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: #2d6a4f;
+      font-weight: 600;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      background-color: #2d6a4f;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(45, 106, 79, 0.25);
+    }
+
+    .btn-submit:hover {
+      background-color: #1b4332;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(45, 106, 79, 0.35);
+    }
+
+    /* Demo Quick-Fill Box */
+    .demo-creds-box {
+      margin-top: 24px;
+      background: #f8faf9;
+      border: 1px dashed #b7e4c7;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 0.85rem;
+    }
+
+    .demo-creds-title {
+      font-weight: 700;
+      color: #1b4332;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .demo-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .demo-chip {
+      background: #ffffff;
+      border: 1px solid #ced4da;
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #2d6a4f;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .demo-chip:hover {
+      background: #2d6a4f;
+      color: #ffffff;
+      border-color: #2d6a4f;
+    }
+
+    /* ========================================================
+       SINGLE NORMAL-LOOKING ACTION BUTTON
+       (Does not show as restricted/harmful before click)
+       ======================================================== */
+    .admin-access-box {
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid #edf2ee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .admin-access-text {
+      font-size: 0.84rem;
+      color: #6c757d;
+      font-weight: 500;
+    }
+
+    .btn-system-settings {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background-color: #f8faf8;
+      color: #2d6a4f;
+      border: 1.5px solid #d8f3dc;
+      padding: 11px 18px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-system-settings:hover {
+      background-color: #e8f5e9;
+      border-color: #2d6a4f;
+      color: #1b4332;
+      transform: translateY(-1px);
+    }
+
+    /* Logged In Status Card */
+    .logged-in-panel {
+      display: none;
+      text-align: center;
+      padding: 24px 0;
+    }
+
+    .user-avatar-circle {
+      width: 72px;
+      height: 72px;
+      background: #e8f5e9;
+      color: #1b4332;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 16px;
+      border: 2px solid #b7e4c7;
+    }
+
+    .logged-in-panel h3 {
+      font-size: 1.4rem;
+      color: #1b4332;
+      margin-bottom: 6px;
+    }
+
+    .user-role-badge {
+      display: inline-block;
+      background: #d8f3dc;
+      color: #1b4332;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .btn-logout {
+      background-color: #e76f51;
+      color: #ffffff;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-logout:hover {
+      background-color: #d65a3d;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: #1b4332;
+      color: #d8f3dc;
+      padding: 55px 0 25px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 35px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .footer-col p {
+      font-size: 0.92rem;
+      color: #d8f3dc;
+      line-height: 1.6;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #e8f5e9;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #e76f51;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #b7e4c7;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-wrapper {
+        flex-direction: column;
+        gap: 14px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      .page-banner h1 {
+        font-size: 2rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        LocalKart
+        <span class="brand-badge">Support Local</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="stores.html">All Stores</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="cart.html">🛒 Cart</a></li>
+          <li><a href="login.html" class="active">🔐 Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="page-banner">
+    <div class="container">
+      <h1>Account &amp; Vendor Login</h1>
+      <p>Sign in to access your local orders, manage store settings, or explore verified neighborhood seller portals.</p>
+    </div>
+  </section>
+
+  <!-- Centered Login Section -->
+  <main class="login-section">
+    <div class="container">
+      <div class="login-card-wrapper">
+
+        <div class="auth-card">
+          
+          <!-- When User is NOT Logged In -->
+          <div id="login-form-container">
+            <div class="auth-header">
+              <h2>Welcome to LocalKart</h2>
+              <p>Select your account type and sign in to continue</p>
+            </div>
+
+            <!-- Role Selector Tabs -->
+            <div class="role-tabs">
+              <button type="button" class="role-tab-btn active" data-role="customer">Customer</button>
+              <button type="button" class="role-tab-btn" data-role="vendor">Local Vendor</button>
+              <button type="button" class="role-tab-btn" data-role="admin">Admin Portal</button>
+            </div>
+
+            <form id="auth-login-form">
+              <div class="form-group">
+                <label for="login-email" class="form-label" id="email-label">Email or Mobile Number</label>
+                <div class="form-input-wrapper">
+                  <input type="text" id="login-email" class="form-input" placeholder="e.g. user@localkart.in" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="login-password" class="form-label">Password</label>
+                <div class="form-input-wrapper">
+                  <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required>
+                  <button type="button" class="pwd-toggle-btn" id="toggle-pwd-btn" title="Show/Hide Password">👁️</button>
+                </div>
+              </div>
+
+              <div class="form-help-row">
+                <label class="remember-me">
+                  <input type="checkbox" id="remember-me-chk" checked>
+                  <span>Remember me</span>
+                </label>
+                <a href="#" class="forgot-link" id="forgot-password-link">Forgot Password?</a>
+              </div>
+
+              <button type="submit" class="btn-submit" id="login-submit-btn">
+                Sign In to LocalKart &rarr;
+              </button>
+            </form>
+
+            <!-- Demo Quick-Fill Credentials -->
+            <div class="demo-creds-box">
+              <div class="demo-creds-title">💡 Quick Demo Auto-Fill:</div>
+              <div class="demo-chips">
+                <button type="button" class="demo-chip" id="demo-customer-btn">Customer: user@localkart.in</button>
+                <button type="button" class="demo-chip" id="demo-vendor-btn">Vendor: sharma@handloom.in</button>
+              </div>
+            </div>
+
+            <!-- Single Normal-Looking Action Button (Does not show as restricted/harmful before click) -->
+            <div class="admin-access-box">
+              <span class="admin-access-text">Platform Management:</span>
+              <button type="button" id="system-action-btn" class="btn-system-settings">
+                ⚙️ System Administration Settings
+              </button>
+            </div>
+          </div>
+
+          <!-- When User IS Logged In -->
+          <div class="logged-in-panel" id="logged-in-container">
+            <div class="user-avatar-circle" id="user-avatar-icon">👤</div>
+            <h3 id="logged-user-name">Welcome Back!</h3>
+            <p id="logged-user-email" style="color: #6c757d; font-size: 0.92rem; margin-bottom: 8px;">user@localkart.in</p>
+            <span class="user-role-badge" id="logged-user-role">Customer Account</span>
+
+            <div style="margin: 20px 0; padding: 14px; background: #f8faf8; border-radius: 8px; border: 1px solid #d8f3dc; font-size: 0.9rem; text-align: left;">
+              <p><strong>✅ Session Status:</strong> Active &bull; Logged In via LocalStorage</p>
+              <p style="margin-top: 6px;"><strong>📦 Order Tracking:</strong> Enabled for neighborhood store orders</p>
+            </div>
+
+            <button type="button" class="btn-logout" id="logout-action-btn">
+              🚪 Sign Out of Account
+            </button>
+
+            <!-- Single Normal-Looking Action Button also shown when logged in -->
+            <div class="admin-access-box">
+              <span class="admin-access-text">Platform Management:</span>
+              <button type="button" id="system-action-btn-logged" class="btn-system-settings">
+                ⚙️ System Administration Settings
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>LocalKart</h4>
+          <p>
+            An online marketplace dedicated to empowering local small vendors, traditional artisans, and neighborhood shops across India.
+          </p>
+          <p style="margin-top: 12px; font-size: 0.85rem; color: #95d5b2;">
+            100% fair pricing &bull; Direct vendor support &bull; Fresh &amp; authentic goods.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="stores.html">All Local Stores</a></li>
+            <li><a href="products.html">Products Catalogue</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="login.html">Login Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Shop Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html#clothing">Handloom Clothing</a></li>
+            <li><a href="products.html#handicrafts">Traditional Handicrafts</a></li>
+            <li><a href="products.html#groceries">Farm Fresh Groceries</a></li>
+            <li><a href="products.html#organic">Organic Pantry</a></li>
+            <li><a href="products.html#sweets">Artisan Sweets &amp; Bakes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Direct Support</h4>
+          <p>
+            Need help with your account or order? Our community support team is available Monday through Saturday.
+          </p>
+          <div style="margin-top: 14px;">
+            <a href="contact.html" class="btn-system-settings" style="display:inline-block; width:auto; padding: 7px 16px; background:#2d6a4f; color:#ffffff; border-color:#2d6a4f; text-decoration:none;">Contact Support</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LocalKart. Supporting Local Vendors &amp; Neighborhood Artisans. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       JAVASCRIPT: AUTHENTICATION & SINGLE ACTION ALERT POPUP
+       ======================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Password Visibility Toggle
+      const pwdInput = document.getElementById('login-password');
+      const togglePwdBtn = document.getElementById('toggle-pwd-btn');
+      if (togglePwdBtn && pwdInput) {
+        togglePwdBtn.addEventListener('click', function() {
+          const isPassword = pwdInput.type === 'password';
+          pwdInput.type = isPassword ? 'text' : 'password';
+          togglePwdBtn.textContent = isPassword ? '🙈' : '👁️';
+        });
+      }
+
+      // 2. Role Selector Tabs
+      const roleTabs = document.querySelectorAll('.role-tab-btn');
+      let currentRole = 'customer';
+      roleTabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          roleTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentRole = tab.getAttribute('data-role');
+
+          const emailInput = document.getElementById('login-email');
+          if (currentRole === 'vendor') {
+            emailInput.placeholder = 'e.g. sharma@handloom.in';
+          } else if (currentRole === 'admin') {
+            emailInput.placeholder = 'e.g. admin@localkart.in';
+          } else {
+            emailInput.placeholder = 'e.g. user@localkart.in';
+          }
+        });
+      });
+
+      // 3. Quick-Fill Demo Credentials
+      const demoCustomerBtn = document.getElementById('demo-customer-btn');
+      const demoVendorBtn = document.getElementById('demo-vendor-btn');
+      const emailInput = document.getElementById('login-email');
+
+      if (demoCustomerBtn) {
+        demoCustomerBtn.addEventListener('click', function() {
+          emailInput.value = 'user@localkart.in';
+          pwdInput.value = 'LocalKart@2026';
+          roleTabs[0].click();
+        });
+      }
+
+      if (demoVendorBtn) {
+        demoVendorBtn.addEventListener('click', function() {
+          emailInput.value = 'sharma@handloom.in';
+          pwdInput.value = 'SharmaWeaves#2026';
+          roleTabs[1].click();
+        });
+      }
+
+      // 4. Check Existing Logged-In User from localStorage
+      const loginContainer = document.getElementById('login-form-container');
+      const loggedInContainer = document.getElementById('logged-in-container');
+      const loggedUserName = document.getElementById('logged-user-name');
+      const loggedUserEmail = document.getElementById('logged-user-email');
+      const loggedUserRole = document.getElementById('logged-user-role');
+      const logoutBtn = document.getElementById('logout-action-btn');
+
+      function updateAuthUI() {
+        try {
+          const storedUser = localStorage.getItem('localKartUser');
+          if (storedUser) {
+            const user = JSON.parse(storedUser);
+            loginContainer.style.display = 'none';
+            loggedInContainer.style.display = 'block';
+            loggedUserName.textContent = 'Welcome Back, ' + (user.name || 'User') + '!';
+            loggedUserEmail.textContent = user.email || 'user@localkart.in';
+            loggedUserRole.textContent = (user.role || 'Customer').toUpperCase() + ' ACCOUNT';
+          } else {
+            loginContainer.style.display = 'block';
+            loggedInContainer.style.display = 'none';
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      updateAuthUI();
+
+      // 5. Login Form Submission
+      const loginForm = document.getElementById('auth-login-form');
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const emailVal = emailInput.value.trim();
+          const pwdVal = pwdInput.value.trim();
+
+          if (!emailVal || !pwdVal) {
+            alert("⚠️ Please enter both your email and password.");
+            return;
+          }
+
+          if (pwdVal.length < 4) {
+            alert("⚠️ Password must be at least 4 characters.");
+            return;
+          }
+
+          // Generate Display Name from Email
+          let displayName = emailVal.split('@')[0];
+          displayName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+
+          const userObj = {
+            email: emailVal,
+            name: displayName,
+            role: currentRole,
+            loggedInAt: new Date().toISOString()
+          };
+
+          localStorage.setItem('localKartUser', JSON.stringify(userObj));
+          
+          alert("✅ LOGIN SUCCESSFUL!\n\nWelcome back, " + displayName + "!\nYou are signed in as a " + currentRole.toUpperCase() + ".");
+          
+          updateAuthUI();
+        });
+      }
+
+      // 6. Logout Action
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          localStorage.removeItem('localKartUser');
+          alert("ℹ️ LOGGED OUT\n\nYou have been signed out of LocalKart successfully.");
+          updateAuthUI();
+        });
+      }
+
+      // 7. Forgot Password Popup
+      const forgotLink = document.getElementById('forgot-password-link');
+      if (forgotLink) {
+        forgotLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          const email = emailInput.value.trim() || 'your registered email';
+          alert("🔑 PASSWORD RESET REQUESTED\n\nA secure password reset authorization link has been sent to " + email + ".");
+        });
+      }
+
+      // ========================================================
+      // 8. SINGLE ACTION BUTTON EVENT LISTENER
+      // Before click: Looks like a normal button (no warning/danger)
+      // When clicked: Displays the restricted/harmful alert popup!
+      // ========================================================
+      function handleSystemActionClick(e) {
+        e.preventDefault();
+        alert(
+          "⛔ ACCESS RESTRICTED & HARMFUL OPERATION BLOCKED!\n\n" +
+          "Warning: You clicked on 'System Administration Settings'.\n\n" +
+          "This action is restricted to Master System Administrators only. " +
+          "Unauthorized modifications to server configurations, store databases, " +
+          "or payment protocols are harmful and have been safely blocked by LocalKart security."
+        );
+      }
+
+      const systemBtn = document.getElementById('system-action-btn');
+      if (systemBtn) {
+        systemBtn.addEventListener('click', handleSystemActionClick);
+      }
+
+      const systemBtnLogged = document.getElementById('system-action-btn-logged');
+      if (systemBtnLogged) {
+        systemBtnLogged.addEventListener('click', handleSystemActionClick);
+      }
+    });
+  </script>
+</body>
+</html>

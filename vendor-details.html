@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View vendor details, store information, and exclusive catalog of products at Local Market Online Store.">
+  <title>Vendor Profile | Local Market Online Store</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Internal CSS Style Tag -->
+  <style>
+    /* Embedded Head Styles for Vendor Details */
+    .vendor-store-verified {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+      padding: 4px 12px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div>
+        <span>🌿 <strong>Local Vendor Storefront</strong> &bull; Supporting Small Businesses</span>
+      </div>
+      <div>
+        <a href="vendors.html">&larr; Back To All 20 Vendors</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation Bar -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand-wrapper">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text-group">
+          <span class="brand-name">Local Market</span>
+          <span class="brand-tagline">Online Store</span>
+        </div>
+      </a>
+
+      <form class="header-search-form" action="products.html" method="GET">
+        <input 
+          type="text" 
+          name="search" 
+          class="header-search-input" 
+          placeholder="Search products..." 
+          aria-label="Search products"
+        >
+        <button type="submit" class="header-search-btn" aria-label="Submit Search">🔍</button>
+      </form>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="products.html" class="nav-link">Products</a>
+        <a href="vendors.html" class="nav-link active">Vendors</a>
+        <a href="about.html" class="nav-link">About Project</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="cart.html" class="cart-btn-header" aria-label="View Shopping Cart">
+          <span>🛒</span>
+          <span>Cart</span>
+          <span class="cart-counter">0</span>
+        </a>
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container section">
+
+      <!-- Breadcrumbs -->
+      <nav class="details-breadcrumb" style="margin-bottom: var(--space-md);">
+        <a href="index.html">Home</a> &rsaquo;
+        <a href="vendors.html">Vendors Directory</a> &rsaquo;
+        <span id="breadcrumb-vendor-name">Vendor Profile</span>
+      </nav>
+
+      <!-- Vendor Hero & Profile Header (Populated by js/vendor-details.js) -->
+      <div id="vendor-hero-view">
+        <div style="text-align: center; padding: 40px;">
+          <p>Loading vendor storefront...</p>
+        </div>
+      </div>
+
+      <!-- Vendor's Products Section -->
+      <section style="margin-top: var(--space-xl);">
+        <div class="catalog-info-bar">
+          <h2 id="vendor-products-count-heading" class="section-title" style="font-size: 1.6rem; margin: 0;">
+            Vendor Products
+          </h2>
+          <a href="products.html" class="btn btn-secondary btn-sm">Explore All Products &rarr;</a>
+        </div>
+
+        <div class="products-grid" id="vendor-products-grid" style="margin-top: var(--space-lg);">
+          <!-- Filtered products rendered dynamically -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <span style="font-size: 1.8rem;">🌿</span>
+            <h3 style="margin: 0;">Local Market Online Store</h3>
+          </div>
+          <p class="footer-tagline">Supporting Small Vendors, Growing Local Businesses!</p>
+          <p class="footer-text">
+            Connecting neighborhood producers and smart shoppers with zero corporate markups.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">All Products</a></li>
+            <li><a href="vendors.html">Vendors Directory</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="about.html">About The Project</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Original 6 Vendors</h4>
+          <ul class="footer-links">
+            <li><a href="vendor-details.html?id=vendor-1">Green Farm</a></li>
+            <li><a href="vendor-details.html?id=vendor-2">Local Bakery</a></li>
+            <li><a href="vendor-details.html?id=vendor-3">Dairy Corner</a></li>
+            <li><a href="vendor-details.html?id=vendor-4">Fruit Basket</a></li>
+            <li><a href="vendor-details.html?id=vendor-5">Tasty Treats</a></li>
+            <li><a href="vendor-details.html?id=vendor-6">Daily Needs Shop</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Local Direct Guarantee</h4>
+          <p class="footer-text">
+            100% genuine local items, harvested or baked fresh, supporting local livelihoods.
+          </p>
+          <a href="products.html" class="btn btn-primary btn-sm" style="margin-top: 8px;">Start Shopping</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Local Market Online Store. All Rights Reserved.</div>
+        <div>
+          <a href="about.html" style="color: #b7c7be; margin-right: 14px;">Documentation</a>
+          <a href="contact.html" style="color: #b7c7be;">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/vendor-details.js"></script>
+</body>
+</html>

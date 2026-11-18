@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Secure Checkout for LocalKart - Local Market Online Store. Enter delivery information and place your verified local order.">
+  <title>Checkout | LocalKart - Local Market Online Store</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Internal CSS Styles for Checkout & Order Confirmation Popup -->
+  <style>
+    /* CSS Variables & Theme Palette */
+    :root {
+      --primary-dark: #1b4332;
+      --primary: #2d6a4f;
+      --primary-light: #40916c;
+      --primary-mint: #d8f3dc;
+      --primary-soft: #f4fbf6;
+      --accent-warm: #e76f51;
+      --text-main: #212529;
+      --text-muted: #556052;
+      --text-light: #718096;
+      --border-subtle: #e7ede8;
+      --border-card: #e2e8f0;
+      --bg-body: #fafcf9;
+      --bg-card: #ffffff;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Checkout Layout */
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-top: 20px;
+    }
+
+    .checkout-card {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 26px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .checkout-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .checkout-step-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid var(--border-subtle);
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #ced4da;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: #212529;
+      background-color: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.18);
+    }
+
+    .form-control.input-error {
+      border-color: #e63946 !important;
+      background-color: #fff9f9;
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15) !important;
+    }
+
+    .field-error-msg {
+      color: #d90429;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .field-error-msg.visible {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Payment Radio Cards */
+    .payment-options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .payment-radio-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 1.5px solid var(--border-card);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      background: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .payment-radio-card:hover {
+      border-color: var(--primary);
+      background-color: var(--primary-soft);
+    }
+
+    .payment-radio-card input[type="radio"] {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .payment-radio-card.selected {
+      border-color: var(--primary);
+      background-color: #eef8f2;
+    }
+
+    .payment-label-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Place Order Button */
+    .btn-place-order {
+      width: 100%;
+      background: linear-gradient(135deg, #e76f51 0%, #d85736 100%);
+      color: #ffffff;
+      padding: 16px 28px;
+      font-size: 1.12rem;
+      font-weight: 800;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(231, 111, 81, 0.35);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: 0.2px;
+      font-family: inherit;
+    }
+
+    .btn-place-order:hover:not(:disabled) {
+      background: linear-gradient(135deg, #d85736 0%, #c44627 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(231, 111, 81, 0.45);
+    }
+
+    .btn-place-order:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .spinner-icon {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Order Summary Box */
+    .order-summary-box {
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 24px 26px;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 90px;
+    }
+
+    .summary-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border-subtle);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      padding-top: 14px;
+      margin-top: 12px;
+      border-top: 2px dashed var(--border-subtle);
+    }
+
+    /* Top error notification banner */
+    .checkout-error-banner {
+      background-color: #ffebee;
+      border: 1.5px solid #ffcdd2;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: #c62828;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* Empty Cart State inside Checkout */
+    .checkout-empty-notice {
+      background-color: #ffffff;
+      border: 1px dashed #b7e4c7;
+      border-radius: var(--radius-lg);
+      padding: 40px 24px;
+      text-align: center;
+      margin: 20px 0;
+      display: none;
+    }
+
+    /* ========================================================
+       Order Confirmation Popup Modal
+       ======================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(17, 34, 27, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 520px;
+      width: 100%;
+      padding: 36px 32px 30px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(27, 67, 50, 0.25);
+      border: 1px solid #d8f3dc;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Animated Green Success Checkmark */
+    .success-checkmark-wrap {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 18px;
+      position: relative;
+    }
+
+    .checkmark-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e8f5e9 0%, #d8f3dc 100%);
+      border: 3px solid #2d6a4f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(45, 106, 79, 0.2);
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .checkmark-svg {
+      width: 44px;
+      height: 44px;
+      stroke: #1b4332;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: strokeDraw 0.5s ease 0.2s forwards;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      80% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes strokeDraw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .modal-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1b4332;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .modal-subtitle {
+      color: #556052;
+      font-size: 0.96rem;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    /* Order Details Summary Box */
+    .order-summary-pill-box {
+      background: #f4fbf6;
+      border: 1.5px solid #d8f3dc;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .order-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      font-size: 0.92rem;
+      border-bottom: 1px dashed #d8f3dc;
+    }
+
+    .order-detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .order-detail-row .label {
+      color: #556052;
+      font-weight: 500;
+    }
+
+    .order-detail-row .val {
+      color: #1b4332;
+      font-weight: 700;
+    }
+
+    .order-id-badge {
+      background: #e8f5e9;
+      color: #1b4332;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border: 1px solid #b7e4c7;
+    }
+
+    .status-badge-confirmed {
+      background: #2d6a4f;
+      color: #ffffff;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-badge-confirmed::before {
+      content: '●';
+      font-size: 0.7rem;
+      color: #a7f3d0;
+    }
+
+    /* Modal Action Buttons */
+    .modal-actions-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .btn-modal-continue {
+      background-color: #ffffff;
+      color: #1b4332;
+      border: 2px solid #b7e4c7;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .btn-modal-continue:hover {
+      background-color: #e8f5e9;
+      border-color: #2d6a4f;
+      transform: translateY(-1px);
+    }
+
+    .btn-modal-orders {
+      background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+      color: #ffffff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .btn-modal-orders:hover {
+      background: #1b4332;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(27, 67, 50, 0.35);
+    }
+
+    @media (max-width: 900px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+      .order-summary-box {
+        position: static;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+      .modal-card {
+        padding: 26px 20px;
+      }
+      .modal-actions-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar" style="background-color: #1b4332; color: #ffffff; padding: 8px 0; font-size: 0.88rem;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div>
+        <span>🔒 <strong>LocalKart Checkout</strong> &bull; Fast Neighborhood Delivery directly from Verified Local Shops</span>
+      </div>
+      <div>
+        <a href="cart.html" style="color: #b7e4c7; font-weight: 600;">&larr; Return to Cart</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <span>🌿</span>
+        <span>LocalKart</span>
+        <span class="logo-badge">Local Market</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="stores.html">All Stores</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="cart.html">🛒 Cart <span class="cart-counter">0</span></a></li>
+          <li><a href="login.html">🔐 Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container section">
+
+      <!-- Breadcrumbs & Header -->
+      <div style="margin-bottom: 24px;">
+        <nav style="font-size: 0.9rem; color: #6c757d; margin-bottom: 6px;">
+          <a href="index.html" style="color: #2d6a4f;">Home</a> &rsaquo;
+          <a href="cart.html" style="color: #2d6a4f;">Cart</a> &rsaquo;
+          <span style="color: #1b4332; font-weight: 600;">Checkout</span>
+        </nav>
+        <h1 class="section-title" style="margin-top: 4px;">Delivery &amp; Order Confirmation</h1>
+        <p style="color: #556052; font-size: 1.02rem;">Please fill in your delivery details to place your verified order with local neighborhood sellers.</p>
+      </div>
+
+      <!-- General Error Banner -->
+      <div id="checkout-error-banner" class="checkout-error-banner"></div>
+
+      <!-- Empty Cart Message (if accessed without cart items) -->
+      <div id="checkout-empty-notice" class="checkout-empty-notice">
+        <div style="font-size: 3rem; margin-bottom: 12px;">🛒</div>
+        <h2 style="color: #1b4332; font-size: 1.4rem; margin-bottom: 8px;">Your Shopping Cart is Empty</h2>
+        <p style="color: #556052; margin-bottom: 20px;">Please add products to your cart before proceeding to checkout.</p>
+        <a href="products.html" class="btn btn-primary" style="padding: 12px 24px; border-radius: 8px;">Browse Products Catalogue &rarr;</a>
+      </div>
+
+      <!-- Checkout Grid -->
+      <div class="checkout-grid" id="checkout-content-grid">
+
+        <!-- Form Column -->
+        <div>
+          <form id="checkout-form" novalidate>
+            
+            <!-- Step 1: Contact Information -->
+            <div class="checkout-card">
+              <h2 class="checkout-step-title">
+                <span class="step-num">1</span>
+                <span>Customer Contact Information</span>
+              </h2>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="cust-name" class="form-label">Full Name *</label>
+                  <input type="text" id="cust-name" class="form-control" placeholder="e.g. Ishaan Sharma" autocomplete="name">
+                  <div class="field-error-msg" id="err-cust-name"></div>
+                </div>
+                <div class="form-group">
+                  <label for="cust-phone" class="form-label">Mobile Phone Number (10 digits) *</label>
+                  <input type="tel" id="cust-phone" class="form-control" placeholder="e.g. 9876543210" maxlength="10" autocomplete="tel">
+                  <div class="field-error-msg" id="err-cust-phone"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cust-email" class="form-label">Email Address (Optional order receipt)</label>
+                <input type="email" id="cust-email" class="form-control" placeholder="e.g. ishaan@example.com" autocomplete="email">
+                <div class="field-error-msg" id="err-cust-email"></div>
+              </div>
+            </div>
+
+            <!-- Step 2: Shipping Address -->
+            <div class="checkout-card">
+              <h2 class="checkout-step-title">
+                <span class="step-num">2</span>
+                <span>Neighborhood Delivery Address</span>
+              </h2>
+
+              <div class="form-group">
+                <label for="cust-address" class="form-label">Flat / House No. / Street Address *</label>
+                <input type="text" id="cust-address" class="form-control" placeholder="e.g. House #14, Green Avenue, Model Town" autocomplete="street-address">
+                <div class="field-error-msg" id="err-cust-address"></div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="cust-city" class="form-label">City / Town *</label>
+                  <input type="text" id="cust-city" class="form-control" placeholder="e.g. Phagwara / Jalandhar" autocomplete="address-level2">
+                  <div class="field-error-msg" id="err-cust-city"></div>
+                </div>
+                <div class="form-group">
+                  <label for="cust-pincode" class="form-label">Postal PIN Code (6 digits) *</label>
+                  <input type="text" id="cust-pincode" class="form-control" placeholder="e.g. 144411" maxlength="6" autocomplete="postal-code">
+                  <div class="field-error-msg" id="err-cust-pincode"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cust-instructions" class="form-label">Delivery Instructions (Optional)</label>
+                <textarea id="cust-instructions" class="form-control" rows="2" placeholder="e.g. Ring the bell, deliver by 6 PM..."></textarea>
+              </div>
+            </div>
+
+            <!-- Step 3: Payment Method Selection -->
+            <div class="checkout-card">
+              <h2 class="checkout-step-title">
+                <span class="step-num">3</span>
+                <span>Select Payment Method (Simulation)</span>
+              </h2>
+
+              <div class="payment-options-grid">
+                <label class="payment-radio-card selected">
+                  <input type="radio" name="paymentMethod" value="Cash on Delivery (COD)" checked>
+                  <span class="payment-label-text">💵 Cash on Delivery (Pay cash upon inspection)</span>
+                </label>
+                <label class="payment-radio-card">
+                  <input type="radio" name="paymentMethod" value="UPI Demo (GPay / PhonePe / Paytm)">
+                  <span class="payment-label-text">📱 UPI Payment Simulation (GPay / PhonePe / Paytm)</span>
+                </label>
+                <label class="payment-radio-card">
+                  <input type="radio" name="paymentMethod" value="Debit / Credit Card (Demo)">
+                  <span class="payment-label-text">💳 Card Payment Simulation (RuPay / Visa / MasterCard)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Place Order Button -->
+            <button type="submit" class="btn-place-order" id="place-order-btn">
+              <span id="place-order-btn-text">🛍️ Place Order &rarr;</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Order Summary Sidebar Column -->
+        <div>
+          <div class="order-summary-box">
+            <h3 class="summary-title">Order Items</h3>
+
+            <!-- Itemized List -->
+            <div id="checkout-summary-items" style="max-height: 280px; overflow-y: auto; margin-bottom: 16px; padding-right: 4px;">
+              <!-- Populated by checkout.js -->
+            </div>
+
+            <div class="summary-row" style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+              <span>Items Subtotal:</span>
+              <span id="checkout-subtotal" style="font-weight: 600; color: #1b4332;">₹0</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Local Delivery:</span>
+              <span id="checkout-shipping" style="font-weight: 600;">₹0</span>
+            </div>
+
+            <div class="summary-row" style="color: var(--primary);">
+              <span>Promo / Coupon Discount:</span>
+              <span id="checkout-discount" style="font-weight: 600;">₹0</span>
+            </div>
+
+            <div class="summary-total-row">
+              <span>Total Payable:</span>
+              <span id="checkout-total">₹0</span>
+            </div>
+
+            <div style="margin-top: 18px; padding: 14px; background: #eef8f2; border: 1px solid #c8ebd1; border-radius: var(--radius-md); font-size: 0.85rem; color: #1b4332; line-height: 1.5;">
+              🛡️ <strong>Fair &amp; Transparent:</strong> 100% of product proceeds directly support neighborhood vendors and urban small businesses.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Order Confirmation Modal Popup (Appears in center of screen) -->
+  <div class="modal-overlay" id="order-confirmation-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      
+      <!-- Green Success Checkmark Animation -->
+      <div class="success-checkmark-wrap">
+        <div class="checkmark-circle">
+          <svg class="checkmark-svg" viewBox="0 0 52 52">
+            <path d="M14 27 l8 8 l16 -16" />
+          </svg>
+        </div>
+      </div>
+
+      <h2 class="modal-title" id="modal-title">✓ Order Placed Successfully!</h2>
+      <p class="modal-subtitle">
+        Thank you for shopping with us. Your order has been confirmed.
+      </p>
+
+      <!-- Order Details Summary -->
+      <div class="order-summary-pill-box">
+        <div class="order-detail-row">
+          <span class="label">Order ID:</span>
+          <span class="val"><span class="order-id-badge" id="modal-order-id">LMO-2026-000000</span></span>
+        </div>
+        <div class="order-detail-row">
+          <span class="label">Customer Name:</span>
+          <span class="val" id="modal-customer-name">-</span>
+        </div>
+        <div class="order-detail-row">
+          <span class="label">Total Amount:</span>
+          <span class="val" id="modal-order-total" style="color: #2d6a4f; font-size: 1.05rem;">₹0</span>
+        </div>
+        <div class="order-detail-row">
+          <span class="label">Number of Items:</span>
+          <span class="val" id="modal-total-items">0 items</span>
+        </div>
+        <div class="order-detail-row">
+          <span class="label">Order Status:</span>
+          <span class="val"><span class="status-badge-confirmed" id="modal-order-status">Confirmed</span></span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="margin-top: 14px; display: flex; justify-content: center;">
+        <a href="products.html" class="btn-modal-orders" id="modal-continue-shopping-btn" style="min-width: 220px; padding: 13px 26px; font-size: 1.05rem;">
+          🛍️ Continue Shopping &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <span style="font-size: 1.8rem;">🌿</span>
+            <h3 style="margin: 0; color: #ffffff;">LocalKart - Local Market</h3>
+          </div>
+          <p class="footer-tagline">Supporting Small Vendors, Growing Local Businesses!</p>
+          <p class="footer-text">
+            Connecting neighborhood shops directly with customers for fresh, authentic products.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products Catalogue</a></li>
+            <li><a href="stores.html">All Local Stores</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Payment Options</h4>
+          <ul class="footer-links">
+            <li><a href="#">Cash on Delivery</a></li>
+            <li><a href="#">Direct UPI Payment</a></li>
+            <li><a href="#">Instant Order Confirmation</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Local Support</h4>
+          <p class="footer-text">
+            Fair pricing &bull; 100% Direct vendor proceeds &bull; Neighborhood community first.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 LocalKart &bull; Local Market Online Store. All Rights Reserved.</div>
+        <div>
+          <a href="about.html" style="color: #b7c7be; margin-right: 14px;">About Us</a>
+          <a href="contact.html" style="color: #b7c7be;">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

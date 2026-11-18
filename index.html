@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LocalKart — Empowering Local Small Vendors, Artisans &amp; Neighborhood Stores with an Online Marketplace Showcase.">
+  <title>LocalKart — Shop Local, Support Small Vendors &amp; Neighborhood Stores</title>
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Embedded CSS for Clean Standalone Rendering -->
+  <style>
+    /* GLOBAL RESET & BASE STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #212529;
+      background-color: #fafcf9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s ease;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /*HEADER & NAVIGATION */
+    .site-header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #e7ede8;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .brand-logo {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #1b4332;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      background: #e8f5e9;
+      color: #2d6a4f;
+      border: 1px solid #b7e4c7;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: #495057;
+      font-weight: 600;
+      font-size: 0.96rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #2d6a4f;
+      background-color: #f1f8f3;
+    }
+
+    /*Hero Banner*/
+    .hero-section {
+      background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 60%, #40916c 100%);
+      color: #ffffff;
+      padding: 70px 0 65px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      color: #d8f3dc;
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .hero-content h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      line-height: 1.65;
+      color: #d8f3dc;
+      margin-bottom: 30px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: #e76f51;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(231, 111, 81, 0.3);
+    }
+
+    .btn-primary:hover {
+      background-color: #d65a3d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(231, 111, 81, 0.4);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background-color: #ffffff;
+      color: #1b4332;
+      transform: translateY(-2px);
+    }
+
+    /*NAVIGATION OPTIONS SECTION (CORE PORTAL DIRECTORY)*/
+    .section {
+      padding: 55px 0;
+    }
+
+    .section-light {
+      background-color: #ffffff;
+      border-top: 1px solid #e7ede8;
+      border-bottom: 1px solid #e7ede8;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .section-badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #1b4332;
+      border: 1px solid #b7e4c7;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 2.1rem;
+      color: #1b4332;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: #6c757d;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .option-card {
+      background: #fafcf9;
+      border: 1.5px solid #d8f3dc;
+      border-radius: 14px;
+      padding: 26px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .option-card:hover {
+      background: #ffffff;
+      border-color: #2d6a4f;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(45, 106, 79, 0.12);
+    }
+
+    .option-icon-box {
+      font-size: 2.3rem;
+      background: #eef7f0;
+      border: 1px solid #c8ebd1;
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-card-body h3 {
+      font-size: 1.25rem;
+      color: #1b4332;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .option-card-body p {
+      font-size: 0.92rem;
+      color: #495057;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .option-open-link {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #2d6a4f;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f8f3;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid #d1ead7;
+      transition: all 0.2s ease;
+    }
+
+    .option-card:hover .option-open-link {
+      background: #2d6a4f;
+      color: #ffffff;
+      border-color: #2d6a4f;
+    }
+
+    /* CATEGORY NAVIGATION CARDS */
+    .category-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 18px;
+    }
+
+    .category-nav-card {
+      background-color: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .category-nav-card:hover {
+      transform: translateY(-4px);
+      border-color: #2d6a4f;
+      background-color: #f4fbf7;
+      box-shadow: 0 8px 20px rgba(45, 106, 79, 0.1);
+    }
+
+    .category-nav-icon {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .category-nav-card h3 {
+      font-size: 1.05rem;
+      color: #1b4332;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .category-nav-card span {
+      font-size: 0.82rem;
+      color: #6c757d;
+      font-weight: 500;
+    }
+
+    /*FOOTER */
+    .site-footer {
+      background-color: #1b4332;
+      color: #d8f3dc;
+      padding: 55px 0 25px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 35px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .footer-col p {
+      font-size: 0.92rem;
+      color: #d8f3dc;
+      line-height: 1.6;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #e8f5e9;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #e76f51;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #b7e4c7;
+    }
+
+    .footer-tagline-text {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #95d5b2;
+    }
+
+    .footer-action-box {
+      margin-top: 14px;
+    }
+
+    .btn-sm {
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-wrapper {
+        flex-direction: column;
+        gap: 14px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      .hero-content h1 {
+        font-size: 2.1rem;
+      }
+      .hero-content p {
+        font-size: 1.02rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        LocalKart
+        <span class="brand-badge">Support Local</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="stores.html">All Stores</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="cart.html">🛒 Cart</a></li>
+          <li><a href="login.html">🔐 Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Banner Section -->
+  <section class="hero-section" id="home">
+    <div class="container hero-content">
+      <div class="hero-badge">🌱 Empowering Neighborhood Small Businesses</div>
+      <h1>Shop Local, Support Small Vendors</h1>
+      <p>
+        Your neighborhood online marketplace connecting conscious shoppers directly with verified local artisans, master weavers, organic farmers, and family-run shops. Select an option below to browse stores and products.
+      </p>
+      <div class="hero-buttons">
+        <a href="stores.html" class="btn btn-primary">View Stores &rarr;</a>
+        <a href="products.html" class="btn btn-secondary">Shop Now &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Navigation Options Section -->
+  <section class="section section-light" id="main-options">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Marketplace Navigation</span>
+        <h2 class="section-title">Main Portal Options</h2>
+        <p class="section-subtitle">Select any card below to open its dedicated page and explore our local commerce network.</p>
+      </div>
+
+      <div class="options-grid">
+        <!-- Option 1: Stores Page -->
+        <a href="stores.html" class="option-card">
+          <div class="option-icon-box">🏪</div>
+          <div class="option-card-body">
+            <h3>All Local Stores</h3>
+            <p>Discover verified neighborhood merchants, traditional handloom weavers, organic farms, and family bakeries.</p>
+            <span class="option-open-link">View Stores &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Option 2: Products Page -->
+        <a href="products.html" class="option-card">
+          <div class="option-icon-box">🛍️</div>
+          <div class="option-card-body">
+            <h3>Products Catalogue</h3>
+            <p>Browse the full collection of authentic produce, clothing, pottery, and organic goods with category filters.</p>
+            <span class="option-open-link">Shop Now &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Option 3: Shopping Cart Page -->
+        <a href="cart.html" class="option-card">
+          <div class="option-icon-box">🛒</div>
+          <div class="option-card-body">
+            <h3>Shopping Cart</h3>
+            <p>Review selected local items, adjust quantities, apply discount coupons, and see live order totals.</p>
+            <span class="option-open-link">Open Cart Page &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Option 4: Demo Checkout Page -->
+        <a href="checkout.html" class="option-card">
+          <div class="option-icon-box">📦</div>
+          <div class="option-card-body">
+            <h3>Demo Checkout</h3>
+            <p>Enter delivery address details, choose payment options (Cash on Delivery or UPI), and confirm your order.</p>
+            <span class="option-open-link">Open Checkout Page &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Option 5: About Page -->
+        <a href="about.html" class="option-card">
+          <div class="option-icon-box">📖</div>
+          <div class="option-card-body">
+            <h3>About Us</h3>
+            <p>Learn how LocalKart empowers small informal merchants and promotes sustainable community retail.</p>
+            <span class="option-open-link">About Us &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Option 6: Contact Page -->
+        <a href="contact.html" class="option-card">
+          <div class="option-icon-box">📨</div>
+          <div class="option-card-body">
+            <h3>Contact &amp; Support</h3>
+            <p>Send a message, submit vendor onboarding inquiries, or find answers to customer support questions.</p>
+            <span class="option-open-link">Open Contact Page &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Option 7: Login & Account Portal -->
+        <a href="login.html" class="option-card">
+          <div class="option-icon-box">🔐</div>
+          <div class="option-card-body">
+            <h3>Login &amp; User Account</h3>
+            <p>Sign in to your customer profile, track orders, access platform tools, or manage vendor shops.</p>
+            <span class="option-open-link">Open Login Page &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Categories Section -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Shop By Department</span>
+        <h2 class="section-title">Product Categories</h2>
+        <p class="section-subtitle">Select any category to jump directly to its department on the catalogue page.</p>
+      </div>
+
+      <div class="category-nav-grid">
+        <a href="products.html#clothing" class="category-nav-card">
+          <span class="category-nav-icon">👕</span>
+          <h3>Handloom Clothing</h3>
+          <span>Traditional Weaves</span>
+        </a>
+
+        <a href="products.html#handicrafts" class="category-nav-card">
+          <span class="category-nav-icon">🏺</span>
+          <h3>Handicrafts</h3>
+          <span>Pottery &amp; Clay Decor</span>
+        </a>
+
+        <a href="products.html#groceries" class="category-nav-card">
+          <span class="category-nav-icon">🥬</span>
+          <h3>Fresh Groceries</h3>
+          <span>Direct Farm Produce</span>
+        </a>
+
+        <a href="products.html#organic" class="category-nav-card">
+          <span class="category-nav-icon">🍯</span>
+          <h3>Organic Goods</h3>
+          <span>Pure Honey &amp; Herbs</span>
+        </a>
+
+        <a href="products.html#sweets" class="category-nav-card">
+          <span class="category-nav-icon">🍬</span>
+          <h3>Sweets &amp; Bakes</h3>
+          <span>Artisanal Delicacies</span>
+        </a>
+
+        <a href="products.html#gifts" class="category-nav-card">
+          <span class="category-nav-icon">🎁</span>
+          <h3>Handmade Gifts</h3>
+          <span>Candles &amp; Cards</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>LocalKart</h4>
+          <p>
+            An online marketplace dedicated to empowering local small vendors, traditional artisans, and neighborhood shops across India.
+          </p>
+          <p class="footer-tagline-text">
+            100% fair pricing &bull; Direct vendor support &bull; Fresh &amp; authentic goods.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="stores.html">All Local Stores</a></li>
+            <li><a href="products.html">Products Catalogue</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="login.html">Login Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Shop Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html#clothing">Handloom Clothing</a></li>
+            <li><a href="products.html#handicrafts">Traditional Handicrafts</a></li>
+            <li><a href="products.html#groceries">Farm Fresh Groceries</a></li>
+            <li><a href="products.html#organic">Organic Pantry</a></li>
+            <li><a href="products.html#sweets">Artisan Sweets &amp; Bakes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Marketplace Assurance</h4>
+          <p>
+            Verified sellers, transparent pricing, and direct community support. Every purchase directly empowers local livelihoods.
+          </p>
+          <div class="footer-action-box">
+            <a href="stores.html" class="btn btn-secondary btn-sm">View Verified Stores</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LocalKart. Supporting Local Vendors &amp; Neighborhood Artisans. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

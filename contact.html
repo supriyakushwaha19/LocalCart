@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — LocalKart</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Head Section Internal CSS Styling -->
+  <style>
+    .page-banner-section {
+      background-color: #f1f7f3;
+      padding: 40px 0;
+    }
+    .banner-center {
+      text-align: center;
+    }
+    .page-banner-title {
+      color: #1b4332;
+      font-size: 2.3rem;
+      margin-bottom: 8px;
+    }
+    .page-banner-subtitle {
+      color: #495057;
+      max-width: 650px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+    .btn-submit-full {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+    }
+    .notice-spaced {
+      margin-top: 18px;
+      border-left: 4px solid #2d6a4f;
+    }
+    .hub-intro {
+      font-size: 0.95rem;
+      color: #495057;
+      margin-bottom: 24px;
+    }
+    .vendor-tip-box {
+      background-color: #ffffff;
+      border: 1px solid #e9ecef;
+      border-radius: 10px;
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    .vendor-tip-title {
+      color: #1b4332;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .vendor-tip-text {
+      font-size: 0.9rem;
+      color: #555555;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        LocalKart
+        <span class="logo-badge">Support Local</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="stores.html">All Stores</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html" class="active">Contact Us</a></li>
+          <li><a href="cart.html">🛒 Cart</a></li>
+          <li><a href="login.html">🔐 Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="section page-banner-section">
+    <div class="container banner-center">
+      <h1 class="page-banner-title">Contact &amp; Vendor Inquiries</h1>
+      <p class="page-banner-subtitle">
+        Have questions about listing your local shop on LocalKart or supporting our regional vendor network? Reach out to us.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Form & Info Section -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+
+        <!-- Left: Static Contact Form -->
+        <div class="content-box" style="margin: 0;">
+          <h2 style="font-size: 1.6rem; color: #1b4332; margin-bottom: 8px;">Send a Message</h2>
+          <p style="font-size: 0.95rem; color: #6c757d; margin-bottom: 24px;">
+            Fill out the form below to get in touch with the LocalKart community team.
+          </p>
+
+          <form action="#" method="get">
+            <div class="form-group">
+              <label for="contact-name">Your Full Name</label>
+              <input type="text" id="contact-name" class="form-control" placeholder="e.g. Ananya Sharma" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" class="form-control" placeholder="e.g. ananya@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-subject">Inquiry Type</label>
+              <select id="contact-subject" class="form-control">
+                <option value="vendor">Register as a New Local Vendor</option>
+                <option value="customer">Customer Product Inquiry</option>
+                <option value="feedback">General Project Feedback</option>
+                <option value="other">Other Inquiry</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-message">Your Message</label>
+              <textarea id="contact-message" class="form-control" placeholder="Write your message or vendor shop details here..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-submit-full">
+              Send Message
+            </button>
+
+            <!-- Vendor Support Note -->
+            <div class="demo-notice notice-spaced">
+              ℹ️ <strong>Customer &amp; Vendor Note:</strong>
+              Our community support team reviews all merchant inquiries and customer messages within 24–48 hours.
+            </div>
+          </form>
+        </div>
+
+        <!-- Right: Contact & Hub Information -->
+        <div>
+          <div class="contact-info-panel">
+            <h3>Community Coordination Hub</h3>
+            <p class="hub-intro">
+              LocalKart is dedicated to supporting independent vendors, master artisans, and small shops across regional markets.
+            </p>
+
+            <div class="info-item">
+              <strong>📍 Central Hub Address</strong>
+              <span>Market Central Hub, Sector 14, Chandigarh, India</span>
+            </div>
+
+            <div class="info-item">
+              <strong>📧 Email Inquiries</strong>
+              <span>support@localkart.in</span>
+            </div>
+
+            <div class="info-item">
+              <strong>📞 Support Helpline</strong>
+              <span>+91 1800-LOCAL-KART (1800-562-255)</span>
+            </div>
+
+            <div class="info-item">
+              <strong>⏰ Operating Hours</strong>
+              <span>Monday &ndash; Saturday: 9:00 AM &ndash; 6:00 PM IST</span>
+            </div>
+          </div>
+
+          <!-- Small Vendor Tip Box -->
+          <div class="vendor-tip-box">
+            <h4 class="vendor-tip-title">Are You a Local Shop Owner?</h4>
+            <p class="vendor-tip-text">
+              LocalKart does not charge any upfront onboarding fees or commissions. We believe community commerce thrives when small businesses keep 100% of their earnings.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>LocalKart</h4>
+          <p>
+            An online marketplace dedicated to empowering local small vendors, traditional artisans, and neighborhood shops across India.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="stores.html">All Stores</a></li>
+            <li><a href="products.html">Product Catalogue</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Top Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html#clothing">Clothing</a></li>
+            <li><a href="products.html#groceries">Groceries</a></li>
+            <li><a href="products.html#handicrafts">Handicrafts</a></li>
+            <li><a href="products.html#organic">Organic Goods</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <p>
+            Direct communication with local stores, transparent pricing, and fast neighborhood order support.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 LocalKart. Supporting Local Vendors &amp; Small Businesses. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var contactForm = document.querySelector('.contact-layout form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var nameInput = document.getElementById('contact-name');
+          var name = nameInput ? nameInput.value.trim() : 'Visitor';
+          alert("📨 Message Sent Successfully!\n\nThank you, " + name + "! Your inquiry has been sent to the LocalKart support team.");
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

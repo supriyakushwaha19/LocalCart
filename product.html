@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View detailed product specifications, vendor origin, customer ratings and freshness assurance at LocalKart.">
+  <title>Product Details — LocalKart</title>
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Embedded CSS for Rich Modern Product Details UI -->
+  <style>
+    /* Details Page Custom Enhancements */
+    .product-detail-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 45px;
+      padding: 38px;
+      margin: 25px 0 45px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .detail-img-box {
+      position: relative;
+      background-color: #f8faf8;
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 380px;
+      max-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #edf2ee;
+    }
+
+    .detail-img-box img {
+      width: 100%;
+      height: 100%;
+      max-height: 460px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .detail-img-box:hover img {
+      transform: scale(1.03);
+    }
+
+    .detail-badge-group {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-category {
+      background: #1b4332;
+      color: #d8f3dc;
+    }
+
+    .badge-stock-pill {
+      background: #e8f5e9;
+      color: #2d6a4f;
+      border: 1px solid #b7e4c7;
+    }
+
+    .detail-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: #e8f5e9;
+      color: #1b4332;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      width: fit-content;
+      margin-bottom: 12px;
+      border: 1px solid #c8e6c9;
+      transition: all 0.2s ease;
+    }
+
+    .detail-store-badge:hover {
+      background-color: #1b4332;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .detail-title {
+      font-size: 2.1rem;
+      color: #1b4332;
+      margin-bottom: 12px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .detail-price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .detail-price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #e76f51;
+      margin: 0;
+    }
+
+    .detail-unit {
+      font-size: 1rem;
+      color: #6c757d;
+      font-weight: 500;
+    }
+
+    .detail-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+    }
+
+    .rating-stars {
+      color: #f4a261;
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+    }
+
+    .rating-score {
+      font-weight: 700;
+      color: #1b4332;
+    }
+
+    .rating-reviews {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .detail-desc {
+      font-size: 1.05rem;
+      color: #495057;
+      margin-bottom: 22px;
+      line-height: 1.65;
+    }
+
+    /* Specifications Table */
+    .detail-specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      background: #fafcf9;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e9ecef;
+      font-size: 0.92rem;
+    }
+
+    .detail-specs-table tr {
+      border-bottom: 1px solid #edf2ee;
+    }
+
+    .detail-specs-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .detail-specs-table th {
+      width: 38%;
+      padding: 10px 14px;
+      text-align: left;
+      color: #6c757d;
+      font-weight: 600;
+      background-color: #f1f7f2;
+    }
+
+    .detail-specs-table td {
+      padding: 10px 14px;
+      color: #212529;
+      font-weight: 500;
+    }
+
+    .detail-specs-table a {
+      color: #2d6a4f;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    /* Quantity and Action Row */
+    .detail-action-group {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      border: 2px solid #2d6a4f;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      height: 48px;
+    }
+
+    .qty-btn {
+      width: 44px;
+      height: 100%;
+      background: #f1f7f2;
+      border: none;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1b4332;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .qty-btn:hover {
+      background: #d8f3dc;
+    }
+
+    .qty-input {
+      width: 55px;
+      height: 100%;
+      border: none;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1b4332;
+      outline: none;
+    }
+
+    .add-cart-large-btn {
+      flex: 1;
+      min-width: 220px;
+      height: 48px;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .buy-now-btn {
+      height: 48px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      background: #2d6a4f;
+      color: #ffffff;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .buy-now-btn:hover {
+      background: #1b4332;
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* Trust highlights */
+    .trust-highlights-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+      padding: 14px 10px;
+      background: #f8faf8;
+      border-radius: 8px;
+      border: 1px dashed #c8e6c9;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #2d6a4f;
+      font-weight: 600;
+    }
+
+    /* Tabs Section */
+    .product-tabs-section {
+      background: #ffffff;
+      border: 1px solid #e9ecef;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 50px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    }
+
+    .tabs-nav {
+      display: flex;
+      gap: 12px;
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .tab-nav-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #6c757d;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .tab-nav-btn:hover {
+      color: #1b4332;
+      background: #f1f7f2;
+    }
+
+    .tab-nav-btn.active {
+      color: #ffffff;
+      background: #1b4332;
+    }
+
+    .tab-pane {
+      display: none;
+      line-height: 1.7;
+      color: #495057;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .review-item-card {
+      background: #fafcf9;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .reviewer-name {
+      font-weight: 700;
+      color: #1b4332;
+    }
+
+    .verified-badge {
+      font-size: 0.78rem;
+      background: #d8f3dc;
+      color: #1b4332;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .product-detail-card {
+        grid-template-columns: 1fr;
+        padding: 24px;
+        gap: 24px;
+      }
+      .detail-img-box {
+        max-height: 340px;
+      }
+      .detail-title {
+        font-size: 1.7rem;
+      }
+      .trust-highlights-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        LocalKart
+        <span class="logo-badge">Support Local</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="stores.html">All Stores</a></li>
+          <li><a href="products.html" class="active">Products</a></li>
+          <li><a href="vendors.html">Vendors Directory</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="login.html">🔐 Login</a></li>
+          <li>
+            <a href="cart.html" style="display: inline-flex; align-items: center; gap: 6px; background-color: #f1f7f2; border: 1px solid #b7e4c7; padding: 6px 14px; border-radius: 20px;">
+              <span>🛒</span>
+              <span style="font-weight: 700;">Cart</span>
+              <span class="cart-counter" style="background: #e76f51; color: #ffffff; font-size: 0.78rem; padding: 2px 8px; border-radius: 10px; font-weight: 700;">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Product Details Breadcrumbs & Back Link -->
+  <section class="section" style="padding: 20px 0 0;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <nav style="font-size: 0.95rem; color: #6c757d;">
+          <a href="index.html" style="color: #2d6a4f; font-weight: 600;">Home</a> &nbsp;&rsaquo;&nbsp;
+          <a href="products.html" style="color: #2d6a4f; font-weight: 600;">Products</a> &nbsp;&rsaquo;&nbsp;
+          <span id="breadcrumb-category" style="color: #2d6a4f;">Category</span> &nbsp;&rsaquo;&nbsp;
+          <span id="breadcrumb-product-name" style="color: #1b4332; font-weight: 700;">Product Details</span>
+        </nav>
+        <a href="products.html" class="btn btn-outline" style="padding: 7px 16px; font-size: 0.88rem;">&larr; Back to Products Catalogue</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Product Detail View Container -->
+  <section class="section" style="padding-top: 15px;">
+    <div class="container">
+      
+      <div class="product-detail-card" id="product-detail-card">
+        <!-- Left Column: Product Image Gallery -->
+        <div class="detail-img-box">
+          <div class="detail-badge-group">
+            <span class="badge-pill badge-category" id="detail-category-badge">Category</span>
+            <span class="badge-pill badge-stock-pill" id="detail-stock-badge">✓ In Stock</span>
+          </div>
+          <img 
+            id="detail-main-img" 
+            src="images/handloom_scarf.jpg" 
+            alt="Product Image"
+            onerror="if (typeof handleImageError === 'function') handleImageError(this, document.getElementById('detail-title').innerText)"
+          >
+        </div>
+
+        <!-- Right Column: Product Information & Purchase Actions -->
+        <div class="detail-content">
+          <a href="store.html" id="detail-store-link" class="detail-store-badge">
+            🏪 <span id="detail-store-name">Local Merchant Store</span> &rarr;
+          </a>
+          
+          <h1 class="detail-title" id="detail-title">Loading Product Details...</h1>
+
+          <div class="detail-price-box">
+            <span class="detail-price" id="detail-price">₹0</span>
+            <span class="detail-unit" id="detail-unit">(per item • Inclusive of all taxes)</span>
+          </div>
+
+          <div class="detail-rating-row">
+            <span class="rating-stars" id="detail-stars">★★★★★</span>
+            <span class="rating-score" id="detail-rating-num">4.8</span>
+            <span class="rating-reviews" id="detail-reviews-num">(84 verified ratings & customer reviews)</span>
+          </div>
+
+          <p class="detail-desc" id="detail-description">
+            Detailed specifications and vendor origin are loading...
+          </p>
+
+          <!-- Specifications Table -->
+          <table class="detail-specs-table">
+            <tbody>
+              <tr>
+                <th>Product Code</th>
+                <td id="spec-code">PROD-01</td>
+              </tr>
+              <tr>
+                <th>Category</th>
+                <td id="spec-category">General Goods</td>
+              </tr>
+              <tr>
+                <th>Vendor Store</th>
+                <td><a href="store.html" id="spec-vendor-link">Local Vendor Shop</a></td>
+              </tr>
+              <tr>
+                <th>Packaging Unit</th>
+                <td id="spec-unit">1 item</td>
+              </tr>
+              <tr>
+                <th>Source &amp; Origin</th>
+                <td id="spec-origin">Directly Sourced from Verified Local Producers</td>
+              </tr>
+              <tr>
+                <th>Quality Guarantee</th>
+                <td id="spec-guarantee">100% Quality Inspected &amp; Same-Day Dispatch</td>
+              </tr>
+              <tr>
+                <th>Availability</th>
+                <td id="spec-availability" style="color: #2d6a4f; font-weight: 700;">In Stock for Local Pickup &amp; Fast Home Delivery</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Quantity Picker & Add to Cart -->
+          <div class="detail-action-group">
+            <div class="quantity-control">
+              <button class="qty-btn" id="qty-decrement" type="button" aria-label="Decrease quantity">&minus;</button>
+              <input class="qty-input" id="details-qty-input" type="number" value="1" min="1" max="99" aria-label="Quantity">
+              <button class="qty-btn" id="qty-increment" type="button" aria-label="Increase quantity">+</button>
+            </div>
+
+            <button class="btn btn-primary add-cart-large-btn" id="add-to-cart-btn" type="button">
+              <span>🛍️</span>
+              <span id="add-cart-btn-text">Add to Cart</span>
+            </button>
+
+            <a href="cart.html" class="buy-now-btn" id="view-cart-btn">
+              View Cart &rarr;
+            </a>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="trust-highlights-bar">
+            <div>🌿 100% Authentic Local Goods</div>
+            <div>🚚 Same-Day Local Delivery</div>
+            <div>🔄 Freshness &amp; Quality Guarantee</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Deep Dive Tabs (Product Overview, Story, Customer Reviews) -->
+      <div class="product-tabs-section">
+        <div class="tabs-nav">
+          <button class="tab-nav-btn active" data-tab="tab-overview">About This Product</button>
+          <button class="tab-nav-btn" data-tab="tab-vendor">Vendor Story &amp; Origin</button>
+          <button class="tab-nav-btn" data-tab="tab-reviews">Customer Reviews (3)</button>
+        </div>
+
+        <!-- Tab 1: Product Overview -->
+        <div class="tab-pane active" id="tab-overview">
+          <h3 style="color: #1b4332; margin-bottom: 12px;" id="tab-overview-title">Product Description &amp; Usage</h3>
+          <p id="tab-overview-text" style="font-size: 1.02rem; margin-bottom: 16px;">
+            Every product available on LocalKart is vetted for ethical sourcing, fair vendor compensation, and community environmental standards.
+          </p>
+          <ul style="list-style: disc; margin-left: 20px; line-height: 1.8;" id="tab-overview-features">
+            <li>Ethically produced by neighborhood artisans and family growers.</li>
+            <li>Zero middlemen markups ensuring fair prices for buyers and vendors.</li>
+            <li>Properly handled and packed using sustainable, clean packaging.</li>
+          </ul>
+        </div>
+
+        <!-- Tab 2: Vendor Story -->
+        <div class="tab-pane" id="tab-vendor">
+          <h3 style="color: #1b4332; margin-bottom: 12px;" id="tab-vendor-name">About the Vendor</h3>
+          <p id="tab-vendor-story" style="font-size: 1.02rem; margin-bottom: 14px;">
+            Supporting local neighborhood business owners empowers regional craftsmen, keeps currency in the community, and provides healthier, fresher goods.
+          </p>
+          <div style="background: #f1f7f2; border-left: 4px solid #2d6a4f; padding: 12px 18px; border-radius: 4px; margin-top: 10px;">
+            <strong>Local Guarantee:</strong> Verified member of LocalKart Merchant Coalition. Meets high cleanliness, quality, and fair pricing standards.
+          </div>
+        </div>
+
+        <!-- Tab 3: Customer Reviews -->
+        <div class="tab-pane" id="tab-reviews">
+          <h3 style="color: #1b4332; margin-bottom: 16px;">Verified Customer Feedback</h3>
+          <div id="tab-reviews-list">
+            <div class="review-item-card">
+              <div class="review-header">
+                <div>
+                  <span class="reviewer-name">Priya S.</span>
+                  <span class="verified-badge">✓ Verified Buyer</span>
+                </div>
+                <span class="rating-stars">★★★★★</span>
+              </div>
+              <p style="margin: 0; font-size: 0.95rem;">
+                "Super fresh and authentic! Delivered within 2 hours by our local shopkeeper. Extremely satisfied with the quality!"
+              </p>
+            </div>
+            <div class="review-item-card">
+              <div class="review-header">
+                <div>
+                  <span class="reviewer-name">Rahul Verma</span>
+                  <span class="verified-badge">✓ Verified Buyer</span>
+                </div>
+                <span class="rating-stars">★★★★★</span>
+              </div>
+              <p style="margin: 0; font-size: 0.95rem;">
+                "Great initiative supporting local merchants. The packaging is eco-friendly and the item condition was pristine."
+              </p>
+            </div>
+            <div class="review-item-card">
+              <div class="review-header">
+                <div>
+                  <span class="reviewer-name">Ananya Joshi</span>
+                  <span class="verified-badge">✓ Verified Buyer</span>
+                </div>
+                <span class="rating-stars">★★★★☆</span>
+              </div>
+              <p style="margin: 0; font-size: 0.95rem;">
+                "Excellent value for money. Very polite vendor contact and easy ordering experience on LocalKart."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products Section -->
+      <section style="margin-top: 40px; margin-bottom: 60px;">
+        <div style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #e76f51;">Recommended For You</span>
+            <h2 style="font-size: 1.8rem; color: #1b4332; margin-top: 4px;">Related Items from Our Local Marketplace</h2>
+          </div>
+          <a href="products.html" class="btn btn-outline btn-sm">Explore Full Catalogue &rarr;</a>
+        </div>
+
+        <div class="product-grid" id="related-products-grid">
+          <!-- Dynamically populated by JavaScript -->
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>LocalKart</h4>
+          <p>
+            An educational frontend project demonstrating an online marketplace designed to empower local vendors and independent shops in India.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="stores.html">All Stores</a></li>
+            <li><a href="products.html">Product Catalogue</a></li>
+            <li><a href="vendors.html">Local Vendors</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="about.html">About the Project</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Top Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html#vegetables">Farm Fresh Vegetables</a></li>
+            <li><a href="products.html#fruits">Seasonal Fresh Fruits</a></li>
+            <li><a href="products.html#groceries">Daily Groceries &amp; Dairy</a></li>
+            <li><a href="products.html#clothing">Clothing &amp; Handloom</a></li>
+            <li><a href="products.html#handicrafts">Traditional Handicrafts</a></li>
+            <li><a href="products.html#sweets">Sweets &amp; Snacks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Direct Support</h4>
+          <p>
+            100% fair pricing, verified neighborhood sellers, and authentic regional products delivered with care.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 LocalKart. Supporting Local Vendors &amp; Small Businesses. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Data & Helper Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+
+  <!-- Product Details Dynamic Rendering Engine -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Local Image Fallback Mapping for 100% Reliable Asset Display
+      const LOCAL_IMAGE_MAP = {
+        'prod-1': 'images/tomatoes_packet.jpg',
+        'prod-2': 'images/white_bread.jpg',
+        'prod-3': 'images/prod-3_fresh_milk.jpg',
+        'prod-4': 'images/apples_packet.jpg',
+        'prod-5': 'images/sweets_box.jpg',
+        'prod-6': 'images/prod-6_water_bottles.jpg',
+        'prod-7': 'images/tomatoes_packet.jpg',
+        'prod-8': 'images/potatoes_packet.jpg',
+        'prod-9': 'images/onions_packet.jpg',
+        'prod-10': 'images/carrots.jpg',
+        'prod-11': 'images/spinach_packet.jpg',
+        'prod-12': 'images/prod-12_capsicum.jpg',
+        'prod-13': 'images/apples_packet.jpg',
+        'prod-14': 'images/bananas_packet.jpg',
+        'prod-15': 'images/prod-15_mangoes.jpg',
+        'prod-16': 'images/prod-16_oranges.jpg',
+        'prod-17': 'images/prod-17_grapes.jpg',
+        'prod-18': 'images/pomegranates.jpg',
+        'prod-19': 'images/prod-19_curd.jpg',
+        'prod-20': 'images/prod-20_paneer.jpg',
+        'prod-21': 'images/butter.jpg',
+        'prod-22': 'images/prod-22_cheese.jpg',
+        'prod-23': 'images/prod-23_buttermilk.jpg',
+        'prod-24': 'images/prod-24_brown_bread.jpg',
+        'prod-25': 'images/white_bread.jpg',
+        'prod-26': 'images/prod-26_chocolate_cake.jpg',
+        'prod-27': 'images/prod-27_muffins.jpg',
+        'prod-28': 'images/prod-28_biscuits.jpg',
+        'prod-29': 'images/prod-29_rice.jpg',
+        'prod-30': 'images/atta_packet.jpg',
+        'prod-31': 'images/sugar.jpg',
+        'prod-32': 'images/prod-32_cooking_oil.jpg',
+        'prod-33': 'images/prod-33_lentils.jpg',
+        'prod-34': 'images/salt.jpg',
+        'prod-35': 'images/sweets_box.jpg',
+        'prod-36': 'images/sweets_box.jpg',
+        'prod-37': 'images/haldiram_namkeen.jpg',
+        'prod-38': 'images/laddoo.jpg',
+        'prod-39': 'images/lays_masala.jpg',
+        'prod-40': 'images/salted_peanuts.jpg',
+        'prod-41': 'images/gulab_jamun.jpg',
+        'prod-42': 'images/kaju_katli_box.jpg',
+        'prod-95': 'images/lays_tomato.jpg',
+        'prod-43': 'images/organic_turmeric.jpg',
+        'prod-44': 'images/prod-44_red_chilli_powder.jpg',
+        'prod-45': 'images/prod-45_coriander_powder.jpg',
+        'prod-46': 'images/prod-43_turmeric_powder.jpg',
+        'prod-47': 'images/prod-47_cumin_seeds.jpg',
+        'prod-48': 'images/prod-48_black_pepper.jpg',
+        'prod-49': 'images/cotton_tshirt.jpg',
+        'prod-50': 'images/prod-50_casual_shirt.jpg',
+        'prod-51': 'images/prod-51_traditional_kurta.jpg',
+        'prod-52': 'images/handloom_scarf.jpg',
+        'prod-53': 'images/prod-53_casual_sandals.jpg',
+        'prod-54': 'images/prod-54_everyday_shoes.jpg',
+        'prod-55': 'images/prod-55_storage_container.jpg',
+        'prod-56': 'images/prod-56_lunch_box.jpg',
+        'prod-57': 'images/ceramic_mug.jpg',
+        'prod-58': 'images/kitchen_towel.jpg',
+        'prod-59': 'images/handcrafted_wooden_elephants.jpg',
+        'prod-60': 'images/notebook.jpg',
+        'prod-61': 'images/prod-61_pen_set.jpg',
+        'prod-62': 'images/prod-62_drawing_book.jpg',
+        'prod-63': 'images/handmade_greeting_cards.jpg',
+        'prod-64': 'images/prod-64_decorative_plant_pot.jpg',
+        'prod-65': 'images/gift_hamper.jpg',
+        'prod-66': 'images/prod-66_farm_fresh_brown_eggs.jpg',
+        'prod-67': 'images/white_eggs.jpg',
+        'prod-68': 'images/prod-68_country_chicken_eggs.jpg',
+        'prod-69': 'images/red_roses.jpg',
+        'prod-70': 'images/jasmine_garland.jpg',
+        'prod-71': 'images/prod-71_money_plant_with_pot.jpg',
+        'prod-72': 'images/prod-72_snake_plant_air_purifier.jpg',
+        'prod-73': 'images/prod-73_fast_charging_usb_c_cable.jpg',
+        'prod-74': 'images/prod-74_20w_power_adapter.jpg',
+        'prod-75': 'images/prod-75_mobile_phone_stand.jpg',
+        'prod-76': 'images/prod-76_tempered_glass_screen_protector.jpg',
+        'prod-77': 'images/honey_jar.jpg',
+        'prod-78': 'images/prod-78_organic_a2_cow_ghee.jpg',
+        'prod-79': 'images/prod-79_organic_green_tea_leaves.jpg',
+        'prod-80': 'images/organic_rolled_oats.jpg',
+        'prod-81': 'images/prod-81_instant_masala_noodles_pack.jpg',
+        'prod-82': 'images/kissan_ketchup.jpg',
+        'prod-83': 'images/kissan_jam.jpg',
+        'prod-84': 'images/prod-84_breakfast_corn_flakes.jpg',
+        'prod-85': 'images/vase.jpg',
+        'prod-86': 'images/prod-86_floor_cleaner.jpg',
+        'prod-87': 'images/candle.jpg',
+        'prod-88': 'images/prod-88_slip_on_loafers.jpg',
+        'prod-89': 'images/cocacola.jpg',
+        'prod-90': 'images/real_juice.jpg',
+        'prod-91': 'images/nestle_coffee.jpg'
+      };
+
+      // 2. Custom Rich Descriptions and Vendor Store Names
+      const PRODUCT_EXTENDED_INFO = {
+        'prod-7': {
+          fullTitle: 'Farm Fresh Red Tomatoes (1 kg)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Morning harvest from certified Nashik & regional agro fields',
+          packaging: '1 kg Biodegradable Fresh Tray with ventilation seal',
+          description: 'Vine-ripened, firm, juicy red tomatoes packed at peak ripeness. Perfect for authentic Indian curries, rich gravies, tangy soups, and fresh daily salads.'
+        },
+        'prod-8': {
+          fullTitle: 'Organic Farm Potatoes (2 kg)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Grown naturally in dirt-free mountain soil, Himachal Pradesh',
+          packaging: '2 kg Breathable Mesh & Kraft Paper Bag',
+          description: 'Naturally grown new crop Pahadi potatoes with thin skin and earthy, dry texture. Excellent for crispy boiling, roasting, and traditional Indian sabzis.'
+        },
+        'prod-9': {
+          fullTitle: 'Fresh Red Indian Onions (1 kg)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Direct Nashik farm harvest, cold-ventilated storage',
+          packaging: '1 kg Durable Ventilated Net Mesh Packet',
+          description: 'Pungent, firm, multilayered red cooking onions essential for building deep flavorful curry bases, tempering dals, and fresh crunchy raitas.'
+        },
+        'prod-11': {
+          fullTitle: 'Organic Farm Green Spinach / Palak (500g)',
+          store: 'Verma Organic Farm',
+          origin: 'Naturally cultivated chemical-free farm fields',
+          packaging: '500g Tender bundle secured with farm kraft paper band',
+          description: 'Crisp, tender, iron-packed emerald spinach leaves harvested at daybreak. Perfect for palak paneer, wholesome soups, and nutritious morning smoothies.'
+        },
+        'prod-10': {
+          fullTitle: 'Farm Fresh Carrots (1 kg)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Locally grown organic carrot patches',
+          packaging: '1 kg Eco-friendly Kraft Paper Sleeve',
+          description: 'Sweet, crisp, and crunchy red winter carrots packed with natural beta-carotene. Ideal for fresh salads, gajar ka halwa, and wholesome soups.'
+        },
+        'prod-13': {
+          fullTitle: 'Crisp Himachal Red Apples (1 kg)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Sun-drenched orchards of Kotgarh, Himachal Pradesh',
+          packaging: '1 kg Padded Molded Fruit Tray Packet',
+          description: 'Naturally sweet and exceptionally juicy Royal Delicious apples with crisp crunch. Free from artificial wax coatings and pesticide residues.'
+        },
+        'prod-14': {
+          fullTitle: 'Fresh Ripe Yellow Bananas (1 Dozen)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Naturally ripened Cavendish plantations in Jalgaon',
+          packaging: '1 Dozen (12 Pieces) Ventilated Fruit Crate Pack',
+          description: 'Energy-rich, naturally sweet yellow bananas ripened in controlled natural chambers without harmful chemicals or carbide.'
+        },
+        'prod-18': {
+          fullTitle: 'Fresh Ripe Pomegranates (1 kg)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Arakta variety from Solapur orchards',
+          packaging: '1 kg Protective Cushioned Tray',
+          description: 'Ruby-red, antioxidant-rich juicy pomegranate arils encased in thin-skinned fruit. Bursting with sweet-tart natural juice.'
+        },
+        'prod-30': {
+          fullTitle: 'Chakki Fresh Wheat Atta (5 kg Packet)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Traditional Stone-ground Sharbati Wheat, MP Plains',
+          packaging: '5 kg Multi-layer Moisture-proof Heavy Bag',
+          description: '100% whole grain wheat flour with zero maida blending. Keeps chapatis ultra-soft, fluffy, and aromatic for hours with high dietary fiber.'
+        },
+        'prod-2': {
+          fullTitle: 'White Fresh Bread (400g Packet)',
+          store: 'Local Bakery',
+          origin: 'Freshly baked daily at dawn in traditional wood ovens',
+          packaging: '400g Sealed Food-grade Bakery Bag',
+          description: 'Soft, golden-crusted sliced white bread made with pure ingredients, natural yeast, and no synthetic dough conditioners or chemical softeners.'
+        },
+        'prod-21': {
+          fullTitle: 'Amul Pasteurized Table Butter (100g)',
+          store: 'Dairy Corner',
+          origin: 'Fresh pasteurized cream from cooperative dairy herds',
+          packaging: '100g Foil-wrapped Paper Carton',
+          description: 'The taste of India! Velvety smooth salted table butter churned from pure pasteurized fresh cream. Indispensable on warm parathas and toast.'
+        },
+        'prod-67': {
+          fullTitle: 'Farm Fresh White Eggs (Carton of 12)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Hygienic bio-secure local poultry farms',
+          packaging: 'Carton of 12 Molded Pulp Egg Tray',
+          description: 'High-protein, clean-shelled farm eggs laid by grain-fed poultry. Carefully inspected for intact shells, freshness, and rich golden yolks.'
+        },
+        'prod-31': {
+          fullTitle: 'Pure Cane Sugar (1 kg)',
+          store: 'Sharma Grocery Store',
+          origin: 'Sulphur-free clean refined Indian sugarcane mills',
+          packaging: '1 kg Heavy Food-grade Polybag',
+          description: 'Sparkling clean, free-flowing cane sugar crystals that dissolve instantly in tea, coffee, bakery treats, and homemade traditional sweets.'
+        },
+        'prod-34': {
+          fullTitle: 'Pure Refined Cooking Salt (1 kg)',
+          store: 'Sharma Grocery Store',
+          origin: 'Vacuum-evaporated sea brine salt refineries',
+          packaging: '1 kg Moisture-resistant Sealed Pack',
+          description: 'Iodized, refined free-flowing white table salt ensuring your family receives the recommended daily dose of iodine for thyroid health.'
+        },
+        'prod-89': {
+          fullTitle: 'Coca-Cola Original Taste (750ml)',
+          store: 'Daily Needs Shop',
+          origin: 'Authorized beverage bottling facility',
+          packaging: '750ml Recyclable Chilled PET Bottle',
+          description: 'The iconic refreshing sparkle and timeless flavor of Coca-Cola, best enjoyed chilled with street snacks, lunch, or family gatherings.'
+        },
+        'prod-90': {
+          fullTitle: 'Real Fruit Power Mixed Fruit (1 Litre)',
+          store: 'Daily Needs Shop',
+          origin: 'Packed with 9 delicious orchard fruits',
+          packaging: '1 Litre Aseptic 6-layer Tetra Pak',
+          description: 'Rich blend of real apple, orange, mango, banana, and guava juices loaded with Vitamin C. No artificial colors or preservatives.'
+        },
+        'prod-91': {
+          fullTitle: 'Nescafe Classic Instant Coffee Jar (100g)',
+          store: 'Daily Needs Shop',
+          origin: 'Slow-roasted Robusta and Arabica South Indian beans',
+          packaging: '100g Airtight Aroma-lock Glass Jar',
+          description: 'Granulated pure instant coffee providing the unmistakably bold, rich aroma and uplifting flavor for your morning cup.'
+        },
+        'prod-83': {
+          fullTitle: 'Kissan Mixed Fruit Jam (500g Jar)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Crafted with pulps of 8 seasonal fruits',
+          packaging: '500g Glass Preserve Jar with Safety Cap',
+          description: 'A classic sweet delight blending juicy fruits into a spreadable, velvety jam loved by kids and adults alike on morning bread and rotis.'
+        },
+        'prod-82': {
+          fullTitle: 'Kissan Fresh Tomato Ketchup (950g)',
+          store: 'Fresh Basket Grocery',
+          origin: 'Made from 100% real ripe sun-kissed field tomatoes',
+          packaging: '950g Easy-pour Squeeze Bottle',
+          description: 'Thick, sweet, and tangy real tomato ketchup that elevates samosas, pakoras, sandwiches, and daily snacks.'
+        },
+        'prod-77': {
+          fullTitle: 'Pure Wild Forest Honey (500g Jar)',
+          store: 'Verma Organic Farm',
+          origin: 'Sustainably harvested from wild Himalayan forest blooms',
+          packaging: '500g Artisanal Glass Jar with Wooden Dipper',
+          description: 'Raw, unprocessed, NMR-tested wild multi-flora honey brimming with active enzymes, pollen, and natural immune-boosting properties.'
+        },
+        'prod-49': {
+          fullTitle: 'Casual Breathable Cotton T-Shirt',
+          store: 'Sharma Handloom & Apparel',
+          origin: 'Hand-tailored by textile artisans in Jaipur',
+          packaging: '1 Piece Biodegradable Garment Bag',
+          description: 'Pre-shrunk, bio-washed 100% combed cotton jersey t-shirt with reinforced seams and breathable comfort for daily wear in all seasons.'
+        },
+        'prod-52': {
+          fullTitle: 'Pure Handloom Cotton Scarf / Stole',
+          store: 'Sharma Handloom Store',
+          origin: 'Hand-spun on wooden pit looms by master artisans in Rajasthan',
+          packaging: '180 cm × 55 cm Handloom Gift Folder',
+          description: 'Hand-woven using 100% pure organic cotton yarns and dyed using natural vegetable extracts. Feather-light, ultra-soft, and adorned with delicate fringe tassels.'
+        },
+        'prod-57': {
+          fullTitle: 'Handmade Ceramic Coffee Mug (350ml)',
+          store: 'Himachali Handicrafts',
+          origin: 'Studio pottery wheel-thrown in Dharamshala',
+          packaging: '350ml Cushion-packed Gift Box',
+          description: 'Individually wheel-thrown stoneware ceramic mug finished with a speckled reactive earthy glaze and comfortable ergonomic handle.'
+        },
+        'prod-85': {
+          fullTitle: 'Handcrafted Terracotta Vase (10 inch)',
+          store: 'Himachali Handicrafts',
+          origin: 'Traditional potter community of Kangra Valley',
+          packaging: '10 inch Heavy Shock-absorbing Box',
+          description: 'Molded manually on a traditional potter wheel using alluvial riverbed clay, sun-baked, wood-fired, and decorated with tribal folk etchings.'
+        },
+        'prod-40': {
+          fullTitle: 'Roasted Crunchy Salted Peanuts (250g)',
+          store: 'Mishra Traditional Sweets',
+          origin: 'Oven-roasted with Himalayan pink rock salt',
+          packaging: '250g Vacuum-sealed Nitrogen Fresh Pack',
+          description: 'Slow dry-roasted Gujarat jumbo groundnuts lightly seasoned with rock salt for an irresistible protein-packed tea-time crunch.'
+        },
+                'prod-59': {
+          fullTitle: 'Hand-Carved Wooden Artisan Elephants',
+          store: 'Himachali Handicrafts',
+          origin: 'Hand-sculpted by master wood artisans in Kangra Valley',
+          packaging: 'Solid Wooden Artisan Figurine (Protective Box)',
+          description: 'Authentic Sheesham timber hand-sculpted heritage elephant figurines adorned with intricate brass inlay work and delicate traditional carvings.'
+        },
+        'prod-65': {
+          fullTitle: 'Curated Artisan Gift Hamper Basket',
+          store: 'Creative Corner Gifts',
+          origin: 'Handcrafted assembly from neighborhood artisan studios',
+          packaging: 'Woven Cane Hamper with Ribbon Bow & Floral Accents',
+          description: 'A luxurious curated gift basket containing scented soy candle jars, handmade stationery greeting cards, floral accents, and festive gift boxes.'
+        },
+        'prod-63': {
+          fullTitle: 'Handmade Calligraphy Greeting Cards Set',
+          store: 'Creative Corner Gifts',
+          origin: 'Handmade textured recycled cotton paper',
+          packaging: 'Set of 4 Enveloped Botanical Greeting Cards',
+          description: 'Artisanal textured greeting cards featuring hand-lettered "With Love" and "Happy Day" calligraphy, pressed dried florals, and kraft envelopes.'
+        },
+        'prod-80': {
+          fullTitle: 'Farm Harvest Organic Rolled Oats (1 kg)',
+          store: 'Verma Organic Farm',
+          origin: 'Certified organic agro farm fields, chemical-free',
+          packaging: '1 kg Burlap & Eco-kraft Stay-fresh Bag',
+          description: '100% whole grain organic jumbo rolled oats packed with high beta-glucan soluble fiber, providing wholesome natural energy for heart-healthy breakfasts.'
+        },
+        'prod-43': {
+          fullTitle: 'Pure Organic Turmeric Powder (500g)',
+          store: 'Verma Organic Farm',
+          origin: 'High-curcumin farm harvest, sun-dried Salem variety',
+          packaging: '500g Food-grade Resealable Moisture Pouch',
+          description: 'Pure sun-dried organic turmeric roots hand-ground in traditional earthen mortars. Rich golden color and aromatic therapeutic potency.'
+        },
+                'prod-41': {
+          fullTitle: 'Pure Desi Ghee Gulab Jamun (500g)',
+          store: 'Mishra Traditional Sweets',
+          origin: 'Prepared with fresh mawa & bilona cow ghee',
+          packaging: '500g Food-grade Sealed Sweet Box / Tin',
+          description: 'Authentic melt-in-the-mouth khoya dumplings gently fried in pure cow ghee and soaked in saffron, rose petal, and green cardamom sugar syrup.'
+        },
+        'prod-38': {
+          fullTitle: 'Pure Cow Ghee Motichoor Laddoo (500g)',
+          store: 'Mishra Traditional Sweets',
+          origin: 'Fine gram flour micro-boondi pearls in pure cow ghee',
+          packaging: '500g Traditional Golden Festive Gift Box',
+          description: 'Melt-in-your-mouth Motichoor laddoos prepared from micro gram flour boondi pearls, churned cow ghee, cardamom, roasted melon seeds, and pistachios.'
+        },
+        'prod-36': {
+          fullTitle: 'Royal Assorted Festive Mix Sweet Box (1kg)',
+          store: 'Mishra Traditional Sweets',
+          origin: 'Handcrafted traditional royal mithai collection',
+          packaging: '1kg Premium Royal Blue & Gold Gift Box',
+          description: 'A lavish celebration assortment of premium fresh mithai: Silver Varak Kaju Katli, Besan Barfi, Mawa Peda, and Dry Fruit Chikki in a royal festive gift box.'
+        },
+        'prod-95': {
+          fullTitle: "Lay's Spanish Tomato Tango Potato Chips (52g)",
+          store: 'Gupta General Store',
+          origin: 'PepsiCo India, select sun-ripened farm potatoes',
+          packaging: '52g Stay-fresh Nitrogen Flushed Packet',
+          description: "Crispy ridged potato chips seasoned with a tangy blend of Mediterranean Spanish tomatoes, savory spices, and natural herbs for an irresistible crunch."
+        },
+        'prod-39': {
+          fullTitle: "Lay's India's Magic Masala Blue Chips (50g)",
+          store: 'Gupta General Store',
+          origin: 'PepsiCo India, select farm potatoes',
+          packaging: '50g Moisture-proof Sealed Foil Packet',
+          description: "India's all-time favorite spicy potato chips dusted with aromatic cumin, coriander, red chili, mango powder (amchur), and black salt for explosive Indian flavor."
+        },
+        'prod-37': {
+          fullTitle: "Haldiram's Bhujia Sev Crispy Namkeen (460g)",
+          store: 'Gupta General Store',
+          origin: "Haldiram's Bikaner savory recipe",
+          packaging: '460g + 15% Extra Metallized Stay-fresh Pack',
+          description: "Famous authentic crispy savory noodles made from moth bean and gram flour, flavored with spicy black pepper, cloves, and cardamom. Perfect teatime snack."
+        },
+        'prod-40': {
+          fullTitle: 'Roasted Crunchy Salted Peanuts (250g)',
+          store: 'Mishra Traditional Sweets',
+          origin: 'Bharuchi clay oven roasted peanuts',
+          packaging: '250g Vacuum Foil Packet',
+          description: 'Golden oven-roasted crunchy peanuts lightly seasoned with rock salt and cumin. Wholesome protein snack with zero artificial colors.'
+        },
+                'prod-26': {
+          fullTitle: 'Moist Double-Chocolate Celebration Cake (500g)',
+          store: 'Sunrise Local Bakery',
+          origin: 'Handmade fresh daily using pure Belgian cocoa',
+          packaging: 'Festive Bakery Cake Box with Ribbon & Cake Knife',
+          description: 'A decadent double-chocolate sponge cake draped in velvety dark chocolate ganache, topped with handmade chocolate rosettes and crunchy chocolate sprinkles.'
+        },
+        'prod-27': {
+          fullTitle: 'Fresh Choco-Chip Muffins & Soft Cookies (Pack of 4)',
+          store: 'Sunrise Local Bakery',
+          origin: 'Oven-baked using pure farm butter and chocolate drops',
+          packaging: 'Artisanal Kraft Bakery Box with Greaseproof Lining',
+          description: 'Golden-baked, tender artisanal muffins and chocolate chip soft cookies prepared with pure butter, madagascar vanilla, and melt-in-mouth dark chocolate chips.'
+        },
+        'prod-28': {
+          fullTitle: 'Artisanal Decorated Biscuit Treats & Pops (Pack of 3)',
+          store: 'Sunrise Local Bakery',
+          origin: 'Hand-dipped in premium Belgian chocolate',
+          packaging: 'Individual Protective Party Pops Sealed Pack',
+          description: 'Crispy toasted rice and flaky butter biscuits hand-dipped in rich melted chocolate and colorful festive confetti sprinkles. Perfect for parties and teatime.'
+        },
+        'prod-25': {
+          fullTitle: 'Fresh Farmhouse White Sandwich Bread (400g)',
+          store: 'Sunrise Local Bakery',
+          origin: 'Freshly baked every morning with pure grain flour',
+          packaging: 'Sealed Bakery Freshness Bag with Clip',
+          description: 'Soft, airy, golden-crusted sandwich loaf baked fresh every morning with zero chemical preservatives. Ideal for sandwiches and morning toast.'
+        },
+        'prod-42': {
+          fullTitle: 'Royal Silver Varak Kaju Katli (500g)',
+          store: 'Mishra Traditional Sweets',
+          origin: 'Authentic Goan cashews & bilona cow ghee',
+          packaging: '500g Luxury Festive Gold & Silver Sweet Box',
+          description: 'Melt-in-the-mouth cashew diamond confection crowned with pure vegetarian silver foil. Prepared fresh daily using minimal sugar and pure nuts.'
+        },
+        'prod-87': {
+          fullTitle: 'Scented Soy Wax Candle Jar',
+          store: 'Creative Corner Gifts',
+          origin: 'Hand-poured using French lavender and bourbon vanilla',
+          packaging: '1 Amber Glass Apothecary Jar with Tin Lid (35 hrs burn)',
+          description: 'Clean-burning 100% natural soy wax candle with lead-free cotton wick. Infuses living rooms with soothing lavender and warm vanilla notes.'
+        },
+        'prod-58': {
+          fullTitle: 'Woven Cotton Kitchen Towels (Set of 3)',
+          store: 'Sharma Handloom Store',
+          origin: 'Woven on indigenous cotton shuttle looms',
+          packaging: 'Set of 3 Pre-washed Waffle Towels',
+          description: 'Super-absorbent, lint-free 100% cotton waffle kitchen dish cloths that absorb up to 5x their weight in water.'
+        }
+      };
+
+      // 3. Resolve Requested Product from URL (fallback to Handloom Scarf prod-52)
+      let reqId = getUrlParam('id');
+      
+      // If no ID param in URL, check if query has 'name' or search
+      if (!reqId) {
+        const reqName = getUrlParam('name');
+        if (reqName && typeof MARKET_DATA !== 'undefined') {
+          const match = MARKET_DATA.products.find(p => p.name.toLowerCase().includes(reqName.toLowerCase()));
+          if (match) reqId = match.id;
+        }
+      }
+
+      // Default to Handloom Scarf if still unassigned
+      if (!reqId) {
+        reqId = 'prod-52';
+      }
+
+      // 4. Fetch Product from MARKET_DATA or fallback
+      let product = null;
+      if (typeof MARKET_DATA !== 'undefined' && Array.isArray(MARKET_DATA.products)) {
+        product = MARKET_DATA.products.find(p => p.id === reqId);
+      }
+
+      // Fallback if not found in data.js
+      if (!product) {
+        product = {
+          id: reqId,
+          name: 'Pure Handloom Cotton Scarf',
+          price: 349,
+          unit: 'piece',
+          vendorId: 'vendor-11',
+          vendorName: 'Sharma Handloom Store',
+          category: 'Clothing & Handloom',
+          categoryId: 'clothing',
+          description: 'Traditional geometric hand-spun cotton scarf crafted by village weavers in Rajasthan with delicate fringe tassels.',
+          stock: 25,
+          rating: 4.9,
+          reviews: 94,
+          image: 'images/handloom_scarf.jpg'
+        };
+      }
+
+      // Overlay extended catalog info if exists
+      const ext = PRODUCT_EXTENDED_INFO[product.id] || {};
+      const displayTitle = ext.fullTitle || product.name;
+      const displayStore = ext.store || product.vendorName || 'Local Community Merchant';
+      const displayDesc = ext.description || product.description;
+      const displayOrigin = ext.origin || 'Locally Produced by Verified Regional Artisans & Growers';
+      const displayPackaging = ext.packaging || `1 ${product.unit}`;
+      const imageSrc = LOCAL_IMAGE_MAP[product.id] || product.image || 'images/handloom_scarf.jpg';
+
+      // 5. Update DOM Elements
+      document.title = `${displayTitle} — Product Details — LocalKart`;
+
+      // Breadcrumbs
+      const bcCat = document.getElementById('breadcrumb-category');
+      const bcName = document.getElementById('breadcrumb-product-name');
+      if (bcCat) {
+        bcCat.innerHTML = `<a href="products.html#${product.categoryId || 'clothing'}" style="color: #2d6a4f; text-decoration: underline;">${product.category}</a>`;
+      }
+      if (bcName) {
+        bcName.textContent = displayTitle;
+      }
+
+      // Badges
+      const catBadge = document.getElementById('detail-category-badge');
+      if (catBadge) catBadge.textContent = product.category;
+
+      const stockBadge = document.getElementById('detail-stock-badge');
+      if (stockBadge) {
+        const stockCount = product.stock || 24;
+        stockBadge.textContent = `✓ In Stock (${stockCount} available)`;
+      }
+
+      // Main Image
+      const mainImg = document.getElementById('detail-main-img');
+      if (mainImg) {
+        mainImg.src = imageSrc;
+        mainImg.alt = displayTitle;
+      }
+
+      // Store Link & Title
+      const storeLink = document.getElementById('detail-store-link');
+      const storeName = document.getElementById('detail-store-name');
+      if (storeLink) {
+        storeLink.href = `store.html?id=${product.vendorId || 'vendor-1'}`;
+      }
+      if (storeName) {
+        storeName.textContent = displayStore;
+      }
+
+      const titleEl = document.getElementById('detail-title');
+      if (titleEl) titleEl.textContent = displayTitle;
+
+      // Price & Unit
+      const priceEl = document.getElementById('detail-price');
+      if (priceEl) priceEl.textContent = typeof formatPrice === 'function' ? formatPrice(product.price) : `₹${product.price}`;
+
+      const unitEl = document.getElementById('detail-unit');
+      if (unitEl) unitEl.textContent = `(per ${product.unit} • Inclusive of all taxes)`;
+
+      // Ratings
+      const ratingEl = document.getElementById('detail-rating-num');
+      if (ratingEl) ratingEl.textContent = product.rating || '4.8';
+
+      const reviewsEl = document.getElementById('detail-reviews-num');
+      if (reviewsEl) reviewsEl.textContent = `(${product.reviews || 84} verified ratings & customer reviews)`;
+
+      // Description
+      const descEl = document.getElementById('detail-description');
+      if (descEl) descEl.textContent = displayDesc;
+
+      // Specifications Table
+      const specCode = document.getElementById('spec-code');
+      if (specCode) specCode.textContent = product.id.toUpperCase().replace('PROD-', 'LK-PR-');
+
+      const specCat = document.getElementById('spec-category');
+      if (specCat) specCat.textContent = product.category;
+
+      const specVendorLink = document.getElementById('spec-vendor-link');
+      if (specVendorLink) {
+        specVendorLink.textContent = displayStore;
+        specVendorLink.href = `store.html?id=${product.vendorId || 'vendor-1'}`;
+      }
+
+      const specUnit = document.getElementById('spec-unit');
+      if (specUnit) specUnit.textContent = displayPackaging;
+
+      const specOrigin = document.getElementById('spec-origin');
+      if (specOrigin) specOrigin.textContent = displayOrigin;
+
+      // Tabs Content
+      const tabOverviewTitle = document.getElementById('tab-overview-title');
+      if (tabOverviewTitle) tabOverviewTitle.textContent = `${displayTitle} — Complete Guide`;
+
+      const tabOverviewText = document.getElementById('tab-overview-text');
+      if (tabOverviewText) tabOverviewText.textContent = displayDesc;
+
+      const tabVendorName = document.getElementById('tab-vendor-name');
+      if (tabVendorName) tabVendorName.textContent = `Meet the Merchant: ${displayStore}`;
+
+      const tabVendorStory = document.getElementById('tab-vendor-story');
+      if (tabVendorStory) {
+        tabVendorStory.textContent = `${displayStore} is an independently owned local business partnering with LocalKart. Located in our neighborhood bazaar, they specialize in authentic ${product.category} with direct sourcing, zero middleman markups, and dedicated customer service.`;
+      }
+
+      // Quantity Controls
+      const qtyInput = document.getElementById('details-qty-input');
+      const btnDec = document.getElementById('qty-decrement');
+      const btnInc = document.getElementById('qty-increment');
+      const maxStock = product.stock || 50;
+
+      if (qtyInput) {
+        qtyInput.max = maxStock;
+      }
+
+      if (btnDec && qtyInput) {
+        btnDec.addEventListener('click', () => {
+          let val = parseInt(qtyInput.value, 10) || 1;
+          if (val > 1) qtyInput.value = val - 1;
+        });
+      }
+
+      if (btnInc && qtyInput) {
+        btnInc.addEventListener('click', () => {
+          let val = parseInt(qtyInput.value, 10) || 1;
+          if (val < maxStock) qtyInput.value = val + 1;
+        });
+      }
+
+      // Add to Cart Action
+      const addCartBtn = document.getElementById('add-to-cart-btn');
+      const addCartBtnText = document.getElementById('add-cart-btn-text');
+
+      if (addCartBtn) {
+        addCartBtn.addEventListener('click', () => {
+          const qty = parseInt(qtyInput ? qtyInput.value : 1, 10) || 1;
+          
+          if (typeof Cart !== 'undefined' && typeof Cart.addItem === 'function') {
+            Cart.addItem(product.id, qty);
+          } else {
+            alert(`✓ Added ${qty} × ${displayTitle} to your cart!`);
+          }
+
+          // Visual feedback
+          if (addCartBtnText) {
+            const originalText = addCartBtnText.textContent;
+            addCartBtnText.textContent = `✓ Added (${qty})!`;
+            addCartBtn.style.backgroundColor = '#1b4332';
+            setTimeout(() => {
+              addCartBtnText.textContent = originalText;
+              addCartBtn.style.backgroundColor = '';
+            }, 1800);
+          }
+        });
+      }
+
+      // Tab Navigation System
+      const tabButtons = document.querySelectorAll('.tab-nav-btn');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          tabPanes.forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const targetId = btn.getAttribute('data-tab');
+          const targetPane = document.getElementById(targetId);
+          if (targetPane) targetPane.classList.add('active');
+        });
+      });
+
+      // 6. Populate Related Items Grid
+      const relatedGrid = document.getElementById('related-products-grid');
+      if (relatedGrid && typeof MARKET_DATA !== 'undefined' && Array.isArray(MARKET_DATA.products)) {
+        // Find 4 related items from same category, or same vendor, excluding current
+        let related = MARKET_DATA.products.filter(p => p.id !== product.id && (p.categoryId === product.categoryId || p.category === product.category));
+        
+        if (related.length < 4) {
+          const others = MARKET_DATA.products.filter(p => p.id !== product.id && !related.includes(p));
+          related = related.concat(others);
+        }
+        
+        related = related.slice(0, 4);
+
+        relatedGrid.innerHTML = related.map(item => {
+          const relExt = PRODUCT_EXTENDED_INFO[item.id] || {};
+          const relTitle = relExt.fullTitle || item.name;
+          const relStore = relExt.store || item.vendorName || 'Local Merchant';
+          const relImg = LOCAL_IMAGE_MAP[item.id] || item.image || 'images/handloom_scarf.jpg';
+          const relPrice = typeof formatPrice === 'function' ? formatPrice(item.price) : `₹${item.price}`;
+
+          return `
+            <div class="product-card">
+              <div class="product-img-wrap">
+                <span class="product-category-tag">${item.category}</span>
+                <a href="product.html?id=${item.id}">
+                  <img src="${relImg}" alt="${relTitle}" loading="lazy" onerror="handleImageError(this, '${relTitle}')">
+                </a>
+              </div>
+              <div class="product-info">
+                <span class="product-store">${relStore}</span>
+                <h3 class="product-title">
+                  <a href="product.html?id=${item.id}">${relTitle}</a>
+                </h3>
+                <p class="product-desc">${item.description.substring(0, 95)}...</p>
+                <div class="product-price-row">
+                  <span class="product-price">${relPrice}</span>
+                  <a href="product.html?id=${item.id}" class="view-btn">View Details</a>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Update cart counter in header if Cart exists
+      if (typeof Cart !== 'undefined' && typeof Cart.updateHeaderBadge === 'function') {
+        Cart.updateHeaderBadge();
+      }
+    });
+  </script>
+</body>
+</html>

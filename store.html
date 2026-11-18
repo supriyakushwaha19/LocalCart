@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Local Store Profile — LocalKart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Dynamic Store Detail Page Specific Styling */
+    .store-hero-card {
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 35px;
+      border: 1px solid #e9ecef;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .store-hero-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .store-hero-img-wrap {
+      position: relative;
+      min-height: 340px;
+      overflow: hidden;
+      background: #2d6a4f;
+    }
+
+    .store-hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .store-hero-card:hover .store-hero-img-wrap img {
+      transform: scale(1.03);
+    }
+
+    .store-hero-content {
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .store-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e8f5e9;
+      color: #1b4332;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 5px 14px;
+      border-radius: 20px;
+      width: fit-content;
+      margin-bottom: 14px;
+      border: 1px solid #c8e6c9;
+    }
+
+    .store-hero-title {
+      font-size: 2.2rem;
+      color: #1b4332;
+      margin-bottom: 10px;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .store-hero-category {
+      color: #e76f51;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .store-hero-tagline {
+      font-size: 1.05rem;
+      color: #495057;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .store-quick-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .store-quick-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: #2b2d42;
+      font-weight: 500;
+    }
+
+    /* Store Info Grid */
+    .store-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      background: #fafcf9;
+      border: 1px solid #e2ebe4;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 24px;
+    }
+
+    .store-info-item strong {
+      display: block;
+      color: #1b4332;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .store-info-item span {
+      color: #495057;
+      font-size: 0.96rem;
+      font-weight: 500;
+    }
+
+    /* Other Stores Strip */
+    .other-stores-strip {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 2px solid #e9ecef;
+    }
+
+    .store-switch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .store-switch-card {
+      background: #ffffff;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .store-switch-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-color: #2d6a4f;
+    }
+
+    .store-switch-card.active-store {
+      border: 2px solid #2d6a4f;
+      background: #f1f8f4;
+    }
+
+    .store-switch-img {
+      height: 100px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .store-switch-body {
+      padding: 10px 12px;
+    }
+
+    .store-switch-body h4 {
+      font-size: 0.95rem;
+      color: #1b4332;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .store-switch-body span {
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        LocalKart
+        <span class="logo-badge">Support Local</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="stores.html" class="active">All Stores</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="cart.html">🛒 Cart</a></li>
+          <li><a href="login.html">🔐 Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Store Detail Section -->
+  <section class="section" style="padding: 24px 0 60px;">
+    <div class="container">
+      
+      <!-- Breadcrumb & Back Button -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 10px;">
+        <div style="font-size: 0.92rem; color: #6c757d;">
+          <a href="index.html" style="color: #2d6a4f; text-decoration: none; font-weight: 500;">Home</a> &rsaquo;
+          <a href="stores.html" style="color: #2d6a4f; text-decoration: none; font-weight: 500;">All Stores</a> &rsaquo;
+          <span id="breadcrumb-store-name" style="color: #1b4332; font-weight: 700;">Loading Store...</span>
+        </div>
+        <a href="stores.html" class="btn btn-outline" style="padding: 7px 16px; font-size: 0.88rem; border-radius: 8px;">&larr; Back to All Stores</a>
+      </div>
+
+      <!-- Main Store Hero Showcase -->
+      <div class="store-hero-card" id="store-hero">
+        <div class="store-hero-img-wrap">
+          <img id="store-main-image" src="images/store_handloom.jpg" alt="Local Store Front">
+        </div>
+        <div class="store-hero-content">
+          <span class="store-badge-pill" id="store-badge-pill">Verified Local Store</span>
+          <span class="store-hero-category" id="store-category-name">Store Category</span>
+          <h1 class="store-hero-title" id="store-title">Loading Store Name...</h1>
+          <p class="store-hero-tagline" id="store-tagline">Loading authentic local storefront details...</p>
+          <div class="store-quick-badges" id="store-quick-badges">
+            <span class="store-quick-badge">⭐ <strong id="store-rating-badge">4.9 / 5.0</strong></span>
+            <span class="store-quick-badge">📍 <span id="store-loc-badge">Main Market</span></span>
+            <span class="store-quick-badge">📞 <span id="store-phone-badge">+91 98765 43210</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Store Detailed Story & Attributes -->
+      <div class="content-box" style="margin-top: 0; margin-bottom: 40px; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+        <h2 style="font-size: 1.5rem; color: #1b4332; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <span>🏪</span> About This Local Establishment
+        </h2>
+        <p id="store-about-text" style="font-size: 1.05rem; line-height: 1.7; color: #495057;">
+          Loading store description...
+        </p>
+
+        <!-- Specifications / Info Grid -->
+        <div class="store-info-grid">
+          <div class="store-info-item">
+            <strong>👤 Store Proprietor</strong>
+            <span id="store-owner-text">Ramesh Sharma</span>
+          </div>
+          <div class="store-info-item">
+            <strong>📍 Physical Address</strong>
+            <span id="store-address-text">Bada Bazaar, Shop 14</span>
+          </div>
+          <div class="store-info-item">
+            <strong>⏰ Operating Hours</strong>
+            <span id="store-hours-text">10:00 AM - 8:30 PM</span>
+          </div>
+          <div class="store-info-item">
+            <strong>📞 Direct Phone Helpline</strong>
+            <span id="store-contact-phone">+91 98765 43210</span>
+          </div>
+          <div class="store-info-item">
+            <strong>📦 Eco Packaging Policy</strong>
+            <span id="store-packaging-text">100% Plastic-Free Biodegradable</span>
+          </div>
+          <div class="store-info-item">
+            <strong>⭐ Customer Trust Score</strong>
+            <span id="store-rating-score">4.9 / 5.0 (230 Reviews)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products from this Store -->
+      <div class="section-header" style="text-align: left; margin-bottom: 25px;">
+        <h2 class="section-title" id="products-heading">Products Available from This Store</h2>
+        <p class="section-subtitle" style="margin: 0;" id="products-subheading">Genuine items ready for immediate local dispatch.</p>
+      </div>
+
+      <div class="product-grid" id="store-products-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Explore Other Local Stores Switcher -->
+      <div class="other-stores-strip">
+        <h3 style="font-size: 1.35rem; color: #1b4332; margin-bottom: 6px;">Browse Other Neighborhood Stores</h3>
+        <p style="color: #6c757d; font-size: 0.95rem;">Select any merchant to view their full storefront, history, and available catalogue:</p>
+        <div class="store-switch-grid" id="store-switch-grid">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>LocalKart</h4>
+          <p>
+            Connecting everyday shoppers with trusted neighborhood merchants and regional craftspeople.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="stores.html">All Stores</a></li>
+            <li><a href="products.html">Product Catalogue</a></li>
+            <li><a href="about.html">About the Project</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Top Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html#clothing">Clothing</a></li>
+            <li><a href="products.html#groceries">Groceries</a></li>
+            <li><a href="products.html#handicrafts">Handicrafts</a></li>
+            <li><a href="products.html#organic">Organic Goods</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Direct Support</h4>
+          <p>
+            100% fair pricing, verified neighborhood sellers, and authentic regional products delivered with care.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 LocalKart. Supporting Local Vendors &amp; Small Businesses. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Store Detail Controller Script -->
+  <script>
+    const STORES_CATALOG = {
+      'store-1': {
+        id: 'store-1',
+        name: 'Sharma Handloom Store',
+        category: 'Handloom & Textiles',
+        badge: 'Verified Master Weaver',
+        image: 'images/store_handloom.jpg',
+        tagline: 'Generations of authentic hand-weaving heritage. Handcrafted 100% natural cotton apparel, khadi scarves, and breathable home textiles.',
+        about: 'Founded in 1994 by master weaver Ramesh Sharma, Sharma Handloom Store works directly with 14 local rural artisan families. Every thread is spun from sustainably cultivated Indian cotton and colored using organic vegetable dyes. By shopping from this storefront on LocalKart, you directly support indigenous loom artists and their families.',
+        location: 'Shop #14, Main Bada Bazaar, Johari Bazaar, Jaipur',
+        shortLocation: 'Johari Bazaar, Jaipur',
+        rating: '4.9 / 5.0 (230 customer reviews)',
+        phone: '+91 98765 43210',
+        owner: 'Ramesh & Sunita Sharma',
+        hours: '10:00 AM - 8:30 PM (Mon-Sat)',
+        packaging: '100% Plastic-Free Biodegradable Paper',
+        products: [
+          { id: 'prod-52', name: 'Pure Handloom Cotton Scarf / Stole', category: 'Handloom', price: '₹349', image: 'images/handloom_scarf.jpg', desc: 'Breathable, feather-light handwoven khadi cotton with tassel fringe borders.' },
+          { id: 'prod-58', name: 'Woven Cotton Kitchen Towels (Set of 3)', category: 'Home Linens', price: '₹180', image: 'images/kitchen_towel.jpg', desc: 'Super-absorbent, lint-free waffle weave cotton towels for everyday kitchen cooking.' },
+          { id: 'prod-49', name: 'Casual Breathable Cotton Daily Wear', category: 'Apparel', price: '₹499', image: 'images/cotton_tshirt.jpg', desc: 'Premium combed cotton tailored for maximum all-day cooling and lasting comfort.' }
+        ]
+      },
+      'store-2': {
+        id: 'store-2',
+        name: 'Himachali Handicrafts',
+        category: 'Handicrafts & Decor',
+        badge: 'Artisan Workshop',
+        image: 'images/store_handicrafts.jpg',
+        tagline: 'Preserving traditional folk craftsmanship with natural terracotta pots, hand-carved pine wooden decor, and exquisite hand-painted pottery.',
+        about: 'Established in 1978 by artisan Mahesh Prajapati in Himachal Pradesh. Specializing in wheel-thrown alluvial clay pottery, rustic pine-wood carvings, brass temple bells, and hand-painted terracotta home accents that bring timeless Himalayan aesthetic into your living space.',
+        location: 'Old Bazaar Lane, Shop 22, Himachal Pradesh',
+        shortLocation: 'Old Bazaar Lane, Shop 22',
+        rating: '4.8 / 5.0 (185 customer reviews)',
+        phone: '+91 98123 67890',
+        owner: 'Mahesh Prajapati',
+        hours: '10:30 AM - 8:00 PM (Daily)',
+        packaging: 'Secure Eco-friendly Corrugated Straw Box',
+        products: [
+          { id: 'prod-85', name: 'Handcrafted Terracotta Vase (10 inch)', category: 'Handicrafts', price: '₹420', image: 'images/vase.jpg', desc: 'Wheel-thrown natural clay decorative flower vase with traditional hand-painted ethnic folk motifs.' },
+          { id: 'prod-57', name: 'Handmade Ceramic Coffee Mug (350ml)', category: 'Pottery', price: '₹280', image: 'images/ceramic_mug.jpg', desc: 'Wheel-thrown artisan pottery coffee mug with warm speckled glaze and ergonomic comfort handle.' },
+          { id: 'prod-87', name: 'Scented Soy Wax Candle Jar', category: 'Crafts', price: '₹299', image: 'images/candle.jpg', desc: 'Hand-poured aromatic lavender and vanilla candle with pure cotton wick, 35 hours clean burning.' }
+        ]
+      },
+      'store-3': {
+        id: 'store-3',
+        name: 'Fresh Basket Grocery',
+        category: 'Daily Groceries & Essentials',
+        badge: 'Daily Farm Produce',
+        image: 'images/store_grocery.jpg',
+        tagline: 'Your neighborhood corner grocery stocking fresh local farm vegetables, stone-ground wheat atta, whole pulses, and free-range farm eggs daily.',
+        about: 'Operating since 2004, Fresh Basket Grocery connects local peri-urban farmers with neighborhood households. Fresh produce arrives every morning at 5:30 AM directly from nearby farms, ensuring peak nutrition, transparency, and honest community prices.',
+        location: 'Sector 14 Main Road, Near Central Park',
+        shortLocation: 'Sector 14, Main Road',
+        rating: '4.9 / 5.0 (420 customer reviews)',
+        phone: '+91 98456 12345',
+        owner: 'Satish & Rajesh Gupta',
+        hours: '6:30 AM - 9:30 PM (All 7 Days)',
+        packaging: 'Reusable Jute & Cotton Carry Bags',
+        products: [
+          { id: 'prod-30', name: 'Chakki Fresh Wheat Atta in Packet (5kg)', category: 'Staples', price: '₹240', image: 'images/atta_packet.jpg', desc: '100% whole wheat grain flour ground on slow stone chakki preserving dietary fiber and nutrition.' },
+          { id: 'prod-67', name: 'Farm Fresh White Eggs in Carton Tray (12 Eggs)', category: 'Poultry', price: '₹95', image: 'images/eggs_carton.jpg', desc: 'Graded clean farm eggs packed securely in biodegradable molded pulp carton trays.' },
+          { id: 'prod-21', name: 'Amul Pure Salted Butter (500g)', category: 'Dairy', price: '₹275', image: 'images/butter.jpg', desc: 'Rich pasteurized table butter crafted from pure wholesome dairy cream.' },
+          { id: 'prod-31', name: 'Pure Cane Crystal Sugar (1kg)', category: 'Groceries', price: '₹45', image: 'images/sugar.jpg', desc: 'Sulphur-free clean sparkling white refined cane sugar crystals.' }
+        ]
+      },
+      'store-4': {
+        id: 'store-4',
+        name: 'Local Fashion Corner',
+        category: 'Apparel & Footwear',
+        badge: 'Daily Wear & Comfort',
+        image: 'images/store_fashion.jpg',
+        tagline: 'Affordable, comfortable everyday apparel, pure cotton t-shirts, casual sandals, and ethnic daily wear designed for everyday convenience.',
+        about: 'Established in 2012 by Rahul & Priya Bajaj, Local Fashion Corner brings breathable pure cotton apparel, casual wear, and handloom accessories directly to neighborhood customers. High-quality stitching and colorfast fabrics are guaranteed.',
+        location: 'Fashion Street, Shop 8, Commercial Arcade',
+        shortLocation: 'Fashion Street, Shop 8',
+        rating: '4.7 / 5.0 (310 customer reviews)',
+        phone: '+91 98567 89012',
+        owner: 'Rahul Bajaj',
+        hours: '10:30 AM - 9:00 PM (Mon-Sun)',
+        packaging: 'Recyclable Kraft Paper Bags',
+        products: [
+          { id: 'prod-49', name: 'Casual Breathable Cotton Daily T-Shirt', category: 'Clothing', price: '₹499', image: 'images/cotton_tshirt.jpg', desc: 'Comfortable pre-shrunk cotton tee with reinforced crew neck and soft bio-wash finish.' },
+          { id: 'prod-52', name: 'Pure Handloom Cotton Scarf / Stole', category: 'Accessories', price: '₹349', image: 'images/handloom_scarf.jpg', desc: 'Handwoven khadi stole with natural dyes and decorative tassel fringes.' },
+          { id: 'prod-58', name: 'Woven Cotton Kitchen Towels (Set of 3)', category: 'Home Linens', price: '₹180', image: 'images/kitchen_towel.jpg', desc: 'Super-absorbent, lint-free waffle weave cotton towels.' }
+        ]
+      },
+      'store-5': {
+        id: 'store-5',
+        name: 'Creative Corner Gifts & Floral Studio',
+        category: 'Gifts & Floral Studio',
+        badge: 'Handmade Craft Studio',
+        image: 'images/store_gifts.jpg',
+        tagline: 'Handmade soy wax scented candles, floral bouquets, ceramic coffee mugs, craft notebooks, and personalized gifting hampers.',
+        about: 'Founded in 2018 by artisan Priyanka Joshi, Creative Corner Gifts blends floral design with bespoke handmade craftsmanship. Each gift hamper, candle jar, and greeting card is crafted with meticulous care to make celebrations unforgettable.',
+        location: 'Heritage Market Square, Studio #3',
+        shortLocation: 'Heritage Market Square',
+        rating: '4.9 / 5.0 (275 customer reviews)',
+        phone: '+91 98901 23456',
+        owner: 'Priyanka Joshi',
+        hours: '10:00 AM - 8:30 PM (Tue-Sun)',
+        packaging: 'Silk Ribbon Wrapped Decorative Gift Box',
+        products: [
+          { id: 'prod-87', name: 'Scented Soy Wax Candle Jar', category: 'Gifts', price: '₹299', image: 'images/candle.jpg', desc: 'Hand-poured aromatic lavender and vanilla candle with pure cotton wick.' },
+          { id: 'prod-57', name: 'Handmade Ceramic Coffee Mug (350ml)', category: 'Artisan Pottery', price: '₹280', image: 'images/ceramic_mug.jpg', desc: 'Wheel-thrown pottery mug with comfort handle and speckled glaze.' },
+          { id: 'prod-85', name: 'Handcrafted Terracotta Vase (10 inch)', category: 'Decor', price: '₹420', image: 'images/vase.jpg', desc: 'Natural clay decorative flower vase with traditional folk motifs.' }
+        ]
+      },
+      'store-6': {
+        id: 'store-6',
+        name: 'Verma Organic Farm Store',
+        category: 'Certified Organic & Health',
+        badge: 'Certified Organic',
+        image: 'images/store_organic.jpg',
+        tagline: 'Pesticide-free raw forest honey, organic rolled oats, pure turmeric, natural jaggery, and unpolished lentils.',
+        about: 'Started in 2018 by agronomist Sandeep Verma, Verma Organic Farm Store partners with certified Jaivik Bharat organic farmers across the foothills. We believe in food that heals: zero chemical pesticides, zero synthetic fertilizers, and 100% nutritional integrity.',
+        location: 'Green Valley Road, Farm Outlet 5',
+        shortLocation: 'Green Valley Road',
+        rating: '4.9 / 5.0 (380 customer reviews)',
+        phone: '+91 97654 32109',
+        owner: 'Sandeep & Ananya Verma',
+        hours: '8:00 AM - 7:30 PM (Daily)',
+        packaging: '100% Unbleached Biodegradable Paper & Glass Jars',
+        products: [
+          { id: 'prod-77', name: 'Pure Wild Forest Honey Jar (500g)', category: 'Organic', price: '₹350', image: 'images/honey_jar.jpg', desc: 'Unprocessed, unfiltered wild multi-flora honey gathered directly from forest hives.' },
+          { id: 'prod-80', name: 'Organic Rolled Oats (1kg)', category: 'Cereals', price: '₹190', image: 'images/prod-80_organic_rolled_oats.jpg', desc: 'Whole grain rolled oat flakes loaded with natural soluble dietary fiber.' },
+          { id: 'prod-78', name: 'Organic A2 Desi Cow Ghee (500ml)', category: 'Superfood', price: '₹650', image: 'images/prod-78_organic_a2_cow_ghee.jpg', desc: 'Traditional bilona churned golden cow ghee with rich Vedic aroma and purity.' },
+          { id: 'prod-40', name: 'Roasted Crunchy Salted Peanuts (250g)', category: 'Healthy Snacks', price: '₹65', image: 'images/salted_peanuts.jpg', desc: 'Golden oven-roasted crunchy peanuts lightly seasoned with rock salt.' }
+        ]
+      },
+      'store-7': {
+        id: 'store-7',
+        name: 'Mishra Traditional Sweets',
+        category: 'Pure Desi Ghee Sweets & Snacks',
+        badge: 'Pure Desi Ghee',
+        image: 'images/store_sweets.jpg',
+        tagline: 'Freshly prepared Motichoor laddoo, pure Kaju Katli, Gulab Jamun, and wholesome Indian festive snacks.',
+        about: 'Established in 1968, Mishra Traditional Sweets has been the cornerstone of city festivities for over five decades. Prepared fresh daily using 100% pure desi ghee, organic dry fruits, and aromatic green cardamom with zero synthetic additives.',
+        location: 'Temple Street, Shop 5, Near Clock Tower',
+        shortLocation: 'Temple Street, Shop 5',
+        rating: '4.9 / 5.0 (540 customer reviews)',
+        phone: '+91 98234 56789',
+        owner: 'Pt. Hari Mohan Mishra & Sons',
+        hours: '8:00 AM - 9:30 PM (All 7 Days)',
+        packaging: 'Food-Grade Traditional Golden Mithai Gift Boxes',
+        products: [
+          { id: 'prod-42', name: 'Royal Silver Varak Kaju Katli (500g)', category: 'Sweets', price: '₹480', image: 'images/kaju_katli_box.jpg', desc: 'Authentic cashew diamond sweets with delicate edible silver foil in an elegant festive gift box.' },
+          { id: 'prod-41', name: 'Pure Desi Ghee Gulab Jamun (500g)', category: 'Dessert', price: '₹280', image: 'images/gulab_jamun.jpg', desc: 'Soft khoya dumplings steeped in saffron, cardamom, and rose water scented sugar syrup.' },
+          { id: 'prod-38', name: 'Pure Cow Ghee Motichoor Laddoo (500g)', category: 'Mithai', price: '₹240', image: 'images/laddoo.jpg', desc: 'Melt-in-mouth micro gram-flour pearls fried in pure cow ghee, garnished with melon seeds and pistachios.' },
+          { id: 'prod-36', name: 'Royal Assorted Festive Mix Sweet Box (1kg)', category: 'Gift Boxes', price: '₹550', image: 'images/sweets_box.jpg', desc: 'Premium festive assortment featuring Silver Kaju Katli, Besan Barfi, Mawa Peda, and Dry Fruit Chikki.' },
+          { id: 'prod-40', name: 'Roasted Crunchy Salted Peanuts (250g)', category: 'Snacks', price: '₹65', image: 'images/salted_peanuts.jpg', desc: 'Golden oven-roasted crunchy peanuts lightly seasoned with rock salt in stay-fresh packet.' }
+        ]
+      }
+    };
+
+    // Alias mapping for flexible URLs
+    const STORE_ALIASES = {
+      'sharma-handloom': 'store-1',
+      'store_handloom': 'store-1',
+      'handloom': 'store-1',
+      'himachali-handicrafts': 'store-2',
+      'store_handicrafts': 'store-2',
+      'handicrafts': 'store-2',
+      'fresh-basket': 'store-3',
+      'store_grocery': 'store-3',
+      'grocery': 'store-3',
+      'local-fashion': 'store-4',
+      'store_fashion': 'store-4',
+      'fashion': 'store-4',
+      'creative-gifts': 'store-5',
+      'store_gifts': 'store-5',
+      'gifts': 'store-5',
+      'verma-organic': 'store-6',
+      'store_organic': 'store-6',
+      'organic': 'store-6',
+      'mishra-sweets': 'store-7',
+      'store_sweets': 'store-7',
+      'sweets': 'store-7'
+    };
+
+    function initStorePage() {
+      const params = new URLSearchParams(window.location.search);
+      let storeParam = params.get('id') || 'store-1';
+      
+      // Resolve alias
+      if (STORE_ALIASES[storeParam]) {
+        storeParam = STORE_ALIASES[storeParam];
+      }
+
+      const store = STORES_CATALOG[storeParam] || STORES_CATALOG['store-1'];
+
+      // Update Page Title
+      document.title = `${store.name} — LocalKart`;
+      const pageTitleEl = document.getElementById('page-title');
+      if (pageTitleEl) pageTitleEl.textContent = `${store.name} — LocalKart`;
+
+      // Update Breadcrumb
+      const breadcrumbEl = document.getElementById('breadcrumb-store-name');
+      if (breadcrumbEl) breadcrumbEl.textContent = store.name;
+
+      // Update Hero Card
+      const mainImageEl = document.getElementById('store-main-image');
+      if (mainImageEl) {
+        mainImageEl.src = store.image;
+        mainImageEl.alt = store.name;
+      }
+
+      const badgePillEl = document.getElementById('store-badge-pill');
+      if (badgePillEl) badgePillEl.textContent = store.badge;
+
+      const categoryEl = document.getElementById('store-category-name');
+      if (categoryEl) categoryEl.textContent = store.category;
+
+      const titleEl = document.getElementById('store-title');
+      if (titleEl) titleEl.textContent = store.name;
+
+      const taglineEl = document.getElementById('store-tagline');
+      if (taglineEl) taglineEl.textContent = store.tagline;
+
+      const ratingBadgeEl = document.getElementById('store-rating-badge');
+      if (ratingBadgeEl) ratingBadgeEl.textContent = store.rating.split(' ')[0] + ' / 5.0';
+
+      const locBadgeEl = document.getElementById('store-loc-badge');
+      if (locBadgeEl) locBadgeEl.textContent = store.shortLocation;
+
+      const phoneBadgeEl = document.getElementById('store-phone-badge');
+      if (phoneBadgeEl) phoneBadgeEl.textContent = store.phone;
+
+      // Update About Box
+      const aboutTextEl = document.getElementById('store-about-text');
+      if (aboutTextEl) aboutTextEl.textContent = store.about;
+
+      const ownerTextEl = document.getElementById('store-owner-text');
+      if (ownerTextEl) ownerTextEl.textContent = store.owner;
+
+      const addressTextEl = document.getElementById('store-address-text');
+      if (addressTextEl) addressTextEl.textContent = store.location;
+
+      const hoursTextEl = document.getElementById('store-hours-text');
+      if (hoursTextEl) hoursTextEl.textContent = store.hours;
+
+      const contactPhoneEl = document.getElementById('store-contact-phone');
+      if (contactPhoneEl) contactPhoneEl.textContent = store.phone;
+
+      const packagingTextEl = document.getElementById('store-packaging-text');
+      if (packagingTextEl) packagingTextEl.textContent = store.packaging;
+
+      const ratingScoreEl = document.getElementById('store-rating-score');
+      if (ratingScoreEl) ratingScoreEl.textContent = store.rating;
+
+      // Update Products Heading
+      const productsHeadingEl = document.getElementById('products-heading');
+      if (productsHeadingEl) productsHeadingEl.textContent = `Products Available from ${store.name}`;
+
+      // Render Products Grid
+      const productsGridEl = document.getElementById('store-products-grid');
+      if (productsGridEl && store.products) {
+        productsGridEl.innerHTML = store.products.map(p => `
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <span class="product-category-tag">${p.category}</span>
+              <a href="product.html?id=${p.id}"><img src="${p.image}" alt="${p.name}"></a>
+            </div>
+            <div class="product-info">
+              <span class="product-store">${store.name}</span>
+              <h3 class="product-title"><a href="product.html?id=${p.id}">${p.name}</a></h3>
+              <p style="font-size: 0.88rem; color: #6c757d; margin-bottom: 12px; line-height: 1.5;">${p.desc}</p>
+              <div class="product-price-row">
+                <span class="product-price">${p.price}</span>
+                <a href="product.html?id=${p.id}" class="view-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Render Other Stores Switcher
+      const switchGridEl = document.getElementById('store-switch-grid');
+      if (switchGridEl) {
+        switchGridEl.innerHTML = Object.keys(STORES_CATALOG).map(key => {
+          const s = STORES_CATALOG[key];
+          const isActive = s.id === store.id ? 'active-store' : '';
+          return `
+            <a href="store.html?id=${s.id}" class="store-switch-card ${isActive}">
+              <img src="${s.image}" alt="${s.name}" class="store-switch-img">
+              <div class="store-switch-body">
+                <h4>${s.name}</h4>
+                <span>${s.category}</span>
+              </div>
+            </a>
+          `;
+        }).join('');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initStorePage);
+  </script>
+
+</body>
+</html>

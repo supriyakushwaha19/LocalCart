@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage items in your LocalKart shopping cart. Free neighborhood delivery over ₹500, instant coupon discounts, and secure checkout.">
+  <title>Shopping Cart — LocalKart</title>
+  
+  <!-- Main Stylesheet Link -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ========================================================
+       INTERNAL CSS STYLING IN THE HEAD SECTION
+       High-Conversion, Modern, Elegant Shopping Cart UI/UX
+       ======================================================== -->
+  <style>
+    /* CSS Variables & Theme Palette */
+    :root {
+      --primary-dark: #1b4332;
+      --primary: #2d6a4f;
+      --primary-light: #40916c;
+      --primary-mint: #d8f3dc;
+      --primary-soft: #f4fbf6;
+      --accent-warm: #e76f51;
+      --accent-amber: #f4a261;
+      --text-main: #212529;
+      --text-muted: #556052;
+      --text-light: #718096;
+      --border-subtle: #e7ede8;
+      --border-card: #e2e8f0;
+      --bg-body: #fafcf9;
+      --bg-card: #ffffff;
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.07);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+    }
+
+    /* Global Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-main);
+      background-color: var(--bg-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* --- Top Announcement Bar --- */
+    .top-announcement-bar {
+      background: linear-gradient(90deg, #1b4332 0%, #2d6a4f 100%);
+      color: #e8f5e9;
+      padding: 10px 0;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .announcement-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .announcement-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .announcement-code {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    /* --- Site Header & Navigation --- */
+    .site-header {
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .brand-logo {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      background: #e8f5e9;
+      color: var(--primary);
+      border: 1px solid #b7e4c7;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #495057;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+      background-color: var(--primary-soft);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cart-header-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--primary-dark);
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.92rem;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(27, 67, 50, 0.25);
+    }
+
+    .cart-header-btn:hover {
+      background-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .cart-counter {
+      background-color: var(--accent-warm);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- Page Breadcrumb & Header Title --- */
+    .cart-page-header {
+      padding: 32px 0 24px;
+    }
+
+    .cart-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .cart-breadcrumb a:hover {
+      color: var(--primary);
+    }
+
+    .cart-page-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.6px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .cart-page-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+    }
+
+    /* ========================================================
+       EMPTY CART STATE VIEW
+       ======================================================== */
+    .empty-cart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 65px 35px 55px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      max-width: 720px;
+      margin: 20px auto 70px;
+    }
+
+    .empty-cart-illustration {
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-cart-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .empty-cart-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+    }
+
+    .empty-cart-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .btn-browse-products {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+      color: #ffffff;
+      padding: 14px 34px;
+      border-radius: var(--radius-md);
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(45, 106, 79, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-browse-products:hover {
+      background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(45, 106, 79, 0.45);
+    }
+
+    .btn-explore-stores {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--primary-soft);
+      color: var(--primary);
+      border: 1.5px solid #b7e4c7;
+      padding: 13px 28px;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.25s ease;
+    }
+
+    .btn-explore-stores:hover {
+      background-color: var(--primary-mint);
+      color: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .empty-cart-suggestions {
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 28px;
+    }
+
+    .suggestions-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 14px;
+    }
+
+    .category-pills-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .category-pill {
+      background: #f8faf8;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .category-pill:hover {
+      background: var(--primary-mint);
+      color: var(--primary-dark);
+      border-color: #95d5b2;
+      transform: translateY(-1px);
+    }
+
+    /* ========================================================
+       ACTIVE CART 2-COLUMN GRID LAYOUT
+       ======================================================== */
+    .cart-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+      margin-bottom: 70px;
+    }
+
+    /* --- Left Column: Cart Items Card --- */
+    .cart-items-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    /* Delivery Threshold Progress Meter */
+    .delivery-threshold-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
+      border-bottom: 1px solid #d8f3dc;
+      padding: 18px 24px;
+    }
+
+    .delivery-threshold-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .delivery-icon {
+      font-size: 1.4rem;
+    }
+
+    .delivery-msg {
+      font-size: 0.95rem;
+      color: var(--primary-dark);
+    }
+
+    .delivery-msg.success {
+      color: #155724;
+      font-weight: 600;
+    }
+
+    .delivery-progress-track {
+      width: 100%;
+      height: 7px;
+      background-color: #d1e7dd;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .delivery-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #52b788 0%, #2d6a4f 100%);
+      border-radius: var(--radius-pill);
+      transition: width 0.4s ease;
+    }
+
+    /* Cart Header inside Card */
+    .cart-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 26px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .cart-card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .items-count-pill {
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #b7e4c7;
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .btn-clear-cart {
+      background: none;
+      border: 1px solid #e2e8f0;
+      color: #718096;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-clear-cart:hover {
+      background: #fee2e2;
+      border-color: #fca5a5;
+      color: #dc2626;
+    }
+
+    /* Table Styles */
+    .cart-table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .modern-cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .modern-cart-table th {
+      background-color: #fbfdfb;
+      padding: 14px 24px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .modern-cart-table td {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+
+    .cart-item-row:hover {
+      background-color: #fafdfa;
+    }
+
+    /* Product Item Cell */
+    .cart-product-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .cart-thumb-link {
+      flex-shrink: 0;
+      width: 78px;
+      height: 78px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background-color: #f8faf8;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+    }
+
+    .cart-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+
+    .cart-thumb-link:hover .cart-thumb-img {
+      transform: scale(1.05);
+    }
+
+    .cart-item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cart-vendor-pill {
+      font-size: 0.76rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .cart-item-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      line-height: 1.35;
+    }
+
+    .cart-item-title a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .cart-unit-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .cart-unit-price {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* Quantity Stepper */
+    .stepper-wrap {
+      display: inline-flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1.5px solid #d1d5db;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .stepper-btn {
+      width: 32px;
+      height: 34px;
+      background: #f9fafb;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #374151;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .stepper-btn:hover {
+      background: #e5e7eb;
+      color: var(--primary-dark);
+    }
+
+    .stepper-input {
+      width: 44px;
+      height: 34px;
+      border: none;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      -moz-appearance: textfield;
+    }
+
+    .stepper-input::-webkit-outer-spin-button,
+    .stepper-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .cart-line-subtotal {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .cart-delete-btn {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .cart-delete-btn:hover {
+      color: #ef4444;
+      background-color: #fee2e2;
+    }
+
+    /* Cart Card Bottom */
+    .cart-card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      background-color: #fbfdfb;
+      border-top: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-continue-shopping {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .btn-continue-shopping:hover {
+      color: var(--primary-dark);
+      transform: translateX(-3px);
+    }
+
+    .cart-reassurance-chip {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 600;
+      background: #e8f5e9;
+      border: 1px solid #b7e4c7;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* --- Right Column: Sticky Order Summary Card --- */
+    .order-summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 28px 26px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .summary-card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.4px;
+    }
+
+    .security-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #2b8a3e;
+      background: #ebfbee;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid #b2f2bb;
+    }
+
+    .summary-calculation-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-bottom: 22px;
+    }
+
+    .summary-calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.96rem;
+      color: #4b5563;
+    }
+
+    .calc-value {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .text-success-free {
+      color: #16a34a !important;
+      font-weight: 800;
+    }
+
+    .discount-row {
+      color: #15803d;
+      font-weight: 600;
+    }
+
+    .text-discount {
+      color: #16a34a !important;
+      font-weight: 800;
+    }
+
+    /* Promo Code Group */
+    .promo-box-wrapper {
+      background: #f9fafb;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .promo-box-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .promo-input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .promo-text-field {
+      flex: 1;
+      padding: 9px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .promo-text-field:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-apply-promo {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-apply-promo:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .promo-quick-chip {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 9px;
+      text-align: left;
+      padding: 0;
+      display: block;
+    }
+
+    .promo-quick-chip:hover {
+      text-decoration: underline;
+    }
+
+    .promo-applied-badge {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-remove-promo {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #065f46;
+      cursor: pointer;
+    }
+
+    /* Grand Total Row */
+    .grand-total-divider {
+      height: 1px;
+      background-color: var(--border-subtle);
+      margin-bottom: 16px;
+    }
+
+    .grand-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 24px;
+    }
+
+    .total-title {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .total-tax-note {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+
+    .grand-total-amount {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+
+    /* Primary CTA Button */
+    .checkout-cta-wrap {
+      margin-bottom: 24px;
+    }
+
+    .btn-primary-checkout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+      color: #ffffff;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      box-shadow: 0 4px 16px rgba(45, 106, 79, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary-checkout:hover {
+      background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(45, 106, 79, 0.45);
+    }
+
+    .cta-arrow {
+      font-size: 1.25rem;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-primary-checkout:hover .cta-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Trust & Security Features */
+    .trust-features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .trust-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .trust-icon {
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .trust-text strong {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--text-main);
+    }
+
+    .trust-text small {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--text-light);
+    }
+
+    /* ========================================================
+       FOOTER SECTION (Clean Structured Columns)
+       ======================================================== */
+    .site-footer {
+      background-color: var(--primary-dark);
+      color: #d8f3dc;
+      padding: 60px 0 25px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.3fr 1.2fr;
+      gap: 40px;
+      margin-bottom: 45px;
+    }
+
+    .footer-col h4 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .footer-col p {
+      font-size: 0.92rem;
+      color: #d8f3dc;
+      line-height: 1.6;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #e8f5e9;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-warm);
+      text-decoration: underline;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      color: #d8f3dc;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: #b7e4c7;
+    }
+
+    /* ========================================================
+       RESPONSIVE DESIGN (Desktop & Mobile)
+       ======================================================== */
+    @media (max-width: 992px) {
+      .cart-layout-grid {
+        grid-template-columns: 1fr;
+      }
+      .order-summary-card {
+        position: static;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .announcement-inner {
+        justify-content: center;
+        text-align: center;
+      }
+      .nav-wrapper {
+        flex-direction: column;
+        gap: 14px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+      .cart-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .cart-card-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Promo Banner -->
+  <div class="top-announcement-bar">
+    <div class="container announcement-inner">
+      <div class="announcement-badge">
+        <span>⚡ <strong>LocalKart Advantage:</strong> Free Neighborhood Delivery on orders above ₹500!</span>
+      </div>
+      <div>
+        <span>Use coupon <span class="announcement-code">LOCAL10</span> for 10% instant discount</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Header & Sticky Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        🌿 LocalKart
+        <span class="brand-badge">Support Local</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="stores.html">All Stores</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="login.html">🔐 Login</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="cart.html" class="cart-header-btn" aria-label="View Cart">
+          <span>🛒 Cart</span>
+          <span class="cart-counter">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Shopping Cart Content -->
+  <main>
+    <div class="container">
+
+      <!-- Breadcrumbs & Heading -->
+      <div class="cart-page-header">
+        <nav class="cart-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>&rsaquo;</span>
+          <a href="products.html">Catalogue</a>
+          <span>&rsaquo;</span>
+          <span>Shopping Cart</span>
+        </nav>
+        <h1 class="cart-page-title">Your Shopping Cart</h1>
+        <p class="cart-page-subtitle">Review your chosen neighborhood goods, unlock free local delivery, and checkout securely.</p>
+      </div>
+
+      <!-- ========================================================
+           EMPTY STATE VIEW (High-Fidelity Minimalist Vector UI)
+           ======================================================== -->
+      <div class="empty-cart-card" id="cart-empty-state" style="display: none;">
+        
+        <!-- Friendly Minimalist Vector Illustration -->
+        <div class="empty-cart-illustration">
+          <svg width="170" height="170" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Soft Mint Circle -->
+            <circle cx="80" cy="80" r="72" fill="#E8F5E9" />
+            <circle cx="80" cy="80" r="56" fill="#D8F3DC" opacity="0.6" />
+            
+            <!-- Floating Sparkle Accents -->
+            <path d="M125 45L127 51L133 53L127 55L125 61L123 55L117 53L123 51L125 45Z" fill="#F4A261" />
+            <path d="M35 55L36.5 59.5L41 61L36.5 62.5L35 67L33.5 62.5L29 61L33.5 59.5L35 55Z" fill="#52B788" />
+            <circle cx="120" cy="98" r="4" fill="#52B788" opacity="0.8" />
+            <circle cx="42" cy="94" r="3" fill="#E76F51" opacity="0.7" />
+
+            <!-- Clean Modern Shopping Cart Body -->
+            <path d="M42 50H50L59 92C59.6 94.8 62.1 96.8 65 96.8H110C112.8 96.8 115.3 94.8 116 92L123 64H53.5" 
+                  stroke="#1B4332" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+            
+            <!-- Cart Grid Lines -->
+            <line x1="68" y1="64" x2="68" y2="86" stroke="#2D6A4F" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="84" y1="64" x2="84" y2="86" stroke="#2D6A4F" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="100" y1="64" x2="100" y2="86" stroke="#2D6A4F" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="57" y1="76" x2="119" y2="76" stroke="#2D6A4F" stroke-width="2.5" stroke-linecap="round" />
+
+            <!-- Cart Wheels -->
+            <circle cx="68" cy="112" r="8" fill="#1B4332" />
+            <circle cx="68" cy="112" r="3.5" fill="#FFFFFF" />
+            <circle cx="106" cy="112" r="8" fill="#1B4332" />
+            <circle cx="106" cy="112" r="3.5" fill="#FFFFFF" />
+
+            <!-- Floating Green Leaf Accent -->
+            <path d="M88 40C88 40 102 43 103 54C92 56 88 40 88 40Z" fill="#2D6A4F" />
+            <path d="M88 40C94 48 98 52 103 54" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <h2 class="empty-cart-title">Your cart is empty</h2>
+        <p class="empty-cart-desc">
+          Looks like you haven't added anything to your cart yet. Explore farm-fresh vegetables, handloom textiles, authentic sweets, and daily essentials from our verified neighborhood stores!
+        </p>
+
+        <!-- Prominent Vibrant CTA Buttons -->
+        <div class="empty-cart-actions">
+          <a href="products.html" class="btn-browse-products">
+            Browse Products &rarr;
+          </a>
+          <a href="stores.html" class="btn-explore-stores">
+            Explore Local Stores
+          </a>
+        </div>
+
+        <!-- Quick Explore Category Chips -->
+        <div class="empty-cart-suggestions">
+          <div class="suggestions-label">Popular Local Categories to Explore</div>
+          <div class="category-pills-row">
+            <a href="products.html#groceries" class="category-pill">🥬 Farm Fresh Groceries</a>
+            <a href="products.html#bakery" class="category-pill">🥖 Artisanal Bakery</a>
+            <a href="products.html#clothing" class="category-pill">🧵 Handloom Apparel</a>
+            <a href="products.html#organic" class="category-pill">🍯 Organic Pantry</a>
+            <a href="products.html#snacks" class="category-pill">🍪 Traditional Munchies</a>
+            <a href="products.html#handicrafts" class="category-pill">🏺 Clay &amp; Wood Crafts</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================================================
+           ACTIVE CART GRID LAYOUT (Rendered dynamically by js/cart.js)
+           ======================================================== -->
+      <div class="cart-layout-grid" id="cart-content-grid">
+        <!-- Left Column: Items Table & Delivery Progress -->
+        <div id="cart-table-wrapper"></div>
+
+        <!-- Right Column: Sticky Order Summary & Trust Badges -->
+        <div id="cart-summary-wrapper"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       SITE FOOTER (Structured 4-Column Layout)
+       ======================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="footer-col">
+          <h4>LocalKart</h4>
+          <p>
+            An online marketplace dedicated to empowering local small vendors, traditional artisans, and neighborhood shops across India.
+          </p>
+          <p style="margin-top: 14px; font-size: 0.85rem; color: #95d5b2;">
+            100% fair pricing &bull; Direct vendor support &bull; Fresh &amp; authentic goods.
+          </p>
+        </div>
+
+        <!-- Col 2: Navigation Links -->
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="stores.html">All Local Stores</a></li>
+            <li><a href="products.html">Products Catalogue</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="login.html">Login Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Customer Benefits -->
+        <div class="footer-col">
+          <h4>Customer Benefits</h4>
+          <div class="benefit-item">
+            <span>⚡</span>
+            <span>Same-Day Direct Delivery</span>
+          </div>
+          <div class="benefit-item">
+            <span>🌿</span>
+            <span>Zero Plastic Waste Packaging</span>
+          </div>
+          <div class="benefit-item">
+            <span>🤝</span>
+            <span>100% Direct Pay to Artisans</span>
+          </div>
+          <div class="benefit-item">
+            <span>💵</span>
+            <span>Cash on Delivery &amp; UPI</span>
+          </div>
+        </div>
+
+        <!-- Col 4: Help Guidelines -->
+        <div class="footer-col">
+          <h4>Help &amp; Guidelines</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">How to Order Online</a></li>
+            <li><a href="contact.html">Payment &amp; UPI Support</a></li>
+            <li><a href="about.html">Return &amp; Refund Policy</a></li>
+            <li><a href="stores.html">Verified Vendor Directory</a></li>
+            <li><a href="contact.html">Community Support FAQ</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 LocalKart. Supporting Local Vendors &amp; Neighborhood Artisans. All Rights Reserved.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="about.html" style="color: #b7e4c7;">About Project</a>
+          <a href="contact.html" style="color: #b7e4c7;">Support</a>
+          <a href="login.html" style="color: #b7e4c7;">Vendor Login</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>
